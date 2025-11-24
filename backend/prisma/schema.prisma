@@ -1,0 +1,250 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+    output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 스칼라 필드, 실제 데이터 베이스 테이블에 컬럼으로 생성되는 필드들
+
+
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  nickname  String
+  password  String
+  // @map: TS에서는 CamelCase(createdAt)를 사용하고
+  // 데이터베이스 컬럼은 Snake_case(created_at)를 사용하는 것이 관례이기 때문에 이를 매핑해주는 역할
+  createdAt DateTime  @default(now()) @map("created_at")
+  // @updatedAt: 이 row의 데이터 변경시 자동으로 업데이트
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at") // Soft Delete
+
+  Workspaces       WorkspaceMember[]
+  ChannelMembers   ChannelMember[]
+  ChannelChats     ChannelChat[]
+  DMInit           DM[]              @relation("DMInit")
+  DMReceived       DM[]              @relation("DMReceived")
+  DMChats          DMChat[]
+  ChannelMentions  ChannelMention[]
+  DMMentions       DMMention[]
+
+  @@map("users")
+}
+
+model Workspace {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  url       String    @unique // workspace url (e.g., slack.com/workspace-url)
+  ownerId   Int       @map("owner_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  Channels  Channel[]
+  Members   WorkspaceMember[]
+  DMs       DM[]
+
+  @@map("workspaces")
+}
+
+model Channel {
+  id          Int       @id @default(autoincrement())
+  name        String
+  private     Boolean   @default(false)
+  workspaceId Int       @map("workspace_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  Workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  Members     ChannelMember[]
+  Chats       ChannelChat[]
+  Mentions    ChannelMention[]
+
+  @@index([workspaceId])
+  @@map("channels")
+}
+
+model DM {
+  id          Int       @id @default(autoincrement())
+  workspaceId Int       @map("workspace_id")
+  senderId    Int       @map("sender_id")
+  receiverId  Int       @map("receiver_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  Sender      User      @relation("DMInit", fields: [senderId], references: [id], onDelete: Cascade)
+  Receiver    User      @relation("DMReceived", fields: [receiverId], references: [id], onDelete: Cascade)
+  Chats       DMChat[]
+
+  @@unique([senderId, receiverId, workspaceId]) // 중복 DM 방지
+  @@index([workspaceId])
+  @@map("dms")
+}
+
+model ChannelChat {
+  id        Int       @id @default(autoincrement())
+  content   String
+  userId    Int       @map("user_id")
+  channelId Int       @map("channel_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Channel   Channel   @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  Mentions  ChannelMention[]
+
+  @@index([channelId])
+  @@index([userId])
+  @@map("channel_chats")
+}
+
+model DMChat {
+  id        Int       @id @default(autoincrement())
+  content   String
+  userId    Int       @map("user_id")
+  dmId      Int       @map("dm_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  DM        DM        @relation(fields: [dmId], references: [id], onDelete: Cascade)
+  Mentions  DMMention[]
+
+  @@index([dmId])
+  @@index([userId])
+  @@map("dm_chats")
+}
+
+model WorkspaceMember {
+  workspaceId Int       @map("workspace_id")
+  userId      Int       @map("user_id")
+  loggedInAt  DateTime? @map("logged_in_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  User        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([workspaceId, userId]) // 복합키 설정
+  @@index([userId])
+  @@map("workspace_members")
+}
+
+model ChannelMember {
+  channelId Int       @map("channel_id")
+  userId    Int       @map("user_id")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  Channel   Channel   @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([channelId, userId])
+  @@index([userId])
+  @@map("channel_members")
+}
+
+model ChannelMention {
+  chatId    Int      @map("chat_id")
+  userId    Int      @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  ChannelChat ChannelChat @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  User        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Channel     Channel?    @relation(fields: [channelId], references: [id]) // 역정규화 (Optional)
+  channelId   Int?        @map("channel_id")
+
+  @@id([chatId, userId])
+  @@map("channel_mentions")
+}
+
+model DMMention {
+  chatId    Int      @map("chat_id")
+  userId    Int      @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  DMChat    DMChat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@id([chatId, userId])
+  @@map("dm_mentions")
+}
+
+/**
+ * =============================================================================
+ * Prisma Schema Attributes Reference (Cheatsheet)
+ * =============================================================================
+ *
+ * [1] Field Attributes (필드 레벨 속성)
+ * - 정의: 특정 컬럼(Field) 하나에 적용되는 설정입니다. ('@' 사용)
+ *
+ * @id             : Primary Key 지정
+ * ex) id Int @id
+ * @default(val)   : 기본값 설정
+ * ex) isActive Boolean @default(true)
+ * @unique         : 중복 불가 (Unique Index)
+ * ex) email String @unique
+ * @updatedAt      : 수정 시 현재 시간 자동 갱신
+ * ex) updatedAt DateTime @updatedAt
+ * @map("name")    : DB 컬럼명 매핑 (CamelCase -> snake_case)
+ * ex) createdAt DateTime @map("created_at")
+ * @relation(...)  : 관계(Foreign Key) 정의
+ * ex) user User @relation(fields: [userId], references: [id])
+ * @ignore         : Prisma Client 생성 제외
+ * ex) secretCode String @ignore
+ * @db.VarChar(x)  : DB 데이터 타입 강제
+ * ex) title String @db.VarChar(200)
+ *
+ * -----------------------------------------------------------------------------
+ *
+ * [2] Attribute Functions (속성 함수)
+ * - 정의: @default() 내부에서 사용하여 값을 동적으로 생성합니다.
+ *
+ * autoincrement() : 정수 자동 증가 (Sequence)
+ * ex) id Int @id @default(autoincrement())
+ * now()           : 현재 시간 (Timestamp)
+ * ex) createdAt DateTime @default(now())
+ * uuid()          : UUID v4 (36자 랜덤 문자열)
+ * ex) id String @id @default(uuid())
+ * cuid()          : 충돌 방지 고유 ID (URL Friendly)
+ * ex) id String @id @default(cuid())
+ * dbgenerated()   : DB 고유 함수 직접 실행
+ * ex) id String @id @default(dbgenerated("gen_random_uuid()"))
+ *
+ * -----------------------------------------------------------------------------
+ *
+ * [3] Block Attributes (모델 레벨 속성)
+ * - 정의: 모델(테이블) 전체에 적용되는 설정입니다. ('@@' 사용)
+ *
+ * @@map("name")   : DB 테이블명 매핑
+ * ex) @@map("users")
+ * @@id([a, b])    : 복합 기본 키 (Composite PK)
+ * ex) @@id([orderId, productId])
+ * @@unique([a, b]): 복합 유니크 (Composite Unique)
+ * ex) @@unique([teamId, memberNumber])
+ * @@index([a, b]) : 인덱스 생성 (성능 최적화)
+ * ex) @@index([email, role])
+ * @@ignore        : 모델 전체 제외
+ * ex) @@ignore
+ *
+ * -----------------------------------------------------------------------------
+ *
+ * [4] Type Modifiers (타입 수식어)
+ *
+ * ? (Optional)    : NULL 허용
+ * ex) description String?
+ * [] (List)       : 배열 또는 관계형 데이터 목록
+ * ex) posts Post[]
+ * =============================================================================
+ */
