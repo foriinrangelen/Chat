@@ -9,7 +9,7 @@ alwaysApply: true
 
 # Tech Stack Context
 
-- **Language**: TypeScript
+- **Language**: TypeScript (strict mode)
 - **Package Manager**: pnpm
 - **Framework**: NestJS
 - **Database**: PostgreSQL

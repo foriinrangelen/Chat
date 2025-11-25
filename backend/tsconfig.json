@@ -5,7 +5,9 @@
 		"resolvePackageJsonExports": true,
 		"esModuleInterop": true,
 		"isolatedModules": true,
-		"declaration": true,
+		// prisma 이슈로인한 임시주석
+		// "declaration": true,
+		"declaration": false,
 		"removeComments": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,

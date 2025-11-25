@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { UserEntity } from 'src/users/entities/user.entity';
+import { UserEntity } from '../routers/users/entities/user.entity';
 
 // @User() 문법으로 사용할 수 있는 커스텀 파라미터 데코레이터를 생성합니다.
 export const User = createParamDecorator<string>((data: unknown, ctx: ExecutionContext) => {
