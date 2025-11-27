@@ -5,19 +5,29 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
-	// 모든 라우트에 /api 접두사 추가
+
+	// CORS 설정 추가
+	app.enableCors({
+		origin: true, // 개발 환경: 모든 도메인 허용
+		credentials: true,
+	});
+
 	// 글로벌 prefix 설정 (Swagger 제외)
 	app.setGlobalPrefix('api', {
 		exclude: ['docs'], // Swagger 경로 제외
 	});
+
 	// 스웨거 추가
 	//prettier-ignore
 	const config = new DocumentBuilder()
-	.setTitle('Cats example').setDescription('The cats API description')
-	.setVersion('1.0')
-	.addCookieAuth('connect.sid')
-	.addTag('cats')
-	.build();
+		.setTitle('RealTime Chat API')
+		.setDescription('The RealTime Chat API description')
+		.setVersion('1.0')
+		.addCookieAuth('connect.sid')
+		.addTag('auth')
+		.addTag('users')
+		.build();
+
 	const documentFactory = () => SwaggerModule.createDocument(app, config);
 	SwaggerModule.setup('docs', app, documentFactory);
 

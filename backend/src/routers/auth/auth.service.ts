@@ -2,10 +2,10 @@
 import { ForbiddenException, Injectable, ConflictException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from '../routers/users/dto/create-user.dto';
+import { JoinDto } from './dto/join.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
-import { prisma } from '../lib/prisma';
+import { prisma } from '../../lib/prisma';
 
 @Injectable()
 export class AuthService {
@@ -17,11 +17,11 @@ export class AuthService {
 	/**
 	 * 회원가입
 	 */
-	async signup(dto: CreateUserDto) {
+	async signup(dto: JoinDto) {
 		// 이메일 중복 체크
-		const userExists = await prisma.user.findUnique({
-			where: { email: dto.email },
-		});
+		const userExists = await prisma.user.findUnique({ where: { email: dto.email } });
+
+		// 유저가 존재한다면
 		if (userExists) {
 			throw new ConflictException('이미 존재하는 이메일입니다.');
 		}
@@ -35,6 +35,10 @@ export class AuthService {
 				email: dto.email,
 				nickname: dto.nickname,
 				password: hashedPassword,
+				hashedRefreshToken: null,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				deletedAt: null,
 			},
 		});
 

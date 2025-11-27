@@ -8,7 +8,7 @@ import { LoggingMiddleware } from './middlewares/logging.middleware';
 // import { WorkspacesModule } from './routers/workspaces/workspaces.module';
 // import { ChannelsModule } from './routers/channels/channels.module';
 // import { DmsModule } from './routers/dms/dms.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './routers/auth/auth.module';
 
 // // 같이 외부에서 비밀키 가져올때 사용
 // const getEnv = async() => {

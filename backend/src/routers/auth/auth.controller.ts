@@ -2,7 +2,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { Request } from 'express';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from '../routers/users/dto/create-user.dto';
+import { JoinDto } from './dto/join.dto';
 import { LoginDto } from './dto/login.dto';
 // import { AccessTokenGuard } from './guards/accessToken.guard';
 // import { RefreshTokenGuard } from './guards/refreshToken.guard';
@@ -16,8 +16,9 @@ export class AuthController {
 
 	@ApiOperation({ summary: '회원가입' })
 	@Post('signup')
-	signup(@Body() createUserDto: CreateUserDto) {
-		return this.authService.signup(createUserDto);
+	signup(@Body() JoinDto: JoinDto) {
+		console.log('AuthController');
+		return this.authService.signup(JoinDto);
 	}
 
 	@ApiOperation({ summary: '로그인' })
