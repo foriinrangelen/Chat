@@ -50,6 +50,15 @@ export const MOCK_SERVERS: Server[] = [
   { id: 1, name: "프론트엔드 스터디", icon: "프" },
   { id: 2, name: "백엔드팀", icon: "백" },
   { id: 3, name: "디자인팀", icon: "디" },
+  { id: 4, name: "데이터베이스팀", icon: "데" },
+  { id: 5, name: "인프라팀", icon: "인" },
+  { id: 6, name: "모바일팀", icon: "모" },
+  { id: 7, name: "데이터베이스팀", icon: "데" },
+  { id: 8, name: "인프라팀", icon: "인" },
+  { id: 9, name: "모바일팀", icon: "모" },
+  { id: 10, name: "데이터베이스팀", icon: "데" },
+  { id: 11, name: "인프라팀", icon: "인" },
+  { id: 12, name: "모바일팀", icon: "모" },
 ];
 
 export const MOCK_CHANNELS: Channel[] = [

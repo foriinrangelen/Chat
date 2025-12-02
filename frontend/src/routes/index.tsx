@@ -10,6 +10,7 @@ import {
   SimpleGrid,
   Stack,
   Paper,
+  ScrollArea,
 } from "@mantine/core";
 import { HiHashtag, HiPlus, HiArrowRightOnRectangle } from "react-icons/hi2";
 import { MOCK_SERVERS } from "@/store/discord";
@@ -58,54 +59,56 @@ function HomePage() {
       </Group>
 
       {/* 채널 리스트 */}
-      {MOCK_SERVERS.length > 0 ? (
-        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
-          {MOCK_SERVERS.map((channel, index) => (
-            <Card
-              key={channel.id}
-              shadow="sm"
-              padding="lg"
-              radius="md"
-              withBorder
-              style={{ cursor: "pointer" }}
-              onClick={() => handleChannelClick(channel.id)}
-            >
-              <Group mb="md">
-                <Avatar size="lg" radius="md" color={getChannelColor(index)}>
-                  {channel.icon}
-                </Avatar>
-                <div style={{ flex: 1 }}>
-                  <Text fw={600} size="lg">
-                    {channel.name}
-                  </Text>
-                  <Group gap="xs">
-                    <Badge size="sm" variant="light" color="green">
-                      활성
-                    </Badge>
-                    <Text size="xs" c="dimmed">
-                      멤버 12명
+      <ScrollArea h="calc(100vh - 300px)">
+        {MOCK_SERVERS.length > 0 ? (
+          <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md" pr="md">
+            {MOCK_SERVERS.map((channel, index) => (
+              <Card
+                key={channel.id}
+                shadow="sm"
+                padding="lg"
+                radius="md"
+                withBorder
+                style={{ cursor: "pointer" }}
+                onClick={() => handleChannelClick(channel.id)}
+              >
+                <Group mb="md">
+                  <Avatar size="lg" radius="md" color={getChannelColor(index)}>
+                    {channel.icon}
+                  </Avatar>
+                  <div style={{ flex: 1 }}>
+                    <Text fw={600} size="lg">
+                      {channel.name}
                     </Text>
-                  </Group>
-                </div>
-              </Group>
-              <Text size="sm" c="dimmed" lineClamp={2}>
-                팀원들과 함께 소통하는 채널입니다.
+                    <Group gap="xs">
+                      <Badge size="sm" variant="light" color="green">
+                        활성
+                      </Badge>
+                      <Text size="xs" c="dimmed">
+                        멤버 12명
+                      </Text>
+                    </Group>
+                  </div>
+                </Group>
+                <Text size="sm" c="dimmed" lineClamp={2}>
+                  팀원들과 함께 소통하는 채널입니다.
+                </Text>
+              </Card>
+            ))}
+          </SimpleGrid>
+        ) : (
+          <Paper p="xl" withBorder radius="md">
+            <Stack align="center" gap="md">
+              <HiHashtag size={48} style={{ color: "#adb5bd" }} />
+              <Text c="dimmed" ta="center">
+                아직 참여 중인 채널이 없습니다.
+                <br />
+                새로운 채널을 생성하거나 참가해보세요!
               </Text>
-            </Card>
-          ))}
-        </SimpleGrid>
-      ) : (
-        <Paper p="xl" withBorder radius="md">
-          <Stack align="center" gap="md">
-            <HiHashtag size={48} style={{ color: "#adb5bd" }} />
-            <Text c="dimmed" ta="center">
-              아직 참여 중인 채널이 없습니다.
-              <br />
-              새로운 채널을 생성하거나 참가해보세요!
-            </Text>
-          </Stack>
-        </Paper>
-      )}
+            </Stack>
+          </Paper>
+        )}
+      </ScrollArea>
     </>
   );
 }

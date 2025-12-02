@@ -26,3 +26,11 @@ export interface ApiError {
   error?: string;
 }
 
+/** 사용자 정보 */
+export interface User {
+  id: number;
+  email: string;
+  nickname: string;
+  createdAt: string;
+}
+

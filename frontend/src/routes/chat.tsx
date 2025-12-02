@@ -7,18 +7,24 @@ import {
   Group,
   Indicator,
   Paper,
+  Popover,
   ScrollArea,
   Stack,
   Text,
   TextInput,
   Title,
+  Button,
+  Badge,
+  UnstyledButton,
 } from "@mantine/core";
 import {
   HiPaperAirplane,
   HiHashtag,
   HiChatBubbleLeftRight,
+  HiChatBubbleOvalLeft,
+  HiUserPlus,
 } from "react-icons/hi2";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MOCK_SERVERS, MOCK_DMS } from "@/store/discord";
 
 type ChatSearch = {
@@ -71,10 +77,86 @@ const MOCK_MESSAGES = [
   },
 ];
 
+// 프로필 팝오버 컴포넌트
+function ProfilePopover({
+  user,
+  isOnline,
+  avatarColor,
+  children,
+}: {
+  user: string;
+  isOnline: boolean;
+  avatarColor: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Popover
+      width={280}
+      position="right-start"
+      withArrow
+      shadow="md"
+      zIndex={1100}
+    >
+      <Popover.Target>{children}</Popover.Target>
+      <Popover.Dropdown>
+        <Stack align="center" gap="sm">
+          <Indicator
+            inline
+            size={14}
+            offset={6}
+            position="bottom-end"
+            color={isOnline ? "green" : "gray"}
+            withBorder
+          >
+            <Avatar size={60} radius="xl" color={avatarColor}>
+              {user[0]}
+            </Avatar>
+          </Indicator>
+
+          <div style={{ textAlign: "center" }}>
+            <Text fw={700} size="lg">
+              {user}
+            </Text>
+            <Badge
+              color={isOnline ? "green" : "gray"}
+              variant="light"
+              size="sm"
+              mt={4}
+            >
+              {isOnline ? "온라인" : "오프라인"}
+            </Badge>
+          </div>
+
+          <Divider w="100%" my={4} />
+
+          <Group w="100%" grow gap="xs">
+            <Button
+              variant="light"
+              size="xs"
+              leftSection={<HiChatBubbleOvalLeft size={14} />}
+            >
+              메시지
+            </Button>
+            <Button
+              variant="light"
+              color="green"
+              size="xs"
+              leftSection={<HiUserPlus size={14} />}
+            >
+              친구 추가
+            </Button>
+          </Group>
+        </Stack>
+      </Popover.Dropdown>
+    </Popover>
+  );
+}
+
 function ChatPage() {
   const { type, id } = Route.useSearch();
   const [messages, setMessages] = useState(MOCK_MESSAGES);
   const [inputValue, setInputValue] = useState("");
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   // 채널 또는 DM 정보 가져오기
   const getChatInfo = () => {
@@ -98,6 +180,16 @@ function ChatPage() {
   };
 
   const chatInfo = getChatInfo();
+
+  // 메시지가 추가되면 자동으로 스크롤
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTo({
+        top: scrollAreaRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages]);
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
@@ -128,6 +220,8 @@ function ChatPage() {
     return AVATAR_COLORS[index % AVATAR_COLORS.length];
   };
 
+  const isMyMessage = (user: string) => user === "나";
+
   return (
     <>
       <Group gap="sm" mb="xl">
@@ -136,39 +230,112 @@ function ChatPage() {
       </Group>
 
       <Paper withBorder radius="md" style={{ overflow: "hidden" }}>
-        <Stack h="calc(100vh - 220px)" gap={0}>
+        <Stack h="calc(100vh - 230px)" gap={0}>
           {/* 메시지 영역 */}
-          <ScrollArea flex={1} p="md">
-            <Stack gap="lg">
-              {messages.map((message, index) => (
-                <Group key={message.id} align="flex-start" wrap="nowrap">
-                  <Indicator
-                    inline
-                    size={12}
-                    offset={4}
-                    position="bottom-end"
-                    color={message.isOnline ? "green" : "gray"}
-                    withBorder
+          <ScrollArea
+            flex={1}
+            p="md"
+            viewportRef={scrollAreaRef}
+            type="scroll"
+            scrollbarSize={8}
+            offsetScrollbars
+          >
+            <Stack gap="lg" style={{ overflowX: "hidden" }}>
+              {messages.map((message, index) => {
+                const isMine = isMyMessage(message.user);
+                const avatarColor = getAvatarColor(index);
+
+                return (
+                  <Group
+                    key={message.id}
+                    align="flex-start"
+                    wrap="nowrap"
+                    justify={isMine ? "flex-end" : "flex-start"}
+                    style={{ width: "100%" }}
                   >
-                    <Avatar size="md" radius="xl" color={getAvatarColor(index)}>
-                      {message.user[0]}
-                    </Avatar>
-                  </Indicator>
-                  <Box style={{ flex: 1 }}>
-                    <Group gap="xs" mb={4}>
-                      <Text fw={600} size="sm">
-                        {message.user}
-                      </Text>
-                      <Text size="xs" c="dimmed">
-                        {message.timestamp}
-                      </Text>
-                    </Group>
-                    <Text size="sm" style={{ lineHeight: 1.5 }}>
-                      {message.content}
-                    </Text>
-                  </Box>
-                </Group>
-              ))}
+                    {/* 다른 사람 메시지: 아바타 왼쪽 */}
+                    {!isMine && (
+                      <ProfilePopover
+                        user={message.user}
+                        isOnline={message.isOnline}
+                        avatarColor={avatarColor}
+                      >
+                        <UnstyledButton>
+                          <Avatar size="md" radius="xl" color={avatarColor}>
+                            {message.user[0]}
+                          </Avatar>
+                        </UnstyledButton>
+                      </ProfilePopover>
+                    )}
+
+                    <Box
+                      style={{
+                        maxWidth: "70%",
+                        minWidth: 0,
+                        textAlign: isMine ? "right" : "left",
+                      }}
+                    >
+                      <Group
+                        gap="xs"
+                        mb={4}
+                        justify={isMine ? "flex-end" : "flex-start"}
+                      >
+                        {isMine ? (
+                          <>
+                            <Text size="xs" c="dimmed">
+                              {message.timestamp}
+                            </Text>
+                            <Text fw={600} size="sm" c="blue">
+                              {message.user}
+                            </Text>
+                          </>
+                        ) : (
+                          <>
+                            <ProfilePopover
+                              user={message.user}
+                              isOnline={message.isOnline}
+                              avatarColor={avatarColor}
+                            >
+                              <UnstyledButton>
+                                <Text
+                                  fw={600}
+                                  size="sm"
+                                  style={{ cursor: "pointer" }}
+                                >
+                                  {message.user}
+                                </Text>
+                              </UnstyledButton>
+                            </ProfilePopover>
+                            <Text size="xs" c="dimmed">
+                              {message.timestamp}
+                            </Text>
+                          </>
+                        )}
+                      </Group>
+                      <Paper
+                        p="sm"
+                        radius="md"
+                        bg={isMine ? "blue.1" : "gray.1"}
+                        style={{
+                          display: "inline-block",
+                          wordBreak: "break-word",
+                        }}
+                      >
+                        <Text size="sm" style={{ lineHeight: 1.5 }}>
+                          {message.content}
+                        </Text>
+                      </Paper>
+                    </Box>
+
+                    {/* 내 메시지: 아바타 오른쪽 */}
+                    {isMine && (
+                      <Avatar size="md" radius="xl" color="blue">
+                        나
+                      </Avatar>
+                    )}
+                  </Group>
+                );
+              })}
             </Stack>
           </ScrollArea>
 

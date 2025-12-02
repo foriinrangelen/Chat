@@ -1,13 +1,13 @@
-// import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { Body, Controller, Post } from '@nestjs/common';
-import { Request } from 'express';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JoinDto } from './dto/join.dto';
 import { LoginDto } from './dto/login.dto';
-// import { AccessTokenGuard } from './guards/accessToken.guard';
-// import { RefreshTokenGuard } from './guards/refreshToken.guard';
-// import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AccessTokenGuard } from './guards/accessToken.guard';
+import { RefreshTokenGuard } from './guards/refreshToken.guard';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { prisma } from '../../lib/prisma';
+import { User } from '../../decorators/user.decorator';
+import type { JwtPayload, JwtPayloadWithRefreshToken } from '../../common/types';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -16,9 +16,8 @@ export class AuthController {
 
 	@ApiOperation({ summary: '회원가입' })
 	@Post('signup')
-	signup(@Body() JoinDto: JoinDto) {
-		console.log('AuthController');
-		return this.authService.signup(JoinDto);
+	signup(@Body() joinDto: JoinDto) {
+		return this.authService.signup(joinDto);
 	}
 
 	@ApiOperation({ summary: '로그인' })
@@ -27,22 +26,36 @@ export class AuthController {
 		return this.authService.login(loginDto);
 	}
 
-	// @ApiBearerAuth()
-	// @ApiOperation({ summary: '로그아웃' })
-	// @UseGuards(AccessTokenGuard)
-	// @Get('logout')
-	// logout(@Req() req: Request) {
-	// 	const userId = req.user['sub'];
-	// 	return this.authService.logout(userId);
-	// }
+	@ApiBearerAuth()
+	@ApiOperation({ summary: '로그아웃' })
+	@UseGuards(AccessTokenGuard)
+	@Post('logout')
+	logout(@User() user: JwtPayload) {
+		return this.authService.logout(user.sub);
+	}
 
-	// @ApiBearerAuth()
-	// @ApiOperation({ summary: '토큰 재발급' })
-	// @UseGuards(RefreshTokenGuard)
-	// @Get('refresh')
-	// refreshTokens(@Req() req: Request) {
-	// 	const userId = req.user['sub'];
-	// 	const refreshToken = req.user['refreshToken'];
-	// 	return this.authService.refreshTokens(userId, refreshToken);
-	// }
+	@ApiBearerAuth()
+	@ApiOperation({ summary: '토큰 재발급' })
+	@UseGuards(RefreshTokenGuard)
+	@Post('refresh')
+	refreshTokens(@User() user: JwtPayloadWithRefreshToken) {
+		return this.authService.refreshTokens(user.sub, user.refreshToken);
+	}
+
+	@ApiBearerAuth()
+	@ApiOperation({ summary: '현재 사용자 정보 조회' })
+	@UseGuards(AccessTokenGuard)
+	@Get('me')
+	async getMe(@User() user: JwtPayload) {
+		const userData = await prisma.user.findUnique({
+			where: { id: user.sub },
+			select: {
+				id: true,
+				email: true,
+				nickname: true,
+				createdAt: true,
+			},
+		});
+		return userData;
+	}
 }

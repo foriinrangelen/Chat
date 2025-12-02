@@ -6,182 +6,169 @@
 
 generator client {
   provider = "prisma-client"
-    output   = "../src/generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-// 스칼라 필드, 실제 데이터 베이스 테이블에 컬럼으로 생성되는 필드들
-
-
-
+// =============================================================================
+// User (사용자)
+// =============================================================================
+  // id        Int       @id @default(autoincrement())
+  // email     String    @unique
+  // nickname  String
+  // password  String
+  // hashedRefreshToken String? @map("hashed_refresh_token") // Refresh Token (Hashed)
+  // // @map: TS에서는 CamelCase(createdAt)를 사용하고
+  // // 데이터베이스 컬럼은 Snake_case(created_at)를 사용하는 것이 관례이기 때문에 이를 매핑해주는 역할
+  // createdAt DateTime  @default(now()) @map("created_at")
+  // // @updatedAt: 이 row의 데이터 변경시 자동으로 업데이트
+  // updatedAt DateTime  @updatedAt @map("updated_at")
+  // deletedAt DateTime? @map("deleted_at") // Soft Delete
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  nickname  String
-  password  String
-  hashedRefreshToken String? @map("hashed_refresh_token") // Refresh Token (Hashed)
-  // @map: TS에서는 CamelCase(createdAt)를 사용하고
-  // 데이터베이스 컬럼은 Snake_case(created_at)를 사용하는 것이 관례이기 때문에 이를 매핑해주는 역할
-  createdAt DateTime  @default(now()) @map("created_at")
-  // @updatedAt: 이 row의 데이터 변경시 자동으로 업데이트
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at") // Soft Delete
+  id                 Int       @id @default(autoincrement())
+  email              String    @unique
+  nickname           String
+  password           String
+  hashedRefreshToken String?   @map("hashed_refresh_token")
+  isOnline           Boolean   @default(false) @map("is_online")
+  lastSeenAt         DateTime? @map("last_seen_at")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+  deletedAt          DateTime? @map("deleted_at")
 
-  Workspaces       WorkspaceMember[]
-  ChannelMembers   ChannelMember[]
-  ChannelChats     ChannelChat[]
-  DMInit           DM[]              @relation("DMInit")
-  DMReceived       DM[]              @relation("DMReceived")
-  DMChats          DMChat[]
-  ChannelMentions  ChannelMention[]
-  DMMentions       DMMention[]
+  // 관계
+  OwnedChannels     Channel[]        @relation("ChannelOwner")
+  ChannelMembers    ChannelMember[]
+  ChannelMessages   ChannelMessage[]
+  SentFriendships   Friendship[]     @relation("FriendshipSender")
+  ReceivedFriendships Friendship[]   @relation("FriendshipReceiver")
+  SentDMs           DirectMessage[]  @relation("DMSender")
+  ReceivedDMs       DirectMessage[]  @relation("DMReceiver")
+  DMMessages        DMMessage[]
 
   @@map("users")
 }
 
-model Workspace {
+// =============================================================================
+// Friendship (친구 관계)
+// =============================================================================
+enum FriendshipStatus {
+  PENDING   // 대기 중
+  ACCEPTED  // 수락됨
+  BLOCKED   // 차단됨
+}
+
+model Friendship {
+  id         Int              @id @default(autoincrement())
+  senderId   Int              @map("sender_id")
+  receiverId Int              @map("receiver_id")
+  status     FriendshipStatus @default(PENDING)
+  message    String?          // 친구 요청 메시지
+  createdAt  DateTime         @default(now()) @map("created_at")
+  updatedAt  DateTime         @updatedAt @map("updated_at")
+
+  Sender   User @relation("FriendshipSender", fields: [senderId], references: [id], onDelete: Cascade)
+  Receiver User @relation("FriendshipReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
+  @@index([receiverId])
+  @@map("friendships")
+}
+
+// =============================================================================
+// Channel (채널/서버)
+// =============================================================================
+model Channel {
   id        Int       @id @default(autoincrement())
-  name      String    @unique
-  url       String    @unique // workspace url (e.g., slack.com/workspace-url)
+  name      String
+  icon      String?   // 아이콘 (첫 글자 또는 이미지 URL)
   ownerId   Int       @map("owner_id")
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
-  Channels  Channel[]
-  Members   WorkspaceMember[]
-  DMs       DM[]
+  Owner    User             @relation("ChannelOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  Members  ChannelMember[]
+  Messages ChannelMessage[]
 
-  @@map("workspaces")
-}
-
-model Channel {
-  id          Int       @id @default(autoincrement())
-  name        String
-  private     Boolean   @default(false)
-  workspaceId Int       @map("workspace_id")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-
-  Workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  Members     ChannelMember[]
-  Chats       ChannelChat[]
-  Mentions    ChannelMention[]
-
-  @@index([workspaceId])
   @@map("channels")
 }
 
-model DM {
-  id          Int       @id @default(autoincrement())
-  workspaceId Int       @map("workspace_id")
-  senderId    Int       @map("sender_id")
-  receiverId  Int       @map("receiver_id")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-
-  Workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  Sender      User      @relation("DMInit", fields: [senderId], references: [id], onDelete: Cascade)
-  Receiver    User      @relation("DMReceived", fields: [receiverId], references: [id], onDelete: Cascade)
-  Chats       DMChat[]
-
-  @@unique([senderId, receiverId, workspaceId]) // 중복 DM 방지
-  @@index([workspaceId])
-  @@map("dms")
-}
-
-model ChannelChat {
-  id        Int       @id @default(autoincrement())
-  content   String
-  userId    Int       @map("user_id")
-  channelId Int       @map("channel_id")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-
-  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Channel   Channel   @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  Mentions  ChannelMention[]
-
-  @@index([channelId])
-  @@index([userId])
-  @@map("channel_chats")
-}
-
-model DMChat {
-  id        Int       @id @default(autoincrement())
-  content   String
-  userId    Int       @map("user_id")
-  dmId      Int       @map("dm_id")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-
-  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  DM        DM        @relation(fields: [dmId], references: [id], onDelete: Cascade)
-  Mentions  DMMention[]
-
-  @@index([dmId])
-  @@index([userId])
-  @@map("dm_chats")
-}
-
-model WorkspaceMember {
-  workspaceId Int       @map("workspace_id")
-  userId      Int       @map("user_id")
-  loggedInAt  DateTime? @map("logged_in_at")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-
-  Workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  User        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([workspaceId, userId]) // 복합키 설정
-  @@index([userId])
-  @@map("workspace_members")
-}
-
+// =============================================================================
+// ChannelMember (채널 멤버)
+// =============================================================================
 model ChannelMember {
-  channelId Int       @map("channel_id")
-  userId    Int       @map("user_id")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
+  channelId Int      @map("channel_id")
+  userId    Int      @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
 
-  Channel   Channel   @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  User    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([channelId, userId])
   @@index([userId])
   @@map("channel_members")
 }
 
-model ChannelMention {
-  chatId    Int      @map("chat_id")
+// =============================================================================
+// ChannelMessage (채널 메시지)
+// =============================================================================
+model ChannelMessage {
+  id        Int      @id @default(autoincrement())
+  content   String
+  channelId Int      @map("channel_id")
   userId    Int      @map("user_id")
   createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  ChannelChat ChannelChat @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  User        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Channel     Channel?    @relation(fields: [channelId], references: [id]) // 역정규화 (Optional)
-  channelId   Int?        @map("channel_id")
+  Channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  User    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@id([chatId, userId])
-  @@map("channel_mentions")
+  @@index([channelId])
+  @@index([userId])
+  @@map("channel_messages")
 }
 
-model DMMention {
-  chatId    Int      @map("chat_id")
-  userId    Int      @map("user_id")
-  createdAt DateTime @default(now()) @map("created_at")
+// =============================================================================
+// DirectMessage (DM 관계)
+// =============================================================================
+model DirectMessage {
+  id         Int      @id @default(autoincrement())
+  senderId   Int      @map("sender_id")
+  receiverId Int      @map("receiver_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
 
-  DMChat    DMChat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@id([chatId, userId])
-  @@map("dm_mentions")
+  Sender   User        @relation("DMSender", fields: [senderId], references: [id], onDelete: Cascade)
+  Receiver User        @relation("DMReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  Messages DMMessage[]
+
+  @@unique([senderId, receiverId])
+  @@index([receiverId])
+  @@map("direct_messages")
 }
 
+// =============================================================================
+// DMMessage (DM 메시지)
+// =============================================================================
+model DMMessage {
+  id              Int      @id @default(autoincrement())
+  content         String
+  directMessageId Int      @map("direct_message_id")
+  userId          Int      @map("user_id")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  DirectMessage DirectMessage @relation(fields: [directMessageId], references: [id], onDelete: Cascade)
+  User          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([directMessageId])
+  @@index([userId])
+  @@map("dm_messages")
+}
 /**
  * =============================================================================
  * Prisma Schema Attributes Reference (Cheatsheet)
