@@ -14,13 +14,15 @@
     "@mantine/form": "^8.3.9",
     "@mantine/hooks": "^8.3.9",
     "@mantinex/dev-icons": "^2.0.0",
+    "@tabler/icons-react": "^3.35.0",
     "@tanstack/react-query": "^5.90.11",
     "@tanstack/react-router": "^1.139.7",
     "@tanstack/react-router-devtools": "^1.139.7",
     "axios": "^1.13.2",
     "jotai": "^2.15.1",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

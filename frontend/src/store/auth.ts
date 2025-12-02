@@ -1,6 +1,8 @@
 // frontend/src/store/auth.ts
 import { atomWithStorage } from "jotai/utils";
 
+// 'isAuthenticated': 브라우저 LocalStorage에 저장될 키 이름
+// false: 초기값 (로그인 안 된 상태)
 /**
  * 인증 상태 Atom
  */

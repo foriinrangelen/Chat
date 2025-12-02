@@ -9,10 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as FriendsRouteImport } from './routes/friends'
+import { Route as ChatRouteImport } from './routes/chat'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticationFormRouteImport } from './routes/AuthenticationForm'
 import { Route as IndexRouteImport } from './routes/index'
 
+const FriendsRoute = FriendsRouteImport.update({
+  id: '/friends',
+  path: '/friends',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -33,34 +45,56 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/AuthenticationForm': typeof AuthenticationFormRoute
   '/about': typeof AboutRoute
+  '/chat': typeof ChatRoute
+  '/friends': typeof FriendsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/AuthenticationForm': typeof AuthenticationFormRoute
   '/about': typeof AboutRoute
+  '/chat': typeof ChatRoute
+  '/friends': typeof FriendsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/AuthenticationForm': typeof AuthenticationFormRoute
   '/about': typeof AboutRoute
+  '/chat': typeof ChatRoute
+  '/friends': typeof FriendsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/AuthenticationForm' | '/about'
+  fullPaths: '/' | '/AuthenticationForm' | '/about' | '/chat' | '/friends'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/AuthenticationForm' | '/about'
-  id: '__root__' | '/' | '/AuthenticationForm' | '/about'
+  to: '/' | '/AuthenticationForm' | '/about' | '/chat' | '/friends'
+  id: '__root__' | '/' | '/AuthenticationForm' | '/about' | '/chat' | '/friends'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticationFormRoute: typeof AuthenticationFormRoute
   AboutRoute: typeof AboutRoute
+  ChatRoute: typeof ChatRoute
+  FriendsRoute: typeof FriendsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/friends': {
+      id: '/friends'
+      path: '/friends'
+      fullPath: '/friends'
+      preLoaderRoute: typeof FriendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -89,6 +123,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticationFormRoute: AuthenticationFormRoute,
   AboutRoute: AboutRoute,
+  ChatRoute: ChatRoute,
+  FriendsRoute: FriendsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

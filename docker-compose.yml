@@ -17,7 +17,9 @@ services:
     ports:
       # - "5432:5432"
       # - "7000:7000"
-      - "7000:5432"
+      # - "7000:5432"
+      - "5432:5432" # 호스트:컨테이너 (PostgreSQL 기본 포트)
+      # - "7000:5432"  # 7000번 포트 사용 시 Windows에서 충돌 가능
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
