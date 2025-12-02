@@ -13,7 +13,7 @@ import {
   Text,
   TextInput,
   Alert,
-  Container,
+  Center,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { upperFirst, useToggle } from "@mantine/hooks";
@@ -108,8 +108,7 @@ function AuthenticationForm(props: PaperProps) {
   };
 
   return (
-    // <Center h="70vh">
-    <Container>
+    <Center h="calc(100vh - 232px)">
       <Paper radius="md" p="lg" withBorder {...props}>
         <Text size="lg" fw={500}>
           <Box ta="center">{type === "login" ? "로그인" : "회원가입"}</Box>
@@ -201,7 +200,6 @@ function AuthenticationForm(props: PaperProps) {
           </Group>
         </form>
       </Paper>
-    </Container>
-    // </Center>
+    </Center>
   );
 }

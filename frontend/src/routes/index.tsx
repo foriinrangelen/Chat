@@ -14,6 +14,7 @@ import {
   ThemeIcon,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
 import { useAtom } from "jotai";
 import { HiHashtag, HiPlus, HiArrowRightOnRectangle } from "react-icons/hi2";
 import {
@@ -73,6 +74,70 @@ const LANGUAGE_ICON_MAP: Record<
 
 // 채널 색상 배열
 const CHANNEL_COLORS = ["blue", "grape", "teal", "orange", "pink", "cyan"];
+
+// 채널 카드 컴포넌트 (호버 효과 포함)
+function ChannelCard({
+  channel,
+  index,
+  workspaceCount,
+  onChannelClick,
+  renderIcon,
+}: {
+  channel: Channel;
+  index: number;
+  workspaceCount: number;
+  onChannelClick: (id: number) => void;
+  renderIcon: (channel: Channel, index: number) => React.ReactNode;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <Card
+      shadow="sm"
+      padding="lg"
+      radius="md"
+      withBorder
+      style={{
+        cursor: "pointer",
+        transition: "background-color 0.15s ease",
+        backgroundColor: isHovered ? "#f8f9fa" : "white",
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => onChannelClick(channel.id)}
+    >
+      <Group mb="md">
+        {renderIcon(channel, index)}
+        <div style={{ flex: 1 }}>
+          <Text fw={600} size="lg">
+            {channel.name}
+          </Text>
+          <Group gap="xs">
+            <Badge size="sm" variant="light" color="green">
+              활성
+            </Badge>
+            <Text size="xs" c="dimmed">
+              멤버 12명
+            </Text>
+          </Group>
+        </div>
+      </Group>
+
+      <Text size="sm" c="dimmed" lineClamp={2} mb="sm">
+        {channel.description || "팀원들과 함께 소통하는 채널입니다."}
+      </Text>
+
+      <Group gap={4} mt="xs">
+        <ThemeIcon size="xs" variant="transparent" color="orange">
+          <HiHashtag size={12} />
+        </ThemeIcon>
+        <Text size="xs" c="dimmed">
+          워크스페이스 {workspaceCount}개
+        </Text>
+      </Group>
+    </Card>
+  );
+}
 
 function HomePage() {
   const navigate = useNavigate();
@@ -207,48 +272,14 @@ function HomePage() {
               );
 
               return (
-                <Card
+                <ChannelCard
                   key={channel.id}
-                  shadow="sm"
-                  padding="lg"
-                  radius="md"
-                  withBorder
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleChannelClick(channel.id)}
-                >
-                  <Group mb="md">
-                    {renderChannelIcon(channel, index)}
-                    <div style={{ flex: 1 }}>
-                      <Text fw={600} size="lg">
-                        {channel.name}
-                      </Text>
-                      <Group gap="xs">
-                        <Badge size="sm" variant="light" color="green">
-                          활성
-                        </Badge>
-                        <Text size="xs" c="dimmed">
-                          멤버 12명
-                        </Text>
-                      </Group>
-                    </div>
-                  </Group>
-
-                  {/* 채널 설명 */}
-                  <Text size="sm" c="dimmed" lineClamp={2} mb="sm">
-                    {channel.description ||
-                      "팀원들과 함께 소통하는 채널입니다."}
-                  </Text>
-
-                  {/* 워크스페이스 정보 */}
-                  <Group gap={4} mt="xs">
-                    <ThemeIcon size="xs" variant="transparent" color="orange">
-                      <HiHashtag size={12} />
-                    </ThemeIcon>
-                    <Text size="xs" c="dimmed">
-                      워크스페이스 {channelWorkspaces.length}개
-                    </Text>
-                  </Group>
-                </Card>
+                  channel={channel}
+                  index={index}
+                  workspaceCount={channelWorkspaces.length}
+                  onChannelClick={handleChannelClick}
+                  renderIcon={renderChannelIcon}
+                />
               );
             })}
           </SimpleGrid>

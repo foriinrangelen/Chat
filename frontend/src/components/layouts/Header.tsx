@@ -1,31 +1,14 @@
-import {
-  Burger,
-  Group,
-  Text,
-  Avatar,
-  Menu,
-  UnstyledButton,
-} from "@mantine/core";
+import { Burger, Group, Text } from "@mantine/core";
 import { Link } from "@tanstack/react-router";
-import {
-  HiArrowRightOnRectangle,
-  HiCog6Tooth,
-  HiUser,
-} from "react-icons/hi2";
+import { NotificationDropdown } from "@/components/common/NotificationDropdown";
 
 interface HeaderProps {
   isAuthenticated: boolean;
   opened: boolean;
   onToggle: () => void;
-  onLogout: () => void;
 }
 
-export function Header({
-  isAuthenticated,
-  opened,
-  onToggle,
-  onLogout,
-}: HeaderProps) {
+export function Header({ isAuthenticated, opened, onToggle }: HeaderProps) {
   return (
     <Group h="100%" px="md" justify="space-between">
       <Group>
@@ -45,42 +28,11 @@ export function Header({
         </Link>
       </Group>
 
-      {/* 로그인 상태일 때만 프로필 메뉴 표시 */}
+      {/* 로그인 상태일 때만 알림 표시 */}
       {isAuthenticated && (
-        <Menu shadow="md" width={200} position="bottom-end" zIndex={1100}>
-          <Menu.Target>
-            <UnstyledButton>
-              <Group gap="xs">
-                <Avatar size="sm" radius="xl" color="blue">
-                  나
-                </Avatar>
-                <Text size="sm" fw={500} visibleFrom="sm">
-                  사용자
-                </Text>
-              </Group>
-            </UnstyledButton>
-          </Menu.Target>
-
-          <Menu.Dropdown>
-            <Menu.Label>내 계정</Menu.Label>
-            <Menu.Item leftSection={<HiUser size={16} />}>
-              프로필 보기
-            </Menu.Item>
-            <Menu.Item leftSection={<HiCog6Tooth size={16} />}>
-              설정
-            </Menu.Item>
-
-            <Menu.Divider />
-
-            <Menu.Item
-              color="red"
-              leftSection={<HiArrowRightOnRectangle size={16} />}
-              onClick={onLogout}
-            >
-              로그아웃
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
+        <Group gap="sm">
+          <NotificationDropdown />
+        </Group>
       )}
     </Group>
   );

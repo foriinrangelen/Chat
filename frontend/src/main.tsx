@@ -2,8 +2,8 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MantineProvider } from "@mantine/core";
-import { theme } from "@styles/theme";
+import { Provider as JotaiProvider } from "jotai";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 // Import styles
 import "@mantine/core/styles.css";
@@ -37,11 +37,13 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <MantineProvider theme={theme}>
-          <RouterProvider router={router} />
-        </MantineProvider>
-      </QueryClientProvider>
+      <JotaiProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider>
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </QueryClientProvider>
+      </JotaiProvider>
     </StrictMode>
   );
 }
