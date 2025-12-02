@@ -1,13 +1,4 @@
-import {
-	WebSocketGateway,
-	WebSocketServer,
-	SubscribeMessage,
-	OnGatewayConnection,
-	OnGatewayDisconnect,
-	OnGatewayInit,
-	MessageBody,
-	ConnectedSocket,
-} from '@nestjs/websockets';
+import { WebSocketGateway, WebSocketServer, SubscribeMessage, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, MessageBody, ConnectedSocket } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import { prisma } from '../../lib/prisma';
@@ -112,10 +103,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
 	// 채널 입장
 	@SubscribeMessage('joinChannel')
-	async handleJoinChannel(
-		@ConnectedSocket() client: AuthenticatedSocket,
-		@MessageBody() data: { channelId: number },
-	) {
+	async handleJoinChannel(@ConnectedSocket() client: AuthenticatedSocket, @MessageBody() data: { channelId: number }) {
 		const roomName = `channel:${data.channelId}`;
 		client.join(roomName);
 		this.logger.log(`User ${client.nickname} joined channel ${data.channelId}`);
@@ -124,10 +112,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
 	// 채널 퇴장
 	@SubscribeMessage('leaveChannel')
-	async handleLeaveChannel(
-		@ConnectedSocket() client: AuthenticatedSocket,
-		@MessageBody() data: { channelId: number },
-	) {
+	async handleLeaveChannel(@ConnectedSocket() client: AuthenticatedSocket, @MessageBody() data: { channelId: number }) {
 		const roomName = `channel:${data.channelId}`;
 		client.leave(roomName);
 		this.logger.log(`User ${client.nickname} left channel ${data.channelId}`);
@@ -136,10 +121,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
 	// 채널 메시지 전송
 	@SubscribeMessage('sendChannelMessage')
-	async handleChannelMessage(
-		@ConnectedSocket() client: AuthenticatedSocket,
-		@MessageBody() data: { channelId: number; content: string },
-	) {
+	async handleChannelMessage(@ConnectedSocket() client: AuthenticatedSocket, @MessageBody() data: { channelId: number; content: string }) {
 		if (!client.userId) return;
 
 		try {
@@ -179,10 +161,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
 	// DM 방 입장
 	@SubscribeMessage('joinDM')
-	async handleJoinDM(
-		@ConnectedSocket() client: AuthenticatedSocket,
-		@MessageBody() data: { dmId: number },
-	) {
+	async handleJoinDM(@ConnectedSocket() client: AuthenticatedSocket, @MessageBody() data: { dmId: number }) {
 		const roomName = `dm:${data.dmId}`;
 		client.join(roomName);
 		this.logger.log(`User ${client.nickname} joined DM ${data.dmId}`);
@@ -191,10 +170,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
 	// DM 퇴장
 	@SubscribeMessage('leaveDM')
-	async handleLeaveDM(
-		@ConnectedSocket() client: AuthenticatedSocket,
-		@MessageBody() data: { dmId: number },
-	) {
+	async handleLeaveDM(@ConnectedSocket() client: AuthenticatedSocket, @MessageBody() data: { dmId: number }) {
 		const roomName = `dm:${data.dmId}`;
 		client.leave(roomName);
 		this.logger.log(`User ${client.nickname} left DM ${data.dmId}`);
@@ -203,10 +179,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
 	// DM 메시지 전송
 	@SubscribeMessage('sendDMMessage')
-	async handleDMMessage(
-		@ConnectedSocket() client: AuthenticatedSocket,
-		@MessageBody() data: { dmId: number; content: string },
-	) {
+	async handleDMMessage(@ConnectedSocket() client: AuthenticatedSocket, @MessageBody() data: { dmId: number; content: string }) {
 		if (!client.userId) return;
 
 		try {
@@ -252,10 +225,7 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 
 	// 타이핑 상태 알림
 	@SubscribeMessage('typing')
-	handleTyping(
-		@ConnectedSocket() client: AuthenticatedSocket,
-		@MessageBody() data: { roomType: 'channel' | 'dm'; roomId: number; isTyping: boolean },
-	) {
+	handleTyping(@ConnectedSocket() client: AuthenticatedSocket, @MessageBody() data: { roomType: 'channel' | 'dm'; roomId: number; isTyping: boolean }) {
 		const roomName = `${data.roomType}:${data.roomId}`;
 		client.to(roomName).emit('userTyping', {
 			userId: client.userId,
@@ -273,4 +243,3 @@ export class ChatGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
 		};
 	}
 }
-

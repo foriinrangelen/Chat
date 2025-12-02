@@ -25,18 +25,29 @@ import {
   HiUserPlus,
 } from "react-icons/hi2";
 import { useState, useEffect, useRef } from "react";
-import { MOCK_SERVERS, MOCK_DMS } from "@/store/discord";
+import { useAtomValue } from "jotai";
+import {
+  MOCK_DMS,
+  channelsAtom,
+  workspacesAtom,
+  getWorkspaceById,
+  getChannelById,
+} from "@/store/discord";
 
 type ChatSearch = {
-  type?: "channel" | "dm";
-  id?: number;
+  type?: "workspace" | "dm";
+  channelId?: number;
+  workspaceId?: number;
+  id?: number; // DM용
 };
 
 export const Route = createFileRoute("/chat")({
   component: ChatPage,
   validateSearch: (search: Record<string, unknown>): ChatSearch => {
     return {
-      type: search.type as "channel" | "dm" | undefined,
+      type: search.type as "workspace" | "dm" | undefined,
+      channelId: search.channelId ? Number(search.channelId) : undefined,
+      workspaceId: search.workspaceId ? Number(search.workspaceId) : undefined,
       id: search.id ? Number(search.id) : undefined,
     };
   },
@@ -153,28 +164,37 @@ function ProfilePopover({
 }
 
 function ChatPage() {
-  const { type, id } = Route.useSearch();
+  const { type, channelId, workspaceId, id } = Route.useSearch();
   const [messages, setMessages] = useState(MOCK_MESSAGES);
   const [inputValue, setInputValue] = useState("");
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const channels = useAtomValue(channelsAtom);
+  const workspaces = useAtomValue(workspacesAtom);
 
-  // 채널 또는 DM 정보 가져오기
+  // 채팅방 정보 가져오기
   const getChatInfo = () => {
-    if (type === "channel" && id) {
-      const channel = MOCK_SERVERS.find((s) => s.id === id);
-      return {
-        name: channel?.name || "알 수 없는 채널",
-        icon: <HiHashtag size={28} style={{ color: "#f97316" }} />,
-      };
+    if (type === "workspace" && channelId && workspaceId) {
+      const channel = getChannelById(channels, channelId);
+      const workspace = getWorkspaceById(workspaces, workspaceId);
+
+      if (workspace && channel) {
+        return {
+          name: channel.name,
+          subtitle: `# ${workspace.name}`,
+          icon: <HiHashtag size={28} style={{ color: "#f97316" }} />,
+        };
+      }
     } else if (type === "dm" && id) {
       const dm = MOCK_DMS.find((d) => d.id === id);
       return {
         name: dm?.userName || "알 수 없는 사용자",
+        subtitle: dm?.isOnline ? "온라인" : "오프라인",
         icon: <HiChatBubbleLeftRight size={28} style={{ color: "#10b981" }} />,
       };
     }
     return {
-      name: "일반 채팅",
+      name: "채팅방을 선택하세요",
+      subtitle: "",
       icon: <HiHashtag size={28} style={{ color: "#f97316" }} />,
     };
   };
@@ -224,13 +244,18 @@ function ChatPage() {
 
   return (
     <>
-      <Group gap="sm" mb="xl">
+      <Group gap="sm" mb="xl" align="center">
         {chatInfo.icon}
         <Title order={2}>{chatInfo.name}</Title>
+        {chatInfo.subtitle && (
+          <Text size="md" c="dimmed" fw={500}>
+            {chatInfo.subtitle}
+          </Text>
+        )}
       </Group>
 
       <Paper withBorder radius="md" style={{ overflow: "hidden" }}>
-        <Stack h="calc(100vh - 230px)" gap={0}>
+        <Stack h="calc(100vh - 260px)" gap={0}>
           {/* 메시지 영역 */}
           <ScrollArea
             flex={1}
