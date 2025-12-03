@@ -31,6 +31,19 @@ export interface User {
   id: number;
   email: string;
   nickname: string;
+  avatar?: string;
+  statusMessage?: string;
+  isOnline: boolean;
+  lastSeenAt?: string;
   createdAt: string;
 }
 
+/** 사용자 기본 정보 (목록용) */
+export interface UserBasic {
+  id: number;
+  nickname: string;
+  email: string;
+  avatar?: string;
+  isOnline: boolean;
+  statusMessage?: string;
+}

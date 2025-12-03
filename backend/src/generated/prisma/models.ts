@@ -9,13 +9,11 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.js'
-export type * from './models/Workspace.js'
+export type * from './models/Friendship.js'
 export type * from './models/Channel.js'
-export type * from './models/DM.js'
-export type * from './models/ChannelChat.js'
-export type * from './models/DMChat.js'
-export type * from './models/WorkspaceMember.js'
 export type * from './models/ChannelMember.js'
-export type * from './models/ChannelMention.js'
-export type * from './models/DMMention.js'
+export type * from './models/TextChannel.js'
+export type * from './models/TextChannelMessage.js'
+export type * from './models/DirectMessage.js'
+export type * from './models/DMMessage.js'
 export type * from './commonInputTypes.js'

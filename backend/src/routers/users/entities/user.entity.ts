@@ -1,10 +1,8 @@
+// src/routers/users/entities/user.entity.ts
 import { ApiProperty } from '@nestjs/swagger';
-import { UserModel } from '../../../generated/prisma/models/User'; // Prisma가 생성한 인터페이스
-// import { Exclude } from 'class-transformer';
-import { IsDate, IsEmail, IsNotEmpty, IsNumber, IsString, Length, Matches } from 'class-validator';
+import { IsBoolean, IsDate, IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, Length, Matches } from 'class-validator';
 
-// 'implements User'를 쓰면 Prisma 모델과 필드가 일치하는지 체크해줘서 좋습니다.
-export class UserEntity implements UserModel {
+export class UserEntity {
 	@ApiProperty({ description: 'ID', example: 1 })
 	@IsNumber()
 	id: number;
@@ -39,11 +37,30 @@ export class UserEntity implements UserModel {
 	@Matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, {
 		message: '비밀번호는 최소 8자, 하나 이상의 문자, 숫자 및 특수문자를 포함해야 합니다.',
 	})
-	// @Exclude() // 중요: 응답(Response)으로 나갈 때 비밀번호 필드를 자동으로 제외합니다.
 	password: string;
+
+	@ApiProperty({ description: '프로필 이미지 URL', required: false, nullable: true })
+	@IsString()
+	@IsOptional()
+	avatar: string | null;
+
+	@ApiProperty({ description: '상태 메시지', required: false, nullable: true })
+	@IsString()
+	@IsOptional()
+	@Length(0, 100)
+	statusMessage: string | null;
 
 	@ApiProperty({ description: '해싱된 리프레시 토큰', required: false, nullable: true })
 	hashedRefreshToken: string | null;
+
+	@ApiProperty({ description: '온라인 상태', default: false })
+	@IsBoolean()
+	isOnline: boolean;
+
+	@ApiProperty({ description: '마지막 접속 시간', required: false, nullable: true })
+	@IsDate()
+	@IsOptional()
+	lastSeenAt: Date | null;
 
 	@ApiProperty({ description: '생성일' })
 	@IsDate()
@@ -55,5 +72,6 @@ export class UserEntity implements UserModel {
 
 	@ApiProperty({ description: '삭제일', required: false, nullable: true })
 	@IsDate()
+	@IsOptional()
 	deletedAt: Date | null;
 }

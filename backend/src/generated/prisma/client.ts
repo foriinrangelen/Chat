@@ -45,47 +45,37 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
- * Model Workspace
+ * Model Friendship
  * 
  */
-export type Workspace = Prisma.WorkspaceModel
+export type Friendship = Prisma.FriendshipModel
 /**
  * Model Channel
  * 
  */
 export type Channel = Prisma.ChannelModel
 /**
- * Model DM
- * 
- */
-export type DM = Prisma.DMModel
-/**
- * Model ChannelChat
- * 
- */
-export type ChannelChat = Prisma.ChannelChatModel
-/**
- * Model DMChat
- * 
- */
-export type DMChat = Prisma.DMChatModel
-/**
- * Model WorkspaceMember
- * 
- */
-export type WorkspaceMember = Prisma.WorkspaceMemberModel
-/**
  * Model ChannelMember
  * 
  */
 export type ChannelMember = Prisma.ChannelMemberModel
 /**
- * Model ChannelMention
+ * Model TextChannel
  * 
  */
-export type ChannelMention = Prisma.ChannelMentionModel
+export type TextChannel = Prisma.TextChannelModel
 /**
- * Model DMMention
+ * Model TextChannelMessage
  * 
  */
-export type DMMention = Prisma.DMMentionModel
+export type TextChannelMessage = Prisma.TextChannelMessageModel
+/**
+ * Model DirectMessage
+ * 
+ */
+export type DirectMessage = Prisma.DirectMessageModel
+/**
+ * Model DMMessage
+ * 
+ */
+export type DMMessage = Prisma.DMMessageModel

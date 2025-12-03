@@ -39,7 +39,11 @@ export type UserMinAggregateOutputType = {
   email: string | null
   nickname: string | null
   password: string | null
+  avatar: string | null
+  statusMessage: string | null
   hashedRefreshToken: string | null
+  isOnline: boolean | null
+  lastSeenAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -50,7 +54,11 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   nickname: string | null
   password: string | null
+  avatar: string | null
+  statusMessage: string | null
   hashedRefreshToken: string | null
+  isOnline: boolean | null
+  lastSeenAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -61,7 +69,11 @@ export type UserCountAggregateOutputType = {
   email: number
   nickname: number
   password: number
+  avatar: number
+  statusMessage: number
   hashedRefreshToken: number
+  isOnline: number
+  lastSeenAt: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -82,7 +94,11 @@ export type UserMinAggregateInputType = {
   email?: true
   nickname?: true
   password?: true
+  avatar?: true
+  statusMessage?: true
   hashedRefreshToken?: true
+  isOnline?: true
+  lastSeenAt?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -93,7 +109,11 @@ export type UserMaxAggregateInputType = {
   email?: true
   nickname?: true
   password?: true
+  avatar?: true
+  statusMessage?: true
   hashedRefreshToken?: true
+  isOnline?: true
+  lastSeenAt?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -104,7 +124,11 @@ export type UserCountAggregateInputType = {
   email?: true
   nickname?: true
   password?: true
+  avatar?: true
+  statusMessage?: true
   hashedRefreshToken?: true
+  isOnline?: true
+  lastSeenAt?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -202,7 +226,11 @@ export type UserGroupByOutputType = {
   email: string
   nickname: string
   password: string
+  avatar: string | null
+  statusMessage: string | null
   hashedRefreshToken: string | null
+  isOnline: boolean
+  lastSeenAt: Date | null
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -236,18 +264,22 @@ export type UserWhereInput = {
   email?: Prisma.StringFilter<"User"> | string
   nickname?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  avatar?: Prisma.StringNullableFilter<"User"> | string | null
+  statusMessage?: Prisma.StringNullableFilter<"User"> | string | null
   hashedRefreshToken?: Prisma.StringNullableFilter<"User"> | string | null
+  isOnline?: Prisma.BoolFilter<"User"> | boolean
+  lastSeenAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberListRelationFilter
+  OwnedChannels?: Prisma.ChannelListRelationFilter
   ChannelMembers?: Prisma.ChannelMemberListRelationFilter
-  ChannelChats?: Prisma.ChannelChatListRelationFilter
-  DMInit?: Prisma.DMListRelationFilter
-  DMReceived?: Prisma.DMListRelationFilter
-  DMChats?: Prisma.DMChatListRelationFilter
-  ChannelMentions?: Prisma.ChannelMentionListRelationFilter
-  DMMentions?: Prisma.DMMentionListRelationFilter
+  TextChannelMessages?: Prisma.TextChannelMessageListRelationFilter
+  SentFriendships?: Prisma.FriendshipListRelationFilter
+  ReceivedFriendships?: Prisma.FriendshipListRelationFilter
+  SentDMs?: Prisma.DirectMessageListRelationFilter
+  ReceivedDMs?: Prisma.DirectMessageListRelationFilter
+  DMMessages?: Prisma.DMMessageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -255,18 +287,22 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   hashedRefreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  Workspaces?: Prisma.WorkspaceMemberOrderByRelationAggregateInput
+  OwnedChannels?: Prisma.ChannelOrderByRelationAggregateInput
   ChannelMembers?: Prisma.ChannelMemberOrderByRelationAggregateInput
-  ChannelChats?: Prisma.ChannelChatOrderByRelationAggregateInput
-  DMInit?: Prisma.DMOrderByRelationAggregateInput
-  DMReceived?: Prisma.DMOrderByRelationAggregateInput
-  DMChats?: Prisma.DMChatOrderByRelationAggregateInput
-  ChannelMentions?: Prisma.ChannelMentionOrderByRelationAggregateInput
-  DMMentions?: Prisma.DMMentionOrderByRelationAggregateInput
+  TextChannelMessages?: Prisma.TextChannelMessageOrderByRelationAggregateInput
+  SentFriendships?: Prisma.FriendshipOrderByRelationAggregateInput
+  ReceivedFriendships?: Prisma.FriendshipOrderByRelationAggregateInput
+  SentDMs?: Prisma.DirectMessageOrderByRelationAggregateInput
+  ReceivedDMs?: Prisma.DirectMessageOrderByRelationAggregateInput
+  DMMessages?: Prisma.DMMessageOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -277,18 +313,22 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   nickname?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  avatar?: Prisma.StringNullableFilter<"User"> | string | null
+  statusMessage?: Prisma.StringNullableFilter<"User"> | string | null
   hashedRefreshToken?: Prisma.StringNullableFilter<"User"> | string | null
+  isOnline?: Prisma.BoolFilter<"User"> | boolean
+  lastSeenAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberListRelationFilter
+  OwnedChannels?: Prisma.ChannelListRelationFilter
   ChannelMembers?: Prisma.ChannelMemberListRelationFilter
-  ChannelChats?: Prisma.ChannelChatListRelationFilter
-  DMInit?: Prisma.DMListRelationFilter
-  DMReceived?: Prisma.DMListRelationFilter
-  DMChats?: Prisma.DMChatListRelationFilter
-  ChannelMentions?: Prisma.ChannelMentionListRelationFilter
-  DMMentions?: Prisma.DMMentionListRelationFilter
+  TextChannelMessages?: Prisma.TextChannelMessageListRelationFilter
+  SentFriendships?: Prisma.FriendshipListRelationFilter
+  ReceivedFriendships?: Prisma.FriendshipListRelationFilter
+  SentDMs?: Prisma.DirectMessageListRelationFilter
+  ReceivedDMs?: Prisma.DirectMessageListRelationFilter
+  DMMessages?: Prisma.DMMessageListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -296,7 +336,11 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusMessage?: Prisma.SortOrderInput | Prisma.SortOrder
   hashedRefreshToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -315,7 +359,11 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   nickname?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  avatar?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  statusMessage?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   hashedRefreshToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  isOnline?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  lastSeenAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -325,18 +373,22 @@ export type UserCreateInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -344,36 +396,44 @@ export type UserUncheckedCreateInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelUncheckedCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatUncheckedCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMUncheckedCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMUncheckedCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatUncheckedCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionUncheckedCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -381,18 +441,22 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUncheckedUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUncheckedUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUncheckedUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUncheckedUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUncheckedUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUncheckedUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -400,7 +464,11 @@ export type UserCreateManyInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -410,7 +478,11 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -421,7 +493,11 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -432,7 +508,11 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrder
+  statusMessage?: Prisma.SortOrder
   hashedRefreshToken?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -447,7 +527,11 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrder
+  statusMessage?: Prisma.SortOrder
   hashedRefreshToken?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -458,7 +542,11 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   nickname?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  avatar?: Prisma.SortOrder
+  statusMessage?: Prisma.SortOrder
   hashedRefreshToken?: Prisma.SortOrder
+  isOnline?: Prisma.SortOrder
+  lastSeenAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -481,12 +569,16 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -497,74 +589,46 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type UserCreateNestedOneWithoutDMInitInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDMInitInput, Prisma.UserUncheckedCreateWithoutDMInitInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMInitInput
+export type UserCreateNestedOneWithoutSentFriendshipsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentFriendshipsInput, Prisma.UserUncheckedCreateWithoutSentFriendshipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentFriendshipsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserCreateNestedOneWithoutDMReceivedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDMReceivedInput, Prisma.UserUncheckedCreateWithoutDMReceivedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMReceivedInput
+export type UserCreateNestedOneWithoutReceivedFriendshipsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedFriendshipsInput, Prisma.UserUncheckedCreateWithoutReceivedFriendshipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedFriendshipsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutDMInitNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDMInitInput, Prisma.UserUncheckedCreateWithoutDMInitInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMInitInput
-  upsert?: Prisma.UserUpsertWithoutDMInitInput
+export type UserUpdateOneRequiredWithoutSentFriendshipsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentFriendshipsInput, Prisma.UserUncheckedCreateWithoutSentFriendshipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentFriendshipsInput
+  upsert?: Prisma.UserUpsertWithoutSentFriendshipsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDMInitInput, Prisma.UserUpdateWithoutDMInitInput>, Prisma.UserUncheckedUpdateWithoutDMInitInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentFriendshipsInput, Prisma.UserUpdateWithoutSentFriendshipsInput>, Prisma.UserUncheckedUpdateWithoutSentFriendshipsInput>
 }
 
-export type UserUpdateOneRequiredWithoutDMReceivedNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDMReceivedInput, Prisma.UserUncheckedCreateWithoutDMReceivedInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMReceivedInput
-  upsert?: Prisma.UserUpsertWithoutDMReceivedInput
+export type UserUpdateOneRequiredWithoutReceivedFriendshipsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedFriendshipsInput, Prisma.UserUncheckedCreateWithoutReceivedFriendshipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedFriendshipsInput
+  upsert?: Prisma.UserUpsertWithoutReceivedFriendshipsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDMReceivedInput, Prisma.UserUpdateWithoutDMReceivedInput>, Prisma.UserUncheckedUpdateWithoutDMReceivedInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedFriendshipsInput, Prisma.UserUpdateWithoutReceivedFriendshipsInput>, Prisma.UserUncheckedUpdateWithoutReceivedFriendshipsInput>
 }
 
-export type UserCreateNestedOneWithoutChannelChatsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutChannelChatsInput, Prisma.UserUncheckedCreateWithoutChannelChatsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutChannelChatsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutChannelChatsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutChannelChatsInput, Prisma.UserUncheckedCreateWithoutChannelChatsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutChannelChatsInput
-  upsert?: Prisma.UserUpsertWithoutChannelChatsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutChannelChatsInput, Prisma.UserUpdateWithoutChannelChatsInput>, Prisma.UserUncheckedUpdateWithoutChannelChatsInput>
-}
-
-export type UserCreateNestedOneWithoutDMChatsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDMChatsInput, Prisma.UserUncheckedCreateWithoutDMChatsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMChatsInput
+export type UserCreateNestedOneWithoutOwnedChannelsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnedChannelsInput, Prisma.UserUncheckedCreateWithoutOwnedChannelsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnedChannelsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutDMChatsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDMChatsInput, Prisma.UserUncheckedCreateWithoutDMChatsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMChatsInput
-  upsert?: Prisma.UserUpsertWithoutDMChatsInput
+export type UserUpdateOneRequiredWithoutOwnedChannelsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnedChannelsInput, Prisma.UserUncheckedCreateWithoutOwnedChannelsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnedChannelsInput
+  upsert?: Prisma.UserUpsertWithoutOwnedChannelsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDMChatsInput, Prisma.UserUpdateWithoutDMChatsInput>, Prisma.UserUncheckedUpdateWithoutDMChatsInput>
-}
-
-export type UserCreateNestedOneWithoutWorkspacesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutWorkspacesInput, Prisma.UserUncheckedCreateWithoutWorkspacesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWorkspacesInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutWorkspacesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutWorkspacesInput, Prisma.UserUncheckedCreateWithoutWorkspacesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWorkspacesInput
-  upsert?: Prisma.UserUpsertWithoutWorkspacesInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWorkspacesInput, Prisma.UserUpdateWithoutWorkspacesInput>, Prisma.UserUncheckedUpdateWithoutWorkspacesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOwnedChannelsInput, Prisma.UserUpdateWithoutOwnedChannelsInput>, Prisma.UserUncheckedUpdateWithoutOwnedChannelsInput>
 }
 
 export type UserCreateNestedOneWithoutChannelMembersInput = {
@@ -581,479 +645,387 @@ export type UserUpdateOneRequiredWithoutChannelMembersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutChannelMembersInput, Prisma.UserUpdateWithoutChannelMembersInput>, Prisma.UserUncheckedUpdateWithoutChannelMembersInput>
 }
 
-export type UserCreateNestedOneWithoutChannelMentionsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutChannelMentionsInput, Prisma.UserUncheckedCreateWithoutChannelMentionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutChannelMentionsInput
+export type UserCreateNestedOneWithoutTextChannelMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTextChannelMessagesInput, Prisma.UserUncheckedCreateWithoutTextChannelMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTextChannelMessagesInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutChannelMentionsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutChannelMentionsInput, Prisma.UserUncheckedCreateWithoutChannelMentionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutChannelMentionsInput
-  upsert?: Prisma.UserUpsertWithoutChannelMentionsInput
+export type UserUpdateOneRequiredWithoutTextChannelMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTextChannelMessagesInput, Prisma.UserUncheckedCreateWithoutTextChannelMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTextChannelMessagesInput
+  upsert?: Prisma.UserUpsertWithoutTextChannelMessagesInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutChannelMentionsInput, Prisma.UserUpdateWithoutChannelMentionsInput>, Prisma.UserUncheckedUpdateWithoutChannelMentionsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTextChannelMessagesInput, Prisma.UserUpdateWithoutTextChannelMessagesInput>, Prisma.UserUncheckedUpdateWithoutTextChannelMessagesInput>
 }
 
-export type UserCreateNestedOneWithoutDMMentionsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDMMentionsInput, Prisma.UserUncheckedCreateWithoutDMMentionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMMentionsInput
+export type UserCreateNestedOneWithoutSentDMsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentDMsInput, Prisma.UserUncheckedCreateWithoutSentDMsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentDMsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutDMMentionsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDMMentionsInput, Prisma.UserUncheckedCreateWithoutDMMentionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMMentionsInput
-  upsert?: Prisma.UserUpsertWithoutDMMentionsInput
+export type UserCreateNestedOneWithoutReceivedDMsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedDMsInput, Prisma.UserUncheckedCreateWithoutReceivedDMsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedDMsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDMMentionsInput, Prisma.UserUpdateWithoutDMMentionsInput>, Prisma.UserUncheckedUpdateWithoutDMMentionsInput>
 }
 
-export type UserCreateWithoutDMInitInput = {
+export type UserUpdateOneRequiredWithoutSentDMsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSentDMsInput, Prisma.UserUncheckedCreateWithoutSentDMsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentDMsInput
+  upsert?: Prisma.UserUpsertWithoutSentDMsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSentDMsInput, Prisma.UserUpdateWithoutSentDMsInput>, Prisma.UserUncheckedUpdateWithoutSentDMsInput>
+}
+
+export type UserUpdateOneRequiredWithoutReceivedDMsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedDMsInput, Prisma.UserUncheckedCreateWithoutReceivedDMsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedDMsInput
+  upsert?: Prisma.UserUpsertWithoutReceivedDMsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedDMsInput, Prisma.UserUpdateWithoutReceivedDMsInput>, Prisma.UserUncheckedUpdateWithoutReceivedDMsInput>
+}
+
+export type UserCreateNestedOneWithoutDMMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDMMessagesInput, Prisma.UserUncheckedCreateWithoutDMMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutDMMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDMMessagesInput, Prisma.UserUncheckedCreateWithoutDMMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDMMessagesInput
+  upsert?: Prisma.UserUpsertWithoutDMMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDMMessagesInput, Prisma.UserUpdateWithoutDMMessagesInput>, Prisma.UserUncheckedUpdateWithoutDMMessagesInput>
+}
+
+export type UserCreateWithoutSentFriendshipsInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatCreateNestedManyWithoutUserInput
-  DMReceived?: Prisma.DMCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageCreateNestedManyWithoutUserInput
+  ReceivedFriendships?: Prisma.FriendshipCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutDMInitInput = {
+export type UserUncheckedCreateWithoutSentFriendshipsInput = {
   id?: number
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelUncheckedCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatUncheckedCreateNestedManyWithoutUserInput
-  DMReceived?: Prisma.DMUncheckedCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatUncheckedCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionUncheckedCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedCreateNestedManyWithoutUserInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutDMInitInput = {
+export type UserCreateOrConnectWithoutSentFriendshipsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutDMInitInput, Prisma.UserUncheckedCreateWithoutDMInitInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentFriendshipsInput, Prisma.UserUncheckedCreateWithoutSentFriendshipsInput>
 }
 
-export type UserCreateWithoutDMReceivedInput = {
+export type UserCreateWithoutReceivedFriendshipsInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMCreateNestedManyWithoutSenderInput
-  DMChats?: Prisma.DMChatCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipCreateNestedManyWithoutSenderInput
+  SentDMs?: Prisma.DirectMessageCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutDMReceivedInput = {
+export type UserUncheckedCreateWithoutReceivedFriendshipsInput = {
   id?: number
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelUncheckedCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatUncheckedCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMUncheckedCreateNestedManyWithoutSenderInput
-  DMChats?: Prisma.DMChatUncheckedCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionUncheckedCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutSenderInput
+  SentDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutDMReceivedInput = {
+export type UserCreateOrConnectWithoutReceivedFriendshipsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutDMReceivedInput, Prisma.UserUncheckedCreateWithoutDMReceivedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedFriendshipsInput, Prisma.UserUncheckedCreateWithoutReceivedFriendshipsInput>
 }
 
-export type UserUpsertWithoutDMInitInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutDMInitInput, Prisma.UserUncheckedUpdateWithoutDMInitInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutDMInitInput, Prisma.UserUncheckedCreateWithoutDMInitInput>
+export type UserUpsertWithoutSentFriendshipsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSentFriendshipsInput, Prisma.UserUncheckedUpdateWithoutSentFriendshipsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentFriendshipsInput, Prisma.UserUncheckedCreateWithoutSentFriendshipsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutDMInitInput = {
+export type UserUpdateToOneWithWhereWithoutSentFriendshipsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutDMInitInput, Prisma.UserUncheckedUpdateWithoutDMInitInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSentFriendshipsInput, Prisma.UserUncheckedUpdateWithoutSentFriendshipsInput>
 }
 
-export type UserUpdateWithoutDMInitInput = {
+export type UserUpdateWithoutSentFriendshipsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUpdateManyWithoutUserNestedInput
-  DMReceived?: Prisma.DMUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUpdateManyWithoutUserNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutDMInitInput = {
+export type UserUncheckedUpdateWithoutSentFriendshipsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUncheckedUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUncheckedUpdateManyWithoutUserNestedInput
-  DMReceived?: Prisma.DMUncheckedUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUncheckedUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUncheckedUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedUpdateManyWithoutUserNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserUpsertWithoutDMReceivedInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutDMReceivedInput, Prisma.UserUncheckedUpdateWithoutDMReceivedInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutDMReceivedInput, Prisma.UserUncheckedCreateWithoutDMReceivedInput>
+export type UserUpsertWithoutReceivedFriendshipsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReceivedFriendshipsInput, Prisma.UserUncheckedUpdateWithoutReceivedFriendshipsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedFriendshipsInput, Prisma.UserUncheckedCreateWithoutReceivedFriendshipsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutDMReceivedInput = {
+export type UserUpdateToOneWithWhereWithoutReceivedFriendshipsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutDMReceivedInput, Prisma.UserUncheckedUpdateWithoutDMReceivedInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReceivedFriendshipsInput, Prisma.UserUncheckedUpdateWithoutReceivedFriendshipsInput>
 }
 
-export type UserUpdateWithoutDMReceivedInput = {
+export type UserUpdateWithoutReceivedFriendshipsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUpdateManyWithoutSenderNestedInput
-  DMChats?: Prisma.DMChatUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUpdateManyWithoutSenderNestedInput
+  SentDMs?: Prisma.DirectMessageUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutDMReceivedInput = {
+export type UserUncheckedUpdateWithoutReceivedFriendshipsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUncheckedUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUncheckedUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUncheckedUpdateManyWithoutSenderNestedInput
-  DMChats?: Prisma.DMChatUncheckedUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUncheckedUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutSenderNestedInput
+  SentDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutChannelChatsInput = {
+export type UserCreateWithoutOwnedChannelsInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
-  ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutChannelChatsInput = {
-  id?: number
-  email: string
-  nickname: string
-  password: string
-  hashedRefreshToken?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMUncheckedCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMUncheckedCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatUncheckedCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutChannelChatsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutChannelChatsInput, Prisma.UserUncheckedCreateWithoutChannelChatsInput>
-}
-
-export type UserUpsertWithoutChannelChatsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutChannelChatsInput, Prisma.UserUncheckedUpdateWithoutChannelChatsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutChannelChatsInput, Prisma.UserUncheckedCreateWithoutChannelChatsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutChannelChatsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutChannelChatsInput, Prisma.UserUncheckedUpdateWithoutChannelChatsInput>
-}
-
-export type UserUpdateWithoutChannelChatsInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
-  ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutChannelChatsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUncheckedUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUncheckedUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUncheckedUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutDMChatsInput = {
-  email: string
-  nickname: string
-  password: string
-  hashedRefreshToken?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
-  ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMCreateNestedManyWithoutReceiverInput
-  ChannelMentions?: Prisma.ChannelMentionCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutDMChatsInput = {
-  id?: number
-  email: string
-  nickname: string
-  password: string
-  hashedRefreshToken?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatUncheckedCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMUncheckedCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMUncheckedCreateNestedManyWithoutReceiverInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutDMChatsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutDMChatsInput, Prisma.UserUncheckedCreateWithoutDMChatsInput>
-}
-
-export type UserUpsertWithoutDMChatsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutDMChatsInput, Prisma.UserUncheckedUpdateWithoutDMChatsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutDMChatsInput, Prisma.UserUncheckedCreateWithoutDMChatsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutDMChatsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutDMChatsInput, Prisma.UserUncheckedUpdateWithoutDMChatsInput>
-}
-
-export type UserUpdateWithoutDMChatsInput = {
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
-  ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUpdateManyWithoutReceiverNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutDMChatsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  nickname?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUncheckedUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUncheckedUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUncheckedUpdateManyWithoutReceiverNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutWorkspacesInput = {
-  email: string
-  nickname: string
-  password: string
-  hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutWorkspacesInput = {
+export type UserUncheckedCreateWithoutOwnedChannelsInput = {
   id?: number
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatUncheckedCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMUncheckedCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMUncheckedCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatUncheckedCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionUncheckedCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutWorkspacesInput = {
+export type UserCreateOrConnectWithoutOwnedChannelsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutWorkspacesInput, Prisma.UserUncheckedCreateWithoutWorkspacesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnedChannelsInput, Prisma.UserUncheckedCreateWithoutOwnedChannelsInput>
 }
 
-export type UserUpsertWithoutWorkspacesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutWorkspacesInput, Prisma.UserUncheckedUpdateWithoutWorkspacesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutWorkspacesInput, Prisma.UserUncheckedCreateWithoutWorkspacesInput>
+export type UserUpsertWithoutOwnedChannelsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOwnedChannelsInput, Prisma.UserUncheckedUpdateWithoutOwnedChannelsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnedChannelsInput, Prisma.UserUncheckedCreateWithoutOwnedChannelsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutWorkspacesInput = {
+export type UserUpdateToOneWithWhereWithoutOwnedChannelsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutWorkspacesInput, Prisma.UserUncheckedUpdateWithoutWorkspacesInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOwnedChannelsInput, Prisma.UserUncheckedUpdateWithoutOwnedChannelsInput>
 }
 
-export type UserUpdateWithoutWorkspacesInput = {
+export type UserUpdateWithoutOwnedChannelsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutWorkspacesInput = {
+export type UserUncheckedUpdateWithoutOwnedChannelsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUncheckedUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUncheckedUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUncheckedUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUncheckedUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUncheckedUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutChannelMembersInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelCreateNestedManyWithoutOwnerInput
+  TextChannelMessages?: Prisma.TextChannelMessageCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutChannelMembersInput = {
@@ -1061,17 +1033,21 @@ export type UserUncheckedCreateWithoutChannelMembersInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatUncheckedCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMUncheckedCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMUncheckedCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatUncheckedCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionUncheckedCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelUncheckedCreateNestedManyWithoutOwnerInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutChannelMembersInput = {
@@ -1094,17 +1070,21 @@ export type UserUpdateWithoutChannelMembersInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUpdateManyWithoutOwnerNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChannelMembersInput = {
@@ -1112,189 +1092,429 @@ export type UserUncheckedUpdateWithoutChannelMembersInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUncheckedUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUncheckedUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUncheckedUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUncheckedUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUncheckedUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUncheckedUpdateManyWithoutOwnerNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutChannelMentionsInput = {
+export type UserCreateWithoutTextChannelMessagesInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutChannelMentionsInput = {
+export type UserUncheckedCreateWithoutTextChannelMessagesInput = {
   id?: number
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelUncheckedCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatUncheckedCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMUncheckedCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMUncheckedCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatUncheckedCreateNestedManyWithoutUserInput
-  DMMentions?: Prisma.DMMentionUncheckedCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutChannelMentionsInput = {
+export type UserCreateOrConnectWithoutTextChannelMessagesInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutChannelMentionsInput, Prisma.UserUncheckedCreateWithoutChannelMentionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTextChannelMessagesInput, Prisma.UserUncheckedCreateWithoutTextChannelMessagesInput>
 }
 
-export type UserUpsertWithoutChannelMentionsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutChannelMentionsInput, Prisma.UserUncheckedUpdateWithoutChannelMentionsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutChannelMentionsInput, Prisma.UserUncheckedCreateWithoutChannelMentionsInput>
+export type UserUpsertWithoutTextChannelMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTextChannelMessagesInput, Prisma.UserUncheckedUpdateWithoutTextChannelMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTextChannelMessagesInput, Prisma.UserUncheckedCreateWithoutTextChannelMessagesInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutChannelMentionsInput = {
+export type UserUpdateToOneWithWhereWithoutTextChannelMessagesInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutChannelMentionsInput, Prisma.UserUncheckedUpdateWithoutChannelMentionsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTextChannelMessagesInput, Prisma.UserUncheckedUpdateWithoutTextChannelMessagesInput>
 }
 
-export type UserUpdateWithoutChannelMentionsInput = {
+export type UserUpdateWithoutTextChannelMessagesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutChannelMentionsInput = {
+export type UserUncheckedUpdateWithoutTextChannelMessagesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUncheckedUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUncheckedUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUncheckedUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUncheckedUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUncheckedUpdateManyWithoutUserNestedInput
-  DMMentions?: Prisma.DMMentionUncheckedUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutDMMentionsInput = {
+export type UserCreateWithoutSentDMsInput = {
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipCreateNestedManyWithoutReceiverInput
+  ReceivedDMs?: Prisma.DirectMessageCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutDMMentionsInput = {
+export type UserUncheckedCreateWithoutSentDMsInput = {
   id?: number
   email: string
   nickname: string
   password: string
+  avatar?: string | null
+  statusMessage?: string | null
   hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutUserInput
+  OwnedChannels?: Prisma.ChannelUncheckedCreateNestedManyWithoutOwnerInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
-  ChannelChats?: Prisma.ChannelChatUncheckedCreateNestedManyWithoutUserInput
-  DMInit?: Prisma.DMUncheckedCreateNestedManyWithoutSenderInput
-  DMReceived?: Prisma.DMUncheckedCreateNestedManyWithoutReceiverInput
-  DMChats?: Prisma.DMChatUncheckedCreateNestedManyWithoutUserInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutReceiverInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutReceiverInput
+  DMMessages?: Prisma.DMMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutDMMentionsInput = {
+export type UserCreateOrConnectWithoutSentDMsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutDMMentionsInput, Prisma.UserUncheckedCreateWithoutDMMentionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentDMsInput, Prisma.UserUncheckedCreateWithoutSentDMsInput>
 }
 
-export type UserUpsertWithoutDMMentionsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutDMMentionsInput, Prisma.UserUncheckedUpdateWithoutDMMentionsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutDMMentionsInput, Prisma.UserUncheckedCreateWithoutDMMentionsInput>
+export type UserCreateWithoutReceivedDMsInput = {
+  email: string
+  nickname: string
+  password: string
+  avatar?: string | null
+  statusMessage?: string | null
+  hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  OwnedChannels?: Prisma.ChannelCreateNestedManyWithoutOwnerInput
+  ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageCreateNestedManyWithoutSenderInput
+  DMMessages?: Prisma.DMMessageCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReceivedDMsInput = {
+  id?: number
+  email: string
+  nickname: string
+  password: string
+  avatar?: string | null
+  statusMessage?: string | null
+  hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  OwnedChannels?: Prisma.ChannelUncheckedCreateNestedManyWithoutOwnerInput
+  ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutSenderInput
+  DMMessages?: Prisma.DMMessageUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReceivedDMsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedDMsInput, Prisma.UserUncheckedCreateWithoutReceivedDMsInput>
+}
+
+export type UserUpsertWithoutSentDMsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSentDMsInput, Prisma.UserUncheckedUpdateWithoutSentDMsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSentDMsInput, Prisma.UserUncheckedCreateWithoutSentDMsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutDMMentionsInput = {
+export type UserUpdateToOneWithWhereWithoutSentDMsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutDMMentionsInput, Prisma.UserUncheckedUpdateWithoutDMMentionsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSentDMsInput, Prisma.UserUncheckedUpdateWithoutSentDMsInput>
 }
 
-export type UserUpdateWithoutDMMentionsInput = {
+export type UserUpdateWithoutSentDMsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUpdateManyWithoutReceiverNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutDMMentionsInput = {
+export type UserUncheckedUpdateWithoutSentDMsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   nickname?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  Workspaces?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutUserNestedInput
+  OwnedChannels?: Prisma.ChannelUncheckedUpdateManyWithoutOwnerNestedInput
   ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
-  ChannelChats?: Prisma.ChannelChatUncheckedUpdateManyWithoutUserNestedInput
-  DMInit?: Prisma.DMUncheckedUpdateManyWithoutSenderNestedInput
-  DMReceived?: Prisma.DMUncheckedUpdateManyWithoutReceiverNestedInput
-  DMChats?: Prisma.DMChatUncheckedUpdateManyWithoutUserNestedInput
-  ChannelMentions?: Prisma.ChannelMentionUncheckedUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutReceiverNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutReceiverNestedInput
+  DMMessages?: Prisma.DMMessageUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutReceivedDMsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReceivedDMsInput, Prisma.UserUncheckedUpdateWithoutReceivedDMsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedDMsInput, Prisma.UserUncheckedCreateWithoutReceivedDMsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReceivedDMsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReceivedDMsInput, Prisma.UserUncheckedUpdateWithoutReceivedDMsInput>
+}
+
+export type UserUpdateWithoutReceivedDMsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  OwnedChannels?: Prisma.ChannelUpdateManyWithoutOwnerNestedInput
+  ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUpdateManyWithoutSenderNestedInput
+  DMMessages?: Prisma.DMMessageUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReceivedDMsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  OwnedChannels?: Prisma.ChannelUncheckedUpdateManyWithoutOwnerNestedInput
+  ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutSenderNestedInput
+  DMMessages?: Prisma.DMMessageUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutDMMessagesInput = {
+  email: string
+  nickname: string
+  password: string
+  avatar?: string | null
+  statusMessage?: string | null
+  hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  OwnedChannels?: Prisma.ChannelCreateNestedManyWithoutOwnerInput
+  ChannelMembers?: Prisma.ChannelMemberCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageCreateNestedManyWithoutReceiverInput
+}
+
+export type UserUncheckedCreateWithoutDMMessagesInput = {
+  id?: number
+  email: string
+  nickname: string
+  password: string
+  avatar?: string | null
+  statusMessage?: string | null
+  hashedRefreshToken?: string | null
+  isOnline?: boolean
+  lastSeenAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  OwnedChannels?: Prisma.ChannelUncheckedCreateNestedManyWithoutOwnerInput
+  ChannelMembers?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutUserInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedCreateNestedManyWithoutUserInput
+  SentFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedCreateNestedManyWithoutReceiverInput
+  SentDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutSenderInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedCreateNestedManyWithoutReceiverInput
+}
+
+export type UserCreateOrConnectWithoutDMMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDMMessagesInput, Prisma.UserUncheckedCreateWithoutDMMessagesInput>
+}
+
+export type UserUpsertWithoutDMMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDMMessagesInput, Prisma.UserUncheckedUpdateWithoutDMMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDMMessagesInput, Prisma.UserUncheckedCreateWithoutDMMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDMMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDMMessagesInput, Prisma.UserUncheckedUpdateWithoutDMMessagesInput>
+}
+
+export type UserUpdateWithoutDMMessagesInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  OwnedChannels?: Prisma.ChannelUpdateManyWithoutOwnerNestedInput
+  ChannelMembers?: Prisma.ChannelMemberUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUpdateManyWithoutReceiverNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDMMessagesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  nickname?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  statusMessage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hashedRefreshToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  OwnedChannels?: Prisma.ChannelUncheckedUpdateManyWithoutOwnerNestedInput
+  ChannelMembers?: Prisma.ChannelMemberUncheckedUpdateManyWithoutUserNestedInput
+  TextChannelMessages?: Prisma.TextChannelMessageUncheckedUpdateManyWithoutUserNestedInput
+  SentFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedFriendships?: Prisma.FriendshipUncheckedUpdateManyWithoutReceiverNestedInput
+  SentDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutSenderNestedInput
+  ReceivedDMs?: Prisma.DirectMessageUncheckedUpdateManyWithoutReceiverNestedInput
 }
 
 
@@ -1303,25 +1523,25 @@ export type UserUncheckedUpdateWithoutDMMentionsInput = {
  */
 
 export type UserCountOutputType = {
-  Workspaces: number
+  OwnedChannels: number
   ChannelMembers: number
-  ChannelChats: number
-  DMInit: number
-  DMReceived: number
-  DMChats: number
-  ChannelMentions: number
-  DMMentions: number
+  TextChannelMessages: number
+  SentFriendships: number
+  ReceivedFriendships: number
+  SentDMs: number
+  ReceivedDMs: number
+  DMMessages: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Workspaces?: boolean | UserCountOutputTypeCountWorkspacesArgs
+  OwnedChannels?: boolean | UserCountOutputTypeCountOwnedChannelsArgs
   ChannelMembers?: boolean | UserCountOutputTypeCountChannelMembersArgs
-  ChannelChats?: boolean | UserCountOutputTypeCountChannelChatsArgs
-  DMInit?: boolean | UserCountOutputTypeCountDMInitArgs
-  DMReceived?: boolean | UserCountOutputTypeCountDMReceivedArgs
-  DMChats?: boolean | UserCountOutputTypeCountDMChatsArgs
-  ChannelMentions?: boolean | UserCountOutputTypeCountChannelMentionsArgs
-  DMMentions?: boolean | UserCountOutputTypeCountDMMentionsArgs
+  TextChannelMessages?: boolean | UserCountOutputTypeCountTextChannelMessagesArgs
+  SentFriendships?: boolean | UserCountOutputTypeCountSentFriendshipsArgs
+  ReceivedFriendships?: boolean | UserCountOutputTypeCountReceivedFriendshipsArgs
+  SentDMs?: boolean | UserCountOutputTypeCountSentDMsArgs
+  ReceivedDMs?: boolean | UserCountOutputTypeCountReceivedDMsArgs
+  DMMessages?: boolean | UserCountOutputTypeCountDMMessagesArgs
 }
 
 /**
@@ -1337,8 +1557,8 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountWorkspacesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.WorkspaceMemberWhereInput
+export type UserCountOutputTypeCountOwnedChannelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChannelWhereInput
 }
 
 /**
@@ -1351,43 +1571,43 @@ export type UserCountOutputTypeCountChannelMembersArgs<ExtArgs extends runtime.T
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountChannelChatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ChannelChatWhereInput
+export type UserCountOutputTypeCountTextChannelMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TextChannelMessageWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountDMInitArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DMWhereInput
+export type UserCountOutputTypeCountSentFriendshipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FriendshipWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountDMReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DMWhereInput
+export type UserCountOutputTypeCountReceivedFriendshipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FriendshipWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountDMChatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DMChatWhereInput
+export type UserCountOutputTypeCountSentDMsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DirectMessageWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountChannelMentionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ChannelMentionWhereInput
+export type UserCountOutputTypeCountReceivedDMsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DirectMessageWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountDMMentionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DMMentionWhereInput
+export type UserCountOutputTypeCountDMMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DMMessageWhereInput
 }
 
 
@@ -1396,18 +1616,22 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   nickname?: boolean
   password?: boolean
+  avatar?: boolean
+  statusMessage?: boolean
   hashedRefreshToken?: boolean
+  isOnline?: boolean
+  lastSeenAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
-  Workspaces?: boolean | Prisma.User$WorkspacesArgs<ExtArgs>
+  OwnedChannels?: boolean | Prisma.User$OwnedChannelsArgs<ExtArgs>
   ChannelMembers?: boolean | Prisma.User$ChannelMembersArgs<ExtArgs>
-  ChannelChats?: boolean | Prisma.User$ChannelChatsArgs<ExtArgs>
-  DMInit?: boolean | Prisma.User$DMInitArgs<ExtArgs>
-  DMReceived?: boolean | Prisma.User$DMReceivedArgs<ExtArgs>
-  DMChats?: boolean | Prisma.User$DMChatsArgs<ExtArgs>
-  ChannelMentions?: boolean | Prisma.User$ChannelMentionsArgs<ExtArgs>
-  DMMentions?: boolean | Prisma.User$DMMentionsArgs<ExtArgs>
+  TextChannelMessages?: boolean | Prisma.User$TextChannelMessagesArgs<ExtArgs>
+  SentFriendships?: boolean | Prisma.User$SentFriendshipsArgs<ExtArgs>
+  ReceivedFriendships?: boolean | Prisma.User$ReceivedFriendshipsArgs<ExtArgs>
+  SentDMs?: boolean | Prisma.User$SentDMsArgs<ExtArgs>
+  ReceivedDMs?: boolean | Prisma.User$ReceivedDMsArgs<ExtArgs>
+  DMMessages?: boolean | Prisma.User$DMMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1416,7 +1640,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   nickname?: boolean
   password?: boolean
+  avatar?: boolean
+  statusMessage?: boolean
   hashedRefreshToken?: boolean
+  isOnline?: boolean
+  lastSeenAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1427,7 +1655,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   nickname?: boolean
   password?: boolean
+  avatar?: boolean
+  statusMessage?: boolean
   hashedRefreshToken?: boolean
+  isOnline?: boolean
+  lastSeenAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -1438,22 +1670,26 @@ export type UserSelectScalar = {
   email?: boolean
   nickname?: boolean
   password?: boolean
+  avatar?: boolean
+  statusMessage?: boolean
   hashedRefreshToken?: boolean
+  isOnline?: boolean
+  lastSeenAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "nickname" | "password" | "hashedRefreshToken" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "nickname" | "password" | "avatar" | "statusMessage" | "hashedRefreshToken" | "isOnline" | "lastSeenAt" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  Workspaces?: boolean | Prisma.User$WorkspacesArgs<ExtArgs>
+  OwnedChannels?: boolean | Prisma.User$OwnedChannelsArgs<ExtArgs>
   ChannelMembers?: boolean | Prisma.User$ChannelMembersArgs<ExtArgs>
-  ChannelChats?: boolean | Prisma.User$ChannelChatsArgs<ExtArgs>
-  DMInit?: boolean | Prisma.User$DMInitArgs<ExtArgs>
-  DMReceived?: boolean | Prisma.User$DMReceivedArgs<ExtArgs>
-  DMChats?: boolean | Prisma.User$DMChatsArgs<ExtArgs>
-  ChannelMentions?: boolean | Prisma.User$ChannelMentionsArgs<ExtArgs>
-  DMMentions?: boolean | Prisma.User$DMMentionsArgs<ExtArgs>
+  TextChannelMessages?: boolean | Prisma.User$TextChannelMessagesArgs<ExtArgs>
+  SentFriendships?: boolean | Prisma.User$SentFriendshipsArgs<ExtArgs>
+  ReceivedFriendships?: boolean | Prisma.User$ReceivedFriendshipsArgs<ExtArgs>
+  SentDMs?: boolean | Prisma.User$SentDMsArgs<ExtArgs>
+  ReceivedDMs?: boolean | Prisma.User$ReceivedDMsArgs<ExtArgs>
+  DMMessages?: boolean | Prisma.User$DMMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1462,21 +1698,25 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    Workspaces: Prisma.$WorkspaceMemberPayload<ExtArgs>[]
+    OwnedChannels: Prisma.$ChannelPayload<ExtArgs>[]
     ChannelMembers: Prisma.$ChannelMemberPayload<ExtArgs>[]
-    ChannelChats: Prisma.$ChannelChatPayload<ExtArgs>[]
-    DMInit: Prisma.$DMPayload<ExtArgs>[]
-    DMReceived: Prisma.$DMPayload<ExtArgs>[]
-    DMChats: Prisma.$DMChatPayload<ExtArgs>[]
-    ChannelMentions: Prisma.$ChannelMentionPayload<ExtArgs>[]
-    DMMentions: Prisma.$DMMentionPayload<ExtArgs>[]
+    TextChannelMessages: Prisma.$TextChannelMessagePayload<ExtArgs>[]
+    SentFriendships: Prisma.$FriendshipPayload<ExtArgs>[]
+    ReceivedFriendships: Prisma.$FriendshipPayload<ExtArgs>[]
+    SentDMs: Prisma.$DirectMessagePayload<ExtArgs>[]
+    ReceivedDMs: Prisma.$DirectMessagePayload<ExtArgs>[]
+    DMMessages: Prisma.$DMMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     email: string
     nickname: string
     password: string
+    avatar: string | null
+    statusMessage: string | null
     hashedRefreshToken: string | null
+    isOnline: boolean
+    lastSeenAt: Date | null
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -1874,14 +2114,14 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  Workspaces<T extends Prisma.User$WorkspacesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$WorkspacesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkspaceMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  OwnedChannels<T extends Prisma.User$OwnedChannelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$OwnedChannelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ChannelMembers<T extends Prisma.User$ChannelMembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ChannelMembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  ChannelChats<T extends Prisma.User$ChannelChatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ChannelChatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  DMInit<T extends Prisma.User$DMInitArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$DMInitArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DMPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  DMReceived<T extends Prisma.User$DMReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$DMReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DMPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  DMChats<T extends Prisma.User$DMChatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$DMChatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DMChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  ChannelMentions<T extends Prisma.User$ChannelMentionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ChannelMentionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelMentionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  DMMentions<T extends Prisma.User$DMMentionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$DMMentionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DMMentionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  TextChannelMessages<T extends Prisma.User$TextChannelMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$TextChannelMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TextChannelMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  SentFriendships<T extends Prisma.User$SentFriendshipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$SentFriendshipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FriendshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ReceivedFriendships<T extends Prisma.User$ReceivedFriendshipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ReceivedFriendshipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FriendshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  SentDMs<T extends Prisma.User$SentDMsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$SentDMsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DirectMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ReceivedDMs<T extends Prisma.User$ReceivedDMsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ReceivedDMsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DirectMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  DMMessages<T extends Prisma.User$DMMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$DMMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DMMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1915,7 +2155,11 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly nickname: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly avatar: Prisma.FieldRef<"User", 'String'>
+  readonly statusMessage: Prisma.FieldRef<"User", 'String'>
   readonly hashedRefreshToken: Prisma.FieldRef<"User", 'String'>
+  readonly isOnline: Prisma.FieldRef<"User", 'Boolean'>
+  readonly lastSeenAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
@@ -2307,27 +2551,27 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.Workspaces
+ * User.OwnedChannels
  */
-export type User$WorkspacesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$OwnedChannelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the WorkspaceMember
+   * Select specific fields to fetch from the Channel
    */
-  select?: Prisma.WorkspaceMemberSelect<ExtArgs> | null
+  select?: Prisma.ChannelSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the WorkspaceMember
+   * Omit specific fields from the Channel
    */
-  omit?: Prisma.WorkspaceMemberOmit<ExtArgs> | null
+  omit?: Prisma.ChannelOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.WorkspaceMemberInclude<ExtArgs> | null
-  where?: Prisma.WorkspaceMemberWhereInput
-  orderBy?: Prisma.WorkspaceMemberOrderByWithRelationInput | Prisma.WorkspaceMemberOrderByWithRelationInput[]
-  cursor?: Prisma.WorkspaceMemberWhereUniqueInput
+  include?: Prisma.ChannelInclude<ExtArgs> | null
+  where?: Prisma.ChannelWhereInput
+  orderBy?: Prisma.ChannelOrderByWithRelationInput | Prisma.ChannelOrderByWithRelationInput[]
+  cursor?: Prisma.ChannelWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.WorkspaceMemberScalarFieldEnum | Prisma.WorkspaceMemberScalarFieldEnum[]
+  distinct?: Prisma.ChannelScalarFieldEnum | Prisma.ChannelScalarFieldEnum[]
 }
 
 /**
@@ -2355,147 +2599,147 @@ export type User$ChannelMembersArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * User.ChannelChats
+ * User.TextChannelMessages
  */
-export type User$ChannelChatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$TextChannelMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ChannelChat
+   * Select specific fields to fetch from the TextChannelMessage
    */
-  select?: Prisma.ChannelChatSelect<ExtArgs> | null
+  select?: Prisma.TextChannelMessageSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ChannelChat
+   * Omit specific fields from the TextChannelMessage
    */
-  omit?: Prisma.ChannelChatOmit<ExtArgs> | null
+  omit?: Prisma.TextChannelMessageOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ChannelChatInclude<ExtArgs> | null
-  where?: Prisma.ChannelChatWhereInput
-  orderBy?: Prisma.ChannelChatOrderByWithRelationInput | Prisma.ChannelChatOrderByWithRelationInput[]
-  cursor?: Prisma.ChannelChatWhereUniqueInput
+  include?: Prisma.TextChannelMessageInclude<ExtArgs> | null
+  where?: Prisma.TextChannelMessageWhereInput
+  orderBy?: Prisma.TextChannelMessageOrderByWithRelationInput | Prisma.TextChannelMessageOrderByWithRelationInput[]
+  cursor?: Prisma.TextChannelMessageWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ChannelChatScalarFieldEnum | Prisma.ChannelChatScalarFieldEnum[]
+  distinct?: Prisma.TextChannelMessageScalarFieldEnum | Prisma.TextChannelMessageScalarFieldEnum[]
 }
 
 /**
- * User.DMInit
+ * User.SentFriendships
  */
-export type User$DMInitArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$SentFriendshipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DM
+   * Select specific fields to fetch from the Friendship
    */
-  select?: Prisma.DMSelect<ExtArgs> | null
+  select?: Prisma.FriendshipSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DM
+   * Omit specific fields from the Friendship
    */
-  omit?: Prisma.DMOmit<ExtArgs> | null
+  omit?: Prisma.FriendshipOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DMInclude<ExtArgs> | null
-  where?: Prisma.DMWhereInput
-  orderBy?: Prisma.DMOrderByWithRelationInput | Prisma.DMOrderByWithRelationInput[]
-  cursor?: Prisma.DMWhereUniqueInput
+  include?: Prisma.FriendshipInclude<ExtArgs> | null
+  where?: Prisma.FriendshipWhereInput
+  orderBy?: Prisma.FriendshipOrderByWithRelationInput | Prisma.FriendshipOrderByWithRelationInput[]
+  cursor?: Prisma.FriendshipWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.DMScalarFieldEnum | Prisma.DMScalarFieldEnum[]
+  distinct?: Prisma.FriendshipScalarFieldEnum | Prisma.FriendshipScalarFieldEnum[]
 }
 
 /**
- * User.DMReceived
+ * User.ReceivedFriendships
  */
-export type User$DMReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$ReceivedFriendshipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DM
+   * Select specific fields to fetch from the Friendship
    */
-  select?: Prisma.DMSelect<ExtArgs> | null
+  select?: Prisma.FriendshipSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DM
+   * Omit specific fields from the Friendship
    */
-  omit?: Prisma.DMOmit<ExtArgs> | null
+  omit?: Prisma.FriendshipOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DMInclude<ExtArgs> | null
-  where?: Prisma.DMWhereInput
-  orderBy?: Prisma.DMOrderByWithRelationInput | Prisma.DMOrderByWithRelationInput[]
-  cursor?: Prisma.DMWhereUniqueInput
+  include?: Prisma.FriendshipInclude<ExtArgs> | null
+  where?: Prisma.FriendshipWhereInput
+  orderBy?: Prisma.FriendshipOrderByWithRelationInput | Prisma.FriendshipOrderByWithRelationInput[]
+  cursor?: Prisma.FriendshipWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.DMScalarFieldEnum | Prisma.DMScalarFieldEnum[]
+  distinct?: Prisma.FriendshipScalarFieldEnum | Prisma.FriendshipScalarFieldEnum[]
 }
 
 /**
- * User.DMChats
+ * User.SentDMs
  */
-export type User$DMChatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$SentDMsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DMChat
+   * Select specific fields to fetch from the DirectMessage
    */
-  select?: Prisma.DMChatSelect<ExtArgs> | null
+  select?: Prisma.DirectMessageSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DMChat
+   * Omit specific fields from the DirectMessage
    */
-  omit?: Prisma.DMChatOmit<ExtArgs> | null
+  omit?: Prisma.DirectMessageOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DMChatInclude<ExtArgs> | null
-  where?: Prisma.DMChatWhereInput
-  orderBy?: Prisma.DMChatOrderByWithRelationInput | Prisma.DMChatOrderByWithRelationInput[]
-  cursor?: Prisma.DMChatWhereUniqueInput
+  include?: Prisma.DirectMessageInclude<ExtArgs> | null
+  where?: Prisma.DirectMessageWhereInput
+  orderBy?: Prisma.DirectMessageOrderByWithRelationInput | Prisma.DirectMessageOrderByWithRelationInput[]
+  cursor?: Prisma.DirectMessageWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.DMChatScalarFieldEnum | Prisma.DMChatScalarFieldEnum[]
+  distinct?: Prisma.DirectMessageScalarFieldEnum | Prisma.DirectMessageScalarFieldEnum[]
 }
 
 /**
- * User.ChannelMentions
+ * User.ReceivedDMs
  */
-export type User$ChannelMentionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$ReceivedDMsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ChannelMention
+   * Select specific fields to fetch from the DirectMessage
    */
-  select?: Prisma.ChannelMentionSelect<ExtArgs> | null
+  select?: Prisma.DirectMessageSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ChannelMention
+   * Omit specific fields from the DirectMessage
    */
-  omit?: Prisma.ChannelMentionOmit<ExtArgs> | null
+  omit?: Prisma.DirectMessageOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ChannelMentionInclude<ExtArgs> | null
-  where?: Prisma.ChannelMentionWhereInput
-  orderBy?: Prisma.ChannelMentionOrderByWithRelationInput | Prisma.ChannelMentionOrderByWithRelationInput[]
-  cursor?: Prisma.ChannelMentionWhereUniqueInput
+  include?: Prisma.DirectMessageInclude<ExtArgs> | null
+  where?: Prisma.DirectMessageWhereInput
+  orderBy?: Prisma.DirectMessageOrderByWithRelationInput | Prisma.DirectMessageOrderByWithRelationInput[]
+  cursor?: Prisma.DirectMessageWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ChannelMentionScalarFieldEnum | Prisma.ChannelMentionScalarFieldEnum[]
+  distinct?: Prisma.DirectMessageScalarFieldEnum | Prisma.DirectMessageScalarFieldEnum[]
 }
 
 /**
- * User.DMMentions
+ * User.DMMessages
  */
-export type User$DMMentionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$DMMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DMMention
+   * Select specific fields to fetch from the DMMessage
    */
-  select?: Prisma.DMMentionSelect<ExtArgs> | null
+  select?: Prisma.DMMessageSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DMMention
+   * Omit specific fields from the DMMessage
    */
-  omit?: Prisma.DMMentionOmit<ExtArgs> | null
+  omit?: Prisma.DMMessageOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DMMentionInclude<ExtArgs> | null
-  where?: Prisma.DMMentionWhereInput
-  orderBy?: Prisma.DMMentionOrderByWithRelationInput | Prisma.DMMentionOrderByWithRelationInput[]
-  cursor?: Prisma.DMMentionWhereUniqueInput
+  include?: Prisma.DMMessageInclude<ExtArgs> | null
+  where?: Prisma.DMMessageWhereInput
+  orderBy?: Prisma.DMMessageOrderByWithRelationInput | Prisma.DMMessageOrderByWithRelationInput[]
+  cursor?: Prisma.DMMessageWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.DMMentionScalarFieldEnum | Prisma.DMMentionScalarFieldEnum[]
+  distinct?: Prisma.DMMessageScalarFieldEnum | Prisma.DMMessageScalarFieldEnum[]
 }
 
 /**

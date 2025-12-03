@@ -6,6 +6,7 @@ import { LoggingMiddleware } from './middlewares/logging.middleware';
 import { AuthModule } from './routers/auth/auth.module';
 import { ChannelsModule } from './routers/channels/channels.module';
 import { DmsModule } from './routers/dms/dms.module';
+import { FriendsModule } from './routers/friends/friends.module';
 import { ChatModule } from './gateways/chat/chat.module';
 
 // // 같이 외부에서 비밀키 가져올때 사용
@@ -21,7 +22,7 @@ import { ChatModule } from './gateways/chat/chat.module';
 
 	// imports: [ConfigModule.forRoot({ isGlobal: true }), UsersModule, WorkspacesModule, ChannelsModule, DmsModule],
 	// imports: [ConfigModule.forRoot({ isGlobal: true, envFilePath: `.env.${process.env.NODE_ENV || 'development'}` }), UsersModule, WorkspacesModule, ChannelsModule, DmsModule],
-	imports: [ConfigModule.forRoot({ isGlobal: true }), AuthModule, ChannelsModule, DmsModule, ChatModule],
+	imports: [ConfigModule.forRoot({ isGlobal: true }), AuthModule, ChannelsModule, DmsModule, FriendsModule, ChatModule],
 	// nest g co board 로 Controller로 생성하면 자동으로 model 안에 Controllers 배열안에 추가
 	// 만약 module이 만들어져 있었더라면 imports 배열안에 BoardModule이 추가가되고 Controllers배열안에는 추가 X
 	// 그래서 항상 controller를 먼저 생성할 것인지 module을 먼저 생성할 것인지 생각하기

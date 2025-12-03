@@ -1,67 +1,84 @@
+// src/routers/channels/dto/channel-response.dto.ts
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ChannelResponseDto {
 	@ApiProperty({ example: 1, description: '채널 ID' })
 	id: number;
 
-	@ApiProperty({ example: '일반', description: '채널 이름' })
+	@ApiProperty({ example: '프론트엔드 스터디', description: '채널 이름' })
 	name: string;
 
-	@ApiProperty({ example: false, description: '비공개 여부' })
-	private: boolean;
+	@ApiProperty({ example: 'React, Vue, Angular 스터디 그룹', description: '채널 설명', required: false })
+	description?: string;
 
-	@ApiProperty({ example: 10, description: '멤버 수' })
+	@ApiProperty({ example: 'react', description: '아이콘', required: false })
+	icon?: string;
+
+	@ApiProperty({ example: 'language', description: '아이콘 타입', required: false })
+	iconType?: string;
+
+	@ApiProperty({ example: '#61DAFB', description: '아이콘 색상', required: false })
+	iconColor?: string;
+
+	@ApiProperty({ example: 1, description: '방장 ID' })
+	ownerId: number;
+
+	@ApiProperty({ example: 'nickname123', description: '방장 닉네임', required: false })
+	ownerName?: string;
+
+	@ApiProperty({ example: 5, description: '멤버 수' })
 	memberCount: number;
 
-	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일시' })
+	@ApiProperty({ example: 3, description: '텍스트 채널 수', required: false })
+	textChannelCount?: number;
+
+	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일' })
 	createdAt: Date;
 }
 
-export class ChannelDetailResponseDto {
-	@ApiProperty({ example: 1, description: '채널 ID' })
+export class TextChannelResponseDto {
+	@ApiProperty({ example: 1, description: '텍스트 채널 ID' })
 	id: number;
 
-	@ApiProperty({ example: '일반', description: '채널 이름' })
+	@ApiProperty({ example: '일반', description: '텍스트 채널 이름' })
 	name: string;
 
-	@ApiProperty({ example: false, description: '비공개 여부' })
-	private: boolean;
+	@ApiProperty({ example: 1, description: '채널 ID' })
+	channelId: number;
 
-	@ApiProperty({ example: 1, description: '워크스페이스 ID' })
-	workspaceId: number;
-
-	@ApiProperty({ example: '프론트엔드 스터디', description: '워크스페이스 이름' })
-	workspaceName: string;
-
-	@ApiProperty({ type: [Object], description: '멤버 목록' })
-	members: MemberDto[];
-
-	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일시' })
+	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일' })
 	createdAt: Date;
 }
 
-export class MemberDto {
-	@ApiProperty({ example: 1, description: '사용자 ID' })
-	id: number;
-
-	@ApiProperty({ example: '홍길동', description: '닉네임' })
-	nickname: string;
-
-	@ApiProperty({ example: 'user@example.com', description: '이메일' })
-	email: string;
-}
-
-export class MessageResponseDto {
+export class ChannelMessageResponseDto {
 	@ApiProperty({ example: 1, description: '메시지 ID' })
 	id: number;
 
 	@ApiProperty({ example: '안녕하세요!', description: '메시지 내용' })
 	content: string;
 
-	@ApiProperty({ type: MemberDto, description: '작성자 정보' })
-	user: MemberDto;
+	@ApiProperty({ description: '작성자 정보' })
+	user: {
+		id: number;
+		nickname: string;
+		email: string;
+		avatar?: string;
+		isOnline: boolean;
+	};
 
-	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일시' })
+	@ApiProperty({ example: false, description: '수정 여부' })
+	isEdited: boolean;
+
+	@ApiProperty({ description: '답장 대상 메시지 정보', required: false })
+	replyTo?: {
+		id: number;
+		content: string;
+		userName: string;
+	};
+
+	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일' })
 	createdAt: Date;
-}
 
+	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '수정일', required: false })
+	updatedAt?: Date;
+}

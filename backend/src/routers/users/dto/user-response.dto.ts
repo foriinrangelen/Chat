@@ -1,3 +1,4 @@
+// src/routers/users/dto/user-response.dto.ts
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserResponseDto {
@@ -7,41 +8,41 @@ export class UserResponseDto {
 	@ApiProperty({ example: 'user@example.com', description: '이메일' })
 	email: string;
 
-	@ApiProperty({ example: '홍길동', description: '닉네임' })
+	@ApiProperty({ example: 'nickname123', description: '닉네임' })
 	nickname: string;
 
-	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일시' })
-	createdAt: Date;
+	@ApiProperty({ example: 'https://example.com/avatar.jpg', description: '프로필 이미지 URL', required: false })
+	avatar?: string;
 
-	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '수정일시' })
-	updatedAt: Date;
+	@ApiProperty({ example: '열심히 코딩 중!', description: '상태 메시지', required: false })
+	statusMessage?: string;
+
+	@ApiProperty({ example: true, description: '온라인 상태' })
+	isOnline: boolean;
+
+	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '마지막 접속 시간', required: false })
+	lastSeenAt?: Date;
+
+	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일' })
+	createdAt: Date;
 }
 
-export class UserProfileResponseDto {
+export class UserBasicResponseDto {
 	@ApiProperty({ example: 1, description: '사용자 ID' })
 	id: number;
+
+	@ApiProperty({ example: 'nickname123', description: '닉네임' })
+	nickname: string;
 
 	@ApiProperty({ example: 'user@example.com', description: '이메일' })
 	email: string;
 
-	@ApiProperty({ example: '홍길동', description: '닉네임' })
-	nickname: string;
+	@ApiProperty({ example: 'https://example.com/avatar.jpg', description: '프로필 이미지 URL', required: false })
+	avatar?: string;
 
-	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일시' })
-	createdAt: Date;
+	@ApiProperty({ example: true, description: '온라인 상태' })
+	isOnline: boolean;
 
-	@ApiProperty({ type: [Object], description: '참여 중인 워크스페이스 목록' })
-	workspaces: WorkspaceInfoDto[];
+	@ApiProperty({ example: '열심히 코딩 중!', description: '상태 메시지', required: false })
+	statusMessage?: string;
 }
-
-export class WorkspaceInfoDto {
-	@ApiProperty({ example: 1, description: '워크스페이스 ID' })
-	id: number;
-
-	@ApiProperty({ example: '프론트엔드 스터디', description: '워크스페이스 이름' })
-	name: string;
-
-	@ApiProperty({ example: 'frontend-study', description: '워크스페이스 URL' })
-	url: string;
-}
-

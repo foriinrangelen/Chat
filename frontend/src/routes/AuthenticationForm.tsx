@@ -13,13 +13,11 @@ import {
   Text,
   TextInput,
   Alert,
-  Center,
   Container,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { upperFirst, useToggle } from "@mantine/hooks";
 import { GoogleButton } from "@components/common/GoogleButton";
-// import { TwitterButton } from "@components/common/TwitterButton";
 import { KakaoButton } from "@/components/common/KakaoButton";
 import { useLogin, useSignup } from "@hooks/useAuth";
 import { AxiosError } from "axios";
@@ -30,9 +28,6 @@ export const Route = createFileRoute("/AuthenticationForm")({
 });
 
 function AuthenticationForm(props: PaperProps) {
-  // const [type, toggle] = useToggle(["login", "register"]);
-  // const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
-  // const [type, toggle] = useToggle(["로그인", "회원가입"]);
   const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
 
   const loginMutation = useLogin();
@@ -46,35 +41,34 @@ function AuthenticationForm(props: PaperProps) {
       terms: true,
     },
 
-    // 개발 중: 유효성 검사 비활성화
-    // validate: {
-    //   email: (val) =>
-    //     /^\S+@\S+$/.test(val) ? null : "올바른 이메일을 입력하세요",
-    //   nickname: (val) => {
-    //     if (type === "register" && val.length < 1) {
-    //       return "닉네임을 입력하세요";
-    //     }
-    //     if (type === "register" && val.length > 20) {
-    //       return "닉네임은 20자 이하여야 합니다";
-    //     }
-    //     return null;
-    //   },
-    //   password: (val) => {
-    //     if (val.length < 8) {
-    //       return "비밀번호는 최소 8자 이상이어야 합니다";
-    //     }
-    //     if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])/.test(val)) {
-    //       return "비밀번호는 문자, 숫자, 특수문자를 포함해야 합니다";
-    //     }
-    //     return null;
-    //   },
-    //   terms: (val) => {
-    //     if (type === "register" && !val) {
-    //       return "이용약관에 동의해주세요";
-    //     }
-    //     return null;
-    //   },
-    // },
+    validate: {
+      email: (val) =>
+        /^\S+@\S+$/.test(val) ? null : "올바른 이메일을 입력하세요",
+      nickname: (val) => {
+        if (type === "register" && val.length < 1) {
+          return "닉네임을 입력하세요";
+        }
+        if (type === "register" && val.length > 20) {
+          return "닉네임은 20자 이하여야 합니다";
+        }
+        return null;
+      },
+      password: (val) => {
+        if (val.length < 8) {
+          return "비밀번호는 최소 8자 이상이어야 합니다";
+        }
+        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])/.test(val)) {
+          return "비밀번호는 문자, 숫자, 특수문자를 포함해야 합니다";
+        }
+        return null;
+      },
+      terms: (val) => {
+        if (type === "register" && !val) {
+          return "이용약관에 동의해주세요";
+        }
+        return null;
+      },
+    },
   });
 
   const handleSubmit = form.onSubmit((values) => {
@@ -110,7 +104,6 @@ function AuthenticationForm(props: PaperProps) {
 
   return (
     <Container size="sm">
-      {/* <Center h="calc(100vh - 232px)"> */}
       <Paper radius="md" p="lg" withBorder {...props}>
         <Text size="lg" fw={500}>
           <Box ta="center">{type === "login" ? "로그인" : "회원가입"}</Box>
@@ -202,7 +195,6 @@ function AuthenticationForm(props: PaperProps) {
           </Group>
         </form>
       </Paper>
-      {/* </Center> */}
     </Container>
   );
 }

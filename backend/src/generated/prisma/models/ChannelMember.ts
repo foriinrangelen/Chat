@@ -39,22 +39,22 @@ export type ChannelMemberSumAggregateOutputType = {
 export type ChannelMemberMinAggregateOutputType = {
   channelId: number | null
   userId: number | null
+  role: string | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type ChannelMemberMaxAggregateOutputType = {
   channelId: number | null
   userId: number | null
+  role: string | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type ChannelMemberCountAggregateOutputType = {
   channelId: number
   userId: number
+  role: number
   createdAt: number
-  updatedAt: number
   _all: number
 }
 
@@ -72,22 +72,22 @@ export type ChannelMemberSumAggregateInputType = {
 export type ChannelMemberMinAggregateInputType = {
   channelId?: true
   userId?: true
+  role?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type ChannelMemberMaxAggregateInputType = {
   channelId?: true
   userId?: true
+  role?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type ChannelMemberCountAggregateInputType = {
   channelId?: true
   userId?: true
+  role?: true
   createdAt?: true
-  updatedAt?: true
   _all?: true
 }
 
@@ -180,8 +180,8 @@ export type ChannelMemberGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type ChannelMemberGroupByOutputType = {
   channelId: number
   userId: number
+  role: string
   createdAt: Date
-  updatedAt: Date
   _count: ChannelMemberCountAggregateOutputType | null
   _avg: ChannelMemberAvgAggregateOutputType | null
   _sum: ChannelMemberSumAggregateOutputType | null
@@ -210,8 +210,8 @@ export type ChannelMemberWhereInput = {
   NOT?: Prisma.ChannelMemberWhereInput | Prisma.ChannelMemberWhereInput[]
   channelId?: Prisma.IntFilter<"ChannelMember"> | number
   userId?: Prisma.IntFilter<"ChannelMember"> | number
+  role?: Prisma.StringFilter<"ChannelMember"> | string
   createdAt?: Prisma.DateTimeFilter<"ChannelMember"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"ChannelMember"> | Date | string
   Channel?: Prisma.XOR<Prisma.ChannelScalarRelationFilter, Prisma.ChannelWhereInput>
   User?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -219,8 +219,8 @@ export type ChannelMemberWhereInput = {
 export type ChannelMemberOrderByWithRelationInput = {
   channelId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   Channel?: Prisma.ChannelOrderByWithRelationInput
   User?: Prisma.UserOrderByWithRelationInput
 }
@@ -232,8 +232,8 @@ export type ChannelMemberWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ChannelMemberWhereInput | Prisma.ChannelMemberWhereInput[]
   channelId?: Prisma.IntFilter<"ChannelMember"> | number
   userId?: Prisma.IntFilter<"ChannelMember"> | number
+  role?: Prisma.StringFilter<"ChannelMember"> | string
   createdAt?: Prisma.DateTimeFilter<"ChannelMember"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"ChannelMember"> | Date | string
   Channel?: Prisma.XOR<Prisma.ChannelScalarRelationFilter, Prisma.ChannelWhereInput>
   User?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "channelId_userId">
@@ -241,8 +241,8 @@ export type ChannelMemberWhereUniqueInput = Prisma.AtLeast<{
 export type ChannelMemberOrderByWithAggregationInput = {
   channelId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   _count?: Prisma.ChannelMemberCountOrderByAggregateInput
   _avg?: Prisma.ChannelMemberAvgOrderByAggregateInput
   _max?: Prisma.ChannelMemberMaxOrderByAggregateInput
@@ -256,13 +256,13 @@ export type ChannelMemberScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ChannelMemberScalarWhereWithAggregatesInput | Prisma.ChannelMemberScalarWhereWithAggregatesInput[]
   channelId?: Prisma.IntWithAggregatesFilter<"ChannelMember"> | number
   userId?: Prisma.IntWithAggregatesFilter<"ChannelMember"> | number
+  role?: Prisma.StringWithAggregatesFilter<"ChannelMember"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ChannelMember"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ChannelMember"> | Date | string
 }
 
 export type ChannelMemberCreateInput = {
+  role?: string
   createdAt?: Date | string
-  updatedAt?: Date | string
   Channel: Prisma.ChannelCreateNestedOneWithoutMembersInput
   User: Prisma.UserCreateNestedOneWithoutChannelMembersInput
 }
@@ -270,13 +270,13 @@ export type ChannelMemberCreateInput = {
 export type ChannelMemberUncheckedCreateInput = {
   channelId: number
   userId: number
+  role?: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type ChannelMemberUpdateInput = {
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Channel?: Prisma.ChannelUpdateOneRequiredWithoutMembersNestedInput
   User?: Prisma.UserUpdateOneRequiredWithoutChannelMembersNestedInput
 }
@@ -284,27 +284,27 @@ export type ChannelMemberUpdateInput = {
 export type ChannelMemberUncheckedUpdateInput = {
   channelId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ChannelMemberCreateManyInput = {
   channelId: number
   userId: number
+  role?: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type ChannelMemberUpdateManyMutationInput = {
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ChannelMemberUncheckedUpdateManyInput = {
   channelId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ChannelMemberListRelationFilter = {
@@ -325,8 +325,8 @@ export type ChannelMemberChannelIdUserIdCompoundUniqueInput = {
 export type ChannelMemberCountOrderByAggregateInput = {
   channelId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type ChannelMemberAvgOrderByAggregateInput = {
@@ -337,15 +337,15 @@ export type ChannelMemberAvgOrderByAggregateInput = {
 export type ChannelMemberMaxOrderByAggregateInput = {
   channelId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type ChannelMemberMinOrderByAggregateInput = {
   channelId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type ChannelMemberSumOrderByAggregateInput = {
@@ -438,15 +438,15 @@ export type ChannelMemberUncheckedUpdateManyWithoutChannelNestedInput = {
 }
 
 export type ChannelMemberCreateWithoutUserInput = {
+  role?: string
   createdAt?: Date | string
-  updatedAt?: Date | string
   Channel: Prisma.ChannelCreateNestedOneWithoutMembersInput
 }
 
 export type ChannelMemberUncheckedCreateWithoutUserInput = {
   channelId: number
+  role?: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type ChannelMemberCreateOrConnectWithoutUserInput = {
@@ -481,20 +481,20 @@ export type ChannelMemberScalarWhereInput = {
   NOT?: Prisma.ChannelMemberScalarWhereInput | Prisma.ChannelMemberScalarWhereInput[]
   channelId?: Prisma.IntFilter<"ChannelMember"> | number
   userId?: Prisma.IntFilter<"ChannelMember"> | number
+  role?: Prisma.StringFilter<"ChannelMember"> | string
   createdAt?: Prisma.DateTimeFilter<"ChannelMember"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"ChannelMember"> | Date | string
 }
 
 export type ChannelMemberCreateWithoutChannelInput = {
+  role?: string
   createdAt?: Date | string
-  updatedAt?: Date | string
   User: Prisma.UserCreateNestedOneWithoutChannelMembersInput
 }
 
 export type ChannelMemberUncheckedCreateWithoutChannelInput = {
   userId: number
+  role?: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type ChannelMemberCreateOrConnectWithoutChannelInput = {
@@ -525,50 +525,50 @@ export type ChannelMemberUpdateManyWithWhereWithoutChannelInput = {
 
 export type ChannelMemberCreateManyUserInput = {
   channelId: number
+  role?: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type ChannelMemberUpdateWithoutUserInput = {
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Channel?: Prisma.ChannelUpdateOneRequiredWithoutMembersNestedInput
 }
 
 export type ChannelMemberUncheckedUpdateWithoutUserInput = {
   channelId?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ChannelMemberUncheckedUpdateManyWithoutUserInput = {
   channelId?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ChannelMemberCreateManyChannelInput = {
   userId: number
+  role?: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type ChannelMemberUpdateWithoutChannelInput = {
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   User?: Prisma.UserUpdateOneRequiredWithoutChannelMembersNestedInput
 }
 
 export type ChannelMemberUncheckedUpdateWithoutChannelInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ChannelMemberUncheckedUpdateManyWithoutChannelInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -576,8 +576,8 @@ export type ChannelMemberUncheckedUpdateManyWithoutChannelInput = {
 export type ChannelMemberSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   channelId?: boolean
   userId?: boolean
+  role?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   Channel?: boolean | Prisma.ChannelDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["channelMember"]>
@@ -585,8 +585,8 @@ export type ChannelMemberSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type ChannelMemberSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   channelId?: boolean
   userId?: boolean
+  role?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   Channel?: boolean | Prisma.ChannelDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["channelMember"]>
@@ -594,8 +594,8 @@ export type ChannelMemberSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type ChannelMemberSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   channelId?: boolean
   userId?: boolean
+  role?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   Channel?: boolean | Prisma.ChannelDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["channelMember"]>
@@ -603,11 +603,11 @@ export type ChannelMemberSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type ChannelMemberSelectScalar = {
   channelId?: boolean
   userId?: boolean
+  role?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }
 
-export type ChannelMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"channelId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["channelMember"]>
+export type ChannelMemberOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"channelId" | "userId" | "role" | "createdAt", ExtArgs["result"]["channelMember"]>
 export type ChannelMemberInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Channel?: boolean | Prisma.ChannelDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -630,8 +630,8 @@ export type $ChannelMemberPayload<ExtArgs extends runtime.Types.Extensions.Inter
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     channelId: number
     userId: number
+    role: string
     createdAt: Date
-    updatedAt: Date
   }, ExtArgs["result"]["channelMember"]>
   composites: {}
 }
@@ -1059,8 +1059,8 @@ export interface Prisma__ChannelMemberClient<T, Null = never, ExtArgs extends ru
 export interface ChannelMemberFieldRefs {
   readonly channelId: Prisma.FieldRef<"ChannelMember", 'Int'>
   readonly userId: Prisma.FieldRef<"ChannelMember", 'Int'>
+  readonly role: Prisma.FieldRef<"ChannelMember", 'String'>
   readonly createdAt: Prisma.FieldRef<"ChannelMember", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"ChannelMember", 'DateTime'>
 }
     
 
