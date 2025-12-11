@@ -2,7 +2,7 @@
 import { ForbiddenException, Injectable, ConflictException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { JoinDto } from './dto/join.dto';
+import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { prisma } from '../../lib/prisma';
@@ -17,14 +17,12 @@ export class AuthService {
 	/**
 	 * 회원가입
 	 */
-	async signup(dto: JoinDto) {
+	async signup(dto: SignupDto) {
 		// 이메일 중복 체크
 		const userExists = await prisma.user.findUnique({ where: { email: dto.email } });
 
 		// 유저가 존재한다면
-		if (userExists) {
-			throw new ConflictException('이미 존재하는 이메일입니다.');
-		}
+		if (userExists) throw new ConflictException('이미 존재하는 이메일입니다.');
 
 		// 비밀번호 해싱
 		const hashedPassword = await this.hashData(dto.password);
@@ -86,21 +84,16 @@ export class AuthService {
 	 * 토큰 재발급
 	 */
 	async refreshTokens(userId: number, refreshToken: string) {
-		const user = await prisma.user.findUnique({
-			where: { id: userId },
-		});
+		const user = await prisma.user.findUnique({ where: { id: userId } });
 
-		if (!user || !user.hashedRefreshToken) {
-			throw new ForbiddenException('Access Denied');
-		}
+		if (!user || !user.hashedRefreshToken) throw new ForbiddenException('Access Denied');
 
 		const refreshTokenMatches = await bcrypt.compare(refreshToken, user.hashedRefreshToken);
 
-		if (!refreshTokenMatches) {
-			throw new ForbiddenException('Access Denied');
-		}
+		if (!refreshTokenMatches) throw new ForbiddenException('Access Denied');
 
 		const tokens = await this.getTokens(user.id, user.email);
+
 		await this.updateRefreshToken(user.id, tokens.refreshToken);
 
 		return tokens;

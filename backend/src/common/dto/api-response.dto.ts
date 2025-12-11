@@ -20,4 +20,3 @@ export class IdResponseDto {
 	@ApiProperty({ example: 1, description: '생성된 리소스 ID' })
 	id: number;
 }
-

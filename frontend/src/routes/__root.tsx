@@ -4,7 +4,7 @@ import {
   useNavigate,
   redirect,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+// import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { AppShell, Container, Box, ActionIcon } from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useState, useCallback, useEffect } from "react";
@@ -130,6 +130,7 @@ function RootLayout() {
           <Sidebar
             onClose={isMobile ? closeMobile : undefined}
             onLogout={handleLogout}
+            collapsed={!desktopOpened}
           />
 
           {/* 데스크톱: 리사이즈 핸들 */}

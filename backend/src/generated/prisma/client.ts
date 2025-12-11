@@ -60,20 +60,30 @@ export type Channel = Prisma.ChannelModel
  */
 export type ChannelMember = Prisma.ChannelMemberModel
 /**
- * Model TextChannel
+ * Model Workspace
  * 
  */
-export type TextChannel = Prisma.TextChannelModel
+export type Workspace = Prisma.WorkspaceModel
 /**
- * Model TextChannelMessage
+ * Model WorkspaceMessage
  * 
  */
-export type TextChannelMessage = Prisma.TextChannelMessageModel
+export type WorkspaceMessage = Prisma.WorkspaceMessageModel
 /**
- * Model DirectMessage
+ * Model WorkspaceReadStatus
  * 
  */
-export type DirectMessage = Prisma.DirectMessageModel
+export type WorkspaceReadStatus = Prisma.WorkspaceReadStatusModel
+/**
+ * Model DMRoom
+ * 
+ */
+export type DMRoom = Prisma.DMRoomModel
+/**
+ * Model DMParticipant
+ * 
+ */
+export type DMParticipant = Prisma.DMParticipantModel
 /**
  * Model DMMessage
  * 

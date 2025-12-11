@@ -41,8 +41,7 @@ export type ChannelMinAggregateOutputType = {
   name: string | null
   description: string | null
   icon: string | null
-  iconType: string | null
-  iconColor: string | null
+  inviteCode: string | null
   ownerId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -54,8 +53,7 @@ export type ChannelMaxAggregateOutputType = {
   name: string | null
   description: string | null
   icon: string | null
-  iconType: string | null
-  iconColor: string | null
+  inviteCode: string | null
   ownerId: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -67,8 +65,7 @@ export type ChannelCountAggregateOutputType = {
   name: number
   description: number
   icon: number
-  iconType: number
-  iconColor: number
+  inviteCode: number
   ownerId: number
   createdAt: number
   updatedAt: number
@@ -92,8 +89,7 @@ export type ChannelMinAggregateInputType = {
   name?: true
   description?: true
   icon?: true
-  iconType?: true
-  iconColor?: true
+  inviteCode?: true
   ownerId?: true
   createdAt?: true
   updatedAt?: true
@@ -105,8 +101,7 @@ export type ChannelMaxAggregateInputType = {
   name?: true
   description?: true
   icon?: true
-  iconType?: true
-  iconColor?: true
+  inviteCode?: true
   ownerId?: true
   createdAt?: true
   updatedAt?: true
@@ -118,8 +113,7 @@ export type ChannelCountAggregateInputType = {
   name?: true
   description?: true
   icon?: true
-  iconType?: true
-  iconColor?: true
+  inviteCode?: true
   ownerId?: true
   createdAt?: true
   updatedAt?: true
@@ -218,8 +212,7 @@ export type ChannelGroupByOutputType = {
   name: string
   description: string | null
   icon: string | null
-  iconType: string | null
-  iconColor: string | null
+  inviteCode: string
   ownerId: number
   createdAt: Date
   updatedAt: Date
@@ -254,15 +247,14 @@ export type ChannelWhereInput = {
   name?: Prisma.StringFilter<"Channel"> | string
   description?: Prisma.StringNullableFilter<"Channel"> | string | null
   icon?: Prisma.StringNullableFilter<"Channel"> | string | null
-  iconType?: Prisma.StringNullableFilter<"Channel"> | string | null
-  iconColor?: Prisma.StringNullableFilter<"Channel"> | string | null
+  inviteCode?: Prisma.StringFilter<"Channel"> | string
   ownerId?: Prisma.IntFilter<"Channel"> | number
   createdAt?: Prisma.DateTimeFilter<"Channel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Channel"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Channel"> | Date | string | null
   Owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   Members?: Prisma.ChannelMemberListRelationFilter
-  TextChannels?: Prisma.TextChannelListRelationFilter
+  Workspaces?: Prisma.WorkspaceListRelationFilter
 }
 
 export type ChannelOrderByWithRelationInput = {
@@ -270,43 +262,40 @@ export type ChannelOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   icon?: Prisma.SortOrderInput | Prisma.SortOrder
-  iconType?: Prisma.SortOrderInput | Prisma.SortOrder
-  iconColor?: Prisma.SortOrderInput | Prisma.SortOrder
+  inviteCode?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   Owner?: Prisma.UserOrderByWithRelationInput
   Members?: Prisma.ChannelMemberOrderByRelationAggregateInput
-  TextChannels?: Prisma.TextChannelOrderByRelationAggregateInput
+  Workspaces?: Prisma.WorkspaceOrderByRelationAggregateInput
 }
 
 export type ChannelWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  inviteCode?: string
   AND?: Prisma.ChannelWhereInput | Prisma.ChannelWhereInput[]
   OR?: Prisma.ChannelWhereInput[]
   NOT?: Prisma.ChannelWhereInput | Prisma.ChannelWhereInput[]
   name?: Prisma.StringFilter<"Channel"> | string
   description?: Prisma.StringNullableFilter<"Channel"> | string | null
   icon?: Prisma.StringNullableFilter<"Channel"> | string | null
-  iconType?: Prisma.StringNullableFilter<"Channel"> | string | null
-  iconColor?: Prisma.StringNullableFilter<"Channel"> | string | null
   ownerId?: Prisma.IntFilter<"Channel"> | number
   createdAt?: Prisma.DateTimeFilter<"Channel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Channel"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"Channel"> | Date | string | null
   Owner?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   Members?: Prisma.ChannelMemberListRelationFilter
-  TextChannels?: Prisma.TextChannelListRelationFilter
-}, "id">
+  Workspaces?: Prisma.WorkspaceListRelationFilter
+}, "id" | "inviteCode">
 
 export type ChannelOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   icon?: Prisma.SortOrderInput | Prisma.SortOrder
-  iconType?: Prisma.SortOrderInput | Prisma.SortOrder
-  iconColor?: Prisma.SortOrderInput | Prisma.SortOrder
+  inviteCode?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -326,8 +315,7 @@ export type ChannelScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Channel"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Channel"> | string | null
   icon?: Prisma.StringNullableWithAggregatesFilter<"Channel"> | string | null
-  iconType?: Prisma.StringNullableWithAggregatesFilter<"Channel"> | string | null
-  iconColor?: Prisma.StringNullableWithAggregatesFilter<"Channel"> | string | null
+  inviteCode?: Prisma.StringWithAggregatesFilter<"Channel"> | string
   ownerId?: Prisma.IntWithAggregatesFilter<"Channel"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Channel"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Channel"> | Date | string
@@ -338,14 +326,13 @@ export type ChannelCreateInput = {
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   Owner: Prisma.UserCreateNestedOneWithoutOwnedChannelsInput
   Members?: Prisma.ChannelMemberCreateNestedManyWithoutChannelInput
-  TextChannels?: Prisma.TextChannelCreateNestedManyWithoutChannelInput
+  Workspaces?: Prisma.WorkspaceCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelUncheckedCreateInput = {
@@ -353,28 +340,26 @@ export type ChannelUncheckedCreateInput = {
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   ownerId: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   Members?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutChannelInput
-  TextChannels?: Prisma.TextChannelUncheckedCreateNestedManyWithoutChannelInput
+  Workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Owner?: Prisma.UserUpdateOneRequiredWithoutOwnedChannelsNestedInput
   Members?: Prisma.ChannelMemberUpdateManyWithoutChannelNestedInput
-  TextChannels?: Prisma.TextChannelUpdateManyWithoutChannelNestedInput
+  Workspaces?: Prisma.WorkspaceUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelUncheckedUpdateInput = {
@@ -382,14 +367,13 @@ export type ChannelUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Members?: Prisma.ChannelMemberUncheckedUpdateManyWithoutChannelNestedInput
-  TextChannels?: Prisma.TextChannelUncheckedUpdateManyWithoutChannelNestedInput
+  Workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelCreateManyInput = {
@@ -397,8 +381,7 @@ export type ChannelCreateManyInput = {
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   ownerId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -409,8 +392,7 @@ export type ChannelUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -421,8 +403,7 @@ export type ChannelUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -444,8 +425,7 @@ export type ChannelCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-  iconType?: Prisma.SortOrder
-  iconColor?: Prisma.SortOrder
+  inviteCode?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -462,8 +442,7 @@ export type ChannelMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-  iconType?: Prisma.SortOrder
-  iconColor?: Prisma.SortOrder
+  inviteCode?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -475,8 +454,7 @@ export type ChannelMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   icon?: Prisma.SortOrder
-  iconType?: Prisma.SortOrder
-  iconColor?: Prisma.SortOrder
+  inviteCode?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -549,31 +527,30 @@ export type ChannelUpdateOneRequiredWithoutMembersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ChannelUpdateToOneWithWhereWithoutMembersInput, Prisma.ChannelUpdateWithoutMembersInput>, Prisma.ChannelUncheckedUpdateWithoutMembersInput>
 }
 
-export type ChannelCreateNestedOneWithoutTextChannelsInput = {
-  create?: Prisma.XOR<Prisma.ChannelCreateWithoutTextChannelsInput, Prisma.ChannelUncheckedCreateWithoutTextChannelsInput>
-  connectOrCreate?: Prisma.ChannelCreateOrConnectWithoutTextChannelsInput
+export type ChannelCreateNestedOneWithoutWorkspacesInput = {
+  create?: Prisma.XOR<Prisma.ChannelCreateWithoutWorkspacesInput, Prisma.ChannelUncheckedCreateWithoutWorkspacesInput>
+  connectOrCreate?: Prisma.ChannelCreateOrConnectWithoutWorkspacesInput
   connect?: Prisma.ChannelWhereUniqueInput
 }
 
-export type ChannelUpdateOneRequiredWithoutTextChannelsNestedInput = {
-  create?: Prisma.XOR<Prisma.ChannelCreateWithoutTextChannelsInput, Prisma.ChannelUncheckedCreateWithoutTextChannelsInput>
-  connectOrCreate?: Prisma.ChannelCreateOrConnectWithoutTextChannelsInput
-  upsert?: Prisma.ChannelUpsertWithoutTextChannelsInput
+export type ChannelUpdateOneRequiredWithoutWorkspacesNestedInput = {
+  create?: Prisma.XOR<Prisma.ChannelCreateWithoutWorkspacesInput, Prisma.ChannelUncheckedCreateWithoutWorkspacesInput>
+  connectOrCreate?: Prisma.ChannelCreateOrConnectWithoutWorkspacesInput
+  upsert?: Prisma.ChannelUpsertWithoutWorkspacesInput
   connect?: Prisma.ChannelWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ChannelUpdateToOneWithWhereWithoutTextChannelsInput, Prisma.ChannelUpdateWithoutTextChannelsInput>, Prisma.ChannelUncheckedUpdateWithoutTextChannelsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChannelUpdateToOneWithWhereWithoutWorkspacesInput, Prisma.ChannelUpdateWithoutWorkspacesInput>, Prisma.ChannelUncheckedUpdateWithoutWorkspacesInput>
 }
 
 export type ChannelCreateWithoutOwnerInput = {
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   Members?: Prisma.ChannelMemberCreateNestedManyWithoutChannelInput
-  TextChannels?: Prisma.TextChannelCreateNestedManyWithoutChannelInput
+  Workspaces?: Prisma.WorkspaceCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelUncheckedCreateWithoutOwnerInput = {
@@ -581,13 +558,12 @@ export type ChannelUncheckedCreateWithoutOwnerInput = {
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   Members?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutChannelInput
-  TextChannels?: Prisma.TextChannelUncheckedCreateNestedManyWithoutChannelInput
+  Workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelCreateOrConnectWithoutOwnerInput = {
@@ -624,8 +600,7 @@ export type ChannelScalarWhereInput = {
   name?: Prisma.StringFilter<"Channel"> | string
   description?: Prisma.StringNullableFilter<"Channel"> | string | null
   icon?: Prisma.StringNullableFilter<"Channel"> | string | null
-  iconType?: Prisma.StringNullableFilter<"Channel"> | string | null
-  iconColor?: Prisma.StringNullableFilter<"Channel"> | string | null
+  inviteCode?: Prisma.StringFilter<"Channel"> | string
   ownerId?: Prisma.IntFilter<"Channel"> | number
   createdAt?: Prisma.DateTimeFilter<"Channel"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Channel"> | Date | string
@@ -636,13 +611,12 @@ export type ChannelCreateWithoutMembersInput = {
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   Owner: Prisma.UserCreateNestedOneWithoutOwnedChannelsInput
-  TextChannels?: Prisma.TextChannelCreateNestedManyWithoutChannelInput
+  Workspaces?: Prisma.WorkspaceCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelUncheckedCreateWithoutMembersInput = {
@@ -650,13 +624,12 @@ export type ChannelUncheckedCreateWithoutMembersInput = {
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   ownerId: number
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
-  TextChannels?: Prisma.TextChannelUncheckedCreateNestedManyWithoutChannelInput
+  Workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutChannelInput
 }
 
 export type ChannelCreateOrConnectWithoutMembersInput = {
@@ -679,13 +652,12 @@ export type ChannelUpdateWithoutMembersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Owner?: Prisma.UserUpdateOneRequiredWithoutOwnedChannelsNestedInput
-  TextChannels?: Prisma.TextChannelUpdateManyWithoutChannelNestedInput
+  Workspaces?: Prisma.WorkspaceUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelUncheckedUpdateWithoutMembersInput = {
@@ -693,21 +665,19 @@ export type ChannelUncheckedUpdateWithoutMembersInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  TextChannels?: Prisma.TextChannelUncheckedUpdateManyWithoutChannelNestedInput
+  Workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutChannelNestedInput
 }
 
-export type ChannelCreateWithoutTextChannelsInput = {
+export type ChannelCreateWithoutWorkspacesInput = {
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -715,13 +685,12 @@ export type ChannelCreateWithoutTextChannelsInput = {
   Members?: Prisma.ChannelMemberCreateNestedManyWithoutChannelInput
 }
 
-export type ChannelUncheckedCreateWithoutTextChannelsInput = {
+export type ChannelUncheckedCreateWithoutWorkspacesInput = {
   id?: number
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   ownerId: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -729,28 +698,27 @@ export type ChannelUncheckedCreateWithoutTextChannelsInput = {
   Members?: Prisma.ChannelMemberUncheckedCreateNestedManyWithoutChannelInput
 }
 
-export type ChannelCreateOrConnectWithoutTextChannelsInput = {
+export type ChannelCreateOrConnectWithoutWorkspacesInput = {
   where: Prisma.ChannelWhereUniqueInput
-  create: Prisma.XOR<Prisma.ChannelCreateWithoutTextChannelsInput, Prisma.ChannelUncheckedCreateWithoutTextChannelsInput>
+  create: Prisma.XOR<Prisma.ChannelCreateWithoutWorkspacesInput, Prisma.ChannelUncheckedCreateWithoutWorkspacesInput>
 }
 
-export type ChannelUpsertWithoutTextChannelsInput = {
-  update: Prisma.XOR<Prisma.ChannelUpdateWithoutTextChannelsInput, Prisma.ChannelUncheckedUpdateWithoutTextChannelsInput>
-  create: Prisma.XOR<Prisma.ChannelCreateWithoutTextChannelsInput, Prisma.ChannelUncheckedCreateWithoutTextChannelsInput>
+export type ChannelUpsertWithoutWorkspacesInput = {
+  update: Prisma.XOR<Prisma.ChannelUpdateWithoutWorkspacesInput, Prisma.ChannelUncheckedUpdateWithoutWorkspacesInput>
+  create: Prisma.XOR<Prisma.ChannelCreateWithoutWorkspacesInput, Prisma.ChannelUncheckedCreateWithoutWorkspacesInput>
   where?: Prisma.ChannelWhereInput
 }
 
-export type ChannelUpdateToOneWithWhereWithoutTextChannelsInput = {
+export type ChannelUpdateToOneWithWhereWithoutWorkspacesInput = {
   where?: Prisma.ChannelWhereInput
-  data: Prisma.XOR<Prisma.ChannelUpdateWithoutTextChannelsInput, Prisma.ChannelUncheckedUpdateWithoutTextChannelsInput>
+  data: Prisma.XOR<Prisma.ChannelUpdateWithoutWorkspacesInput, Prisma.ChannelUncheckedUpdateWithoutWorkspacesInput>
 }
 
-export type ChannelUpdateWithoutTextChannelsInput = {
+export type ChannelUpdateWithoutWorkspacesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -758,13 +726,12 @@ export type ChannelUpdateWithoutTextChannelsInput = {
   Members?: Prisma.ChannelMemberUpdateManyWithoutChannelNestedInput
 }
 
-export type ChannelUncheckedUpdateWithoutTextChannelsInput = {
+export type ChannelUncheckedUpdateWithoutWorkspacesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   ownerId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -777,8 +744,7 @@ export type ChannelCreateManyOwnerInput = {
   name: string
   description?: string | null
   icon?: string | null
-  iconType?: string | null
-  iconColor?: string | null
+  inviteCode?: string
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -788,13 +754,12 @@ export type ChannelUpdateWithoutOwnerInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Members?: Prisma.ChannelMemberUpdateManyWithoutChannelNestedInput
-  TextChannels?: Prisma.TextChannelUpdateManyWithoutChannelNestedInput
+  Workspaces?: Prisma.WorkspaceUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelUncheckedUpdateWithoutOwnerInput = {
@@ -802,13 +767,12 @@ export type ChannelUncheckedUpdateWithoutOwnerInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   Members?: Prisma.ChannelMemberUncheckedUpdateManyWithoutChannelNestedInput
-  TextChannels?: Prisma.TextChannelUncheckedUpdateManyWithoutChannelNestedInput
+  Workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutChannelNestedInput
 }
 
 export type ChannelUncheckedUpdateManyWithoutOwnerInput = {
@@ -816,8 +780,7 @@ export type ChannelUncheckedUpdateManyWithoutOwnerInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   icon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  iconColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inviteCode?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -830,12 +793,12 @@ export type ChannelUncheckedUpdateManyWithoutOwnerInput = {
 
 export type ChannelCountOutputType = {
   Members: number
-  TextChannels: number
+  Workspaces: number
 }
 
 export type ChannelCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Members?: boolean | ChannelCountOutputTypeCountMembersArgs
-  TextChannels?: boolean | ChannelCountOutputTypeCountTextChannelsArgs
+  Workspaces?: boolean | ChannelCountOutputTypeCountWorkspacesArgs
 }
 
 /**
@@ -858,8 +821,8 @@ export type ChannelCountOutputTypeCountMembersArgs<ExtArgs extends runtime.Types
 /**
  * ChannelCountOutputType without action
  */
-export type ChannelCountOutputTypeCountTextChannelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TextChannelWhereInput
+export type ChannelCountOutputTypeCountWorkspacesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkspaceWhereInput
 }
 
 
@@ -868,15 +831,14 @@ export type ChannelSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name?: boolean
   description?: boolean
   icon?: boolean
-  iconType?: boolean
-  iconColor?: boolean
+  inviteCode?: boolean
   ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
   Owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   Members?: boolean | Prisma.Channel$MembersArgs<ExtArgs>
-  TextChannels?: boolean | Prisma.Channel$TextChannelsArgs<ExtArgs>
+  Workspaces?: boolean | Prisma.Channel$WorkspacesArgs<ExtArgs>
   _count?: boolean | Prisma.ChannelCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["channel"]>
 
@@ -885,8 +847,7 @@ export type ChannelSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   description?: boolean
   icon?: boolean
-  iconType?: boolean
-  iconColor?: boolean
+  inviteCode?: boolean
   ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -899,8 +860,7 @@ export type ChannelSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   name?: boolean
   description?: boolean
   icon?: boolean
-  iconType?: boolean
-  iconColor?: boolean
+  inviteCode?: boolean
   ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -913,19 +873,18 @@ export type ChannelSelectScalar = {
   name?: boolean
   description?: boolean
   icon?: boolean
-  iconType?: boolean
-  iconColor?: boolean
+  inviteCode?: boolean
   ownerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type ChannelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "icon" | "iconType" | "iconColor" | "ownerId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["channel"]>
+export type ChannelOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "icon" | "inviteCode" | "ownerId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["channel"]>
 export type ChannelInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   Owner?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   Members?: boolean | Prisma.Channel$MembersArgs<ExtArgs>
-  TextChannels?: boolean | Prisma.Channel$TextChannelsArgs<ExtArgs>
+  Workspaces?: boolean | Prisma.Channel$WorkspacesArgs<ExtArgs>
   _count?: boolean | Prisma.ChannelCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChannelIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -940,15 +899,14 @@ export type $ChannelPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     Owner: Prisma.$UserPayload<ExtArgs>
     Members: Prisma.$ChannelMemberPayload<ExtArgs>[]
-    TextChannels: Prisma.$TextChannelPayload<ExtArgs>[]
+    Workspaces: Prisma.$WorkspacePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     name: string
     description: string | null
     icon: string | null
-    iconType: string | null
-    iconColor: string | null
+    inviteCode: string
     ownerId: number
     createdAt: Date
     updatedAt: Date
@@ -1349,7 +1307,7 @@ export interface Prisma__ChannelClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   Owner<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   Members<T extends Prisma.Channel$MembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Channel$MembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  TextChannels<T extends Prisma.Channel$TextChannelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Channel$TextChannelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TextChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  Workspaces<T extends Prisma.Channel$WorkspacesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Channel$WorkspacesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1383,8 +1341,7 @@ export interface ChannelFieldRefs {
   readonly name: Prisma.FieldRef<"Channel", 'String'>
   readonly description: Prisma.FieldRef<"Channel", 'String'>
   readonly icon: Prisma.FieldRef<"Channel", 'String'>
-  readonly iconType: Prisma.FieldRef<"Channel", 'String'>
-  readonly iconColor: Prisma.FieldRef<"Channel", 'String'>
+  readonly inviteCode: Prisma.FieldRef<"Channel", 'String'>
   readonly ownerId: Prisma.FieldRef<"Channel", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Channel", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Channel", 'DateTime'>
@@ -1809,27 +1766,27 @@ export type Channel$MembersArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Channel.TextChannels
+ * Channel.Workspaces
  */
-export type Channel$TextChannelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Channel$WorkspacesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the TextChannel
+   * Select specific fields to fetch from the Workspace
    */
-  select?: Prisma.TextChannelSelect<ExtArgs> | null
+  select?: Prisma.WorkspaceSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the TextChannel
+   * Omit specific fields from the Workspace
    */
-  omit?: Prisma.TextChannelOmit<ExtArgs> | null
+  omit?: Prisma.WorkspaceOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TextChannelInclude<ExtArgs> | null
-  where?: Prisma.TextChannelWhereInput
-  orderBy?: Prisma.TextChannelOrderByWithRelationInput | Prisma.TextChannelOrderByWithRelationInput[]
-  cursor?: Prisma.TextChannelWhereUniqueInput
+  include?: Prisma.WorkspaceInclude<ExtArgs> | null
+  where?: Prisma.WorkspaceWhereInput
+  orderBy?: Prisma.WorkspaceOrderByWithRelationInput | Prisma.WorkspaceOrderByWithRelationInput[]
+  cursor?: Prisma.WorkspaceWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.TextChannelScalarFieldEnum | Prisma.TextChannelScalarFieldEnum[]
+  distinct?: Prisma.WorkspaceScalarFieldEnum | Prisma.WorkspaceScalarFieldEnum[]
 }
 
 /**

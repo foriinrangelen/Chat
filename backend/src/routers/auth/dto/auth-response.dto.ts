@@ -21,4 +21,3 @@ export class UserResponseDto {
 	@ApiProperty({ example: '2024-01-01T00:00:00.000Z', description: '생성일시' })
 	createdAt: Date;
 }
-

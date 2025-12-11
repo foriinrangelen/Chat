@@ -23,7 +23,7 @@ export function Header({ isAuthenticated, opened, onToggle }: HeaderProps) {
         )}
         <Link to="/" style={{ textDecoration: "none" }}>
           <Text fw={700} c="dark" style={{ cursor: "pointer" }}>
-            v0.0.2
+            <span style={{ fontSize: "1.4rem" }}>v0.0.2</span>
           </Text>
         </Link>
       </Group>

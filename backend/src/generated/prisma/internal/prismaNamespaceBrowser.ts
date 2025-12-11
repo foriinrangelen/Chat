@@ -55,9 +55,11 @@ export const ModelName = {
   Friendship: 'Friendship',
   Channel: 'Channel',
   ChannelMember: 'ChannelMember',
-  TextChannel: 'TextChannel',
-  TextChannelMessage: 'TextChannelMessage',
-  DirectMessage: 'DirectMessage',
+  Workspace: 'Workspace',
+  WorkspaceMessage: 'WorkspaceMessage',
+  WorkspaceReadStatus: 'WorkspaceReadStatus',
+  DMRoom: 'DMRoom',
+  DMParticipant: 'DMParticipant',
   DMMessage: 'DMMessage'
 } as const
 
@@ -83,10 +85,7 @@ export const UserScalarFieldEnum = {
   nickname: 'nickname',
   password: 'password',
   avatar: 'avatar',
-  statusMessage: 'statusMessage',
   hashedRefreshToken: 'hashedRefreshToken',
-  isOnline: 'isOnline',
-  lastSeenAt: 'lastSeenAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -100,7 +99,6 @@ export const FriendshipScalarFieldEnum = {
   senderId: 'senderId',
   receiverId: 'receiverId',
   status: 'status',
-  message: 'message',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -113,8 +111,7 @@ export const ChannelScalarFieldEnum = {
   name: 'name',
   description: 'description',
   icon: 'icon',
-  iconType: 'iconType',
-  iconColor: 'iconColor',
+  inviteCode: 'inviteCode',
   ownerId: 'ownerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -128,55 +125,80 @@ export const ChannelMemberScalarFieldEnum = {
   channelId: 'channelId',
   userId: 'userId',
   role: 'role',
-  createdAt: 'createdAt'
+  joinedAt: 'joinedAt'
 } as const
 
 export type ChannelMemberScalarFieldEnum = (typeof ChannelMemberScalarFieldEnum)[keyof typeof ChannelMemberScalarFieldEnum]
 
 
-export const TextChannelScalarFieldEnum = {
+export const WorkspaceScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  type: 'type',
   channelId: 'channelId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 } as const
 
-export type TextChannelScalarFieldEnum = (typeof TextChannelScalarFieldEnum)[keyof typeof TextChannelScalarFieldEnum]
+export type WorkspaceScalarFieldEnum = (typeof WorkspaceScalarFieldEnum)[keyof typeof WorkspaceScalarFieldEnum]
 
 
-export const TextChannelMessageScalarFieldEnum = {
+export const WorkspaceMessageScalarFieldEnum = {
   id: 'id',
   content: 'content',
-  textChannelId: 'textChannelId',
+  type: 'type',
+  attachments: 'attachments',
+  workspaceId: 'workspaceId',
   userId: 'userId',
   replyToId: 'replyToId',
   isEdited: 'isEdited',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type TextChannelMessageScalarFieldEnum = (typeof TextChannelMessageScalarFieldEnum)[keyof typeof TextChannelMessageScalarFieldEnum]
+export type WorkspaceMessageScalarFieldEnum = (typeof WorkspaceMessageScalarFieldEnum)[keyof typeof WorkspaceMessageScalarFieldEnum]
 
 
-export const DirectMessageScalarFieldEnum = {
+export const WorkspaceReadStatusScalarFieldEnum = {
+  userId: 'userId',
+  workspaceId: 'workspaceId',
+  lastReadMessageId: 'lastReadMessageId',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WorkspaceReadStatusScalarFieldEnum = (typeof WorkspaceReadStatusScalarFieldEnum)[keyof typeof WorkspaceReadStatusScalarFieldEnum]
+
+
+export const DMRoomScalarFieldEnum = {
   id: 'id',
-  senderId: 'senderId',
-  receiverId: 'receiverId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type DirectMessageScalarFieldEnum = (typeof DirectMessageScalarFieldEnum)[keyof typeof DirectMessageScalarFieldEnum]
+export type DMRoomScalarFieldEnum = (typeof DMRoomScalarFieldEnum)[keyof typeof DMRoomScalarFieldEnum]
+
+
+export const DMParticipantScalarFieldEnum = {
+  dmRoomId: 'dmRoomId',
+  userId: 'userId',
+  joinedAt: 'joinedAt',
+  lastReadMessageId: 'lastReadMessageId'
+} as const
+
+export type DMParticipantScalarFieldEnum = (typeof DMParticipantScalarFieldEnum)[keyof typeof DMParticipantScalarFieldEnum]
 
 
 export const DMMessageScalarFieldEnum = {
   id: 'id',
   content: 'content',
-  directMessageId: 'directMessageId',
+  type: 'type',
+  attachments: 'attachments',
+  dmRoomId: 'dmRoomId',
   userId: 'userId',
   replyToId: 'replyToId',
-  isEdited: 'isEdited',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -190,6 +212,14 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull'
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -206,4 +236,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull',
+  AnyNull: 'AnyNull'
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

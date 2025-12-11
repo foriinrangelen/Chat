@@ -12,7 +12,8 @@ import {
   Divider,
   ThemeIcon,
 } from "@mantine/core";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+// import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import {
   HiBell,
   HiChatBubbleLeft,
@@ -36,7 +37,10 @@ import {
 
 // 알림 타입별 아이콘
 const getNotificationIcon = (type: NotificationType) => {
-  const iconMap: Record<NotificationType, { icon: React.ReactNode; color: string }> = {
+  const iconMap: Record<
+    NotificationType,
+    { icon: React.ReactNode; color: string }
+  > = {
     message: { icon: <HiChatBubbleLeft size={16} />, color: "blue" },
     friend_request: { icon: <HiUserPlus size={16} />, color: "grape" },
     friend_accepted: { icon: <HiUserGroup size={16} />, color: "green" },
@@ -140,7 +144,7 @@ export function NotificationDropdown() {
           disabled={unreadCount === 0}
         >
           <ActionIcon variant="subtle" size="lg">
-            <HiBell size={20} />
+            <HiBell size={30} />
           </ActionIcon>
         </Indicator>
       </Menu.Target>
@@ -186,4 +190,3 @@ export function NotificationDropdown() {
     </Menu>
   );
 }
-

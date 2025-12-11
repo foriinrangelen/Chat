@@ -69,6 +69,7 @@ import { CreateWorkspaceModal } from "@/components/modals/CreateWorkspaceModal";
 interface SidebarProps {
   onClose?: () => void;
   onLogout?: () => void;
+  collapsed?: boolean;
 }
 
 // 언어 아이콘 매핑
@@ -94,7 +95,11 @@ const LANGUAGE_ICON_MAP: Record<
   docker: SiDocker,
 };
 
-export function Sidebar({ onClose, onLogout }: SidebarProps) {
+export function Sidebar({
+  onClose,
+  onLogout,
+  collapsed = false,
+}: SidebarProps) {
   const navigate = useNavigate();
 
   // Atoms
@@ -437,90 +442,92 @@ export function Sidebar({ onClose, onLogout }: SidebarProps) {
       </ScrollArea>
 
       {/* 하단 프로필 섹션 */}
-      <Box
-        p="sm"
-        style={{
-          borderTop: "1px solid var(--mantine-color-gray-3)",
-        }}
-      >
-        <Group gap="xs" justify="space-between" align="center">
-          {/* 프로필 정보 + 로그아웃 메뉴 */}
-          <Menu shadow="md" width={150} position="top-start" zIndex={1100}>
-            <Menu.Target>
-              <UnstyledButton
-                style={{
-                  padding: "4px 8px",
-                  borderRadius: "var(--mantine-radius-md)",
-                }}
-              >
-                <Group gap="sm">
-                  <Indicator
-                    inline
-                    size={10}
-                    offset={3}
-                    position="bottom-end"
-                    color="green"
-                    withBorder
-                  >
-                    <Avatar
-                      size="sm"
-                      radius="xl"
-                      color="blue"
-                      src={currentUser?.avatar}
+      {!collapsed && (
+        <Box
+          p="sm"
+          style={{
+            borderTop: "1px solid var(--mantine-color-gray-3)",
+          }}
+        >
+          <Group gap="xs" justify="space-between" align="center">
+            {/* 프로필 정보 + 로그아웃 메뉴 */}
+            <Menu shadow="md" width={150} position="top-start" zIndex={1100}>
+              <Menu.Target>
+                <UnstyledButton
+                  style={{
+                    padding: "4px 8px",
+                    borderRadius: "var(--mantine-radius-md)",
+                  }}
+                >
+                  <Group gap="sm">
+                    <Indicator
+                      inline
+                      size={10}
+                      offset={3}
+                      position="bottom-end"
+                      color="green"
+                      withBorder
                     >
-                      {currentUser?.nickname?.[0] || "나"}
-                    </Avatar>
-                  </Indicator>
-                  <Text size="sm" fw={500}>
-                    {currentUser?.nickname || "사용자"}
-                  </Text>
-                </Group>
-              </UnstyledButton>
-            </Menu.Target>
+                      <Avatar
+                        size="sm"
+                        radius="xl"
+                        color="blue"
+                        src={currentUser?.avatar}
+                      >
+                        {currentUser?.nickname?.[0] || "나"}
+                      </Avatar>
+                    </Indicator>
 
-            <Menu.Dropdown>
-              <Menu.Item
-                color="red"
-                leftSection={<HiArrowRightOnRectangle size={16} />}
-                onClick={onLogout}
-              >
-                로그아웃
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
+                    <Text size="sm" fw={500}>
+                      {currentUser?.nickname || "사용자"}
+                    </Text>
+                  </Group>
+                </UnstyledButton>
+              </Menu.Target>
 
-          {/* 프로필 보기 & 설정 버튼 */}
-          <Group gap={4}>
-            <Tooltip label="프로필">
-              <ActionIcon
-                variant="subtle"
-                color="gray"
-                size="md"
-                onClick={() => {
-                  navigate({ to: "/profile" });
-                  onClose?.();
-                }}
-              >
-                <HiUser size={18} />
-              </ActionIcon>
-            </Tooltip>
-            <Tooltip label="설정">
-              <ActionIcon
-                variant="subtle"
-                color="gray"
-                size="md"
-                onClick={() => {
-                  navigate({ to: "/settings" });
-                  onClose?.();
-                }}
-              >
-                <HiCog6Tooth size={18} />
-              </ActionIcon>
-            </Tooltip>
+              <Menu.Dropdown>
+                <Menu.Item
+                  color="red"
+                  leftSection={<HiArrowRightOnRectangle size={16} />}
+                  onClick={onLogout}
+                >
+                  로그아웃
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+
+            {/* 프로필 보기 & 설정 버튼 */}
+            <Group gap={4}>
+              <Tooltip label="프로필">
+                <ActionIcon
+                  variant="subtle"
+                  color="gray"
+                  size="md"
+                  onClick={() => {
+                    navigate({ to: "/profile" });
+                    onClose?.();
+                  }}
+                >
+                  <HiUser size={18} />
+                </ActionIcon>
+              </Tooltip>
+              <Tooltip label="설정">
+                <ActionIcon
+                  variant="subtle"
+                  color="gray"
+                  size="md"
+                  onClick={() => {
+                    navigate({ to: "/settings" });
+                    onClose?.();
+                  }}
+                >
+                  <HiCog6Tooth size={18} />
+                </ActionIcon>
+              </Tooltip>
+            </Group>
           </Group>
-        </Group>
-      </Box>
-
+        </Box>
+      )}
       {/* 워크스페이스 생성 모달 */}
       {targetChannel && (
         <CreateWorkspaceModal

@@ -8,4 +8,3 @@ export interface JwtPayload {
 export interface JwtPayloadWithRefreshToken extends JwtPayload {
 	refreshToken: string;
 }
-

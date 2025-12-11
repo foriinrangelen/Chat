@@ -28,14 +28,14 @@ export type AggregateDMMessage = {
 
 export type DMMessageAvgAggregateOutputType = {
   id: number | null
-  directMessageId: number | null
+  dmRoomId: number | null
   userId: number | null
   replyToId: number | null
 }
 
 export type DMMessageSumAggregateOutputType = {
   id: number | null
-  directMessageId: number | null
+  dmRoomId: number | null
   userId: number | null
   replyToId: number | null
 }
@@ -43,10 +43,11 @@ export type DMMessageSumAggregateOutputType = {
 export type DMMessageMinAggregateOutputType = {
   id: number | null
   content: string | null
-  directMessageId: number | null
+  type: string | null
+  dmRoomId: number | null
   userId: number | null
   replyToId: number | null
-  isEdited: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,10 +55,11 @@ export type DMMessageMinAggregateOutputType = {
 export type DMMessageMaxAggregateOutputType = {
   id: number | null
   content: string | null
-  directMessageId: number | null
+  type: string | null
+  dmRoomId: number | null
   userId: number | null
   replyToId: number | null
-  isEdited: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,10 +67,12 @@ export type DMMessageMaxAggregateOutputType = {
 export type DMMessageCountAggregateOutputType = {
   id: number
   content: number
-  directMessageId: number
+  type: number
+  attachments: number
+  dmRoomId: number
   userId: number
   replyToId: number
-  isEdited: number
+  deletedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -77,14 +81,14 @@ export type DMMessageCountAggregateOutputType = {
 
 export type DMMessageAvgAggregateInputType = {
   id?: true
-  directMessageId?: true
+  dmRoomId?: true
   userId?: true
   replyToId?: true
 }
 
 export type DMMessageSumAggregateInputType = {
   id?: true
-  directMessageId?: true
+  dmRoomId?: true
   userId?: true
   replyToId?: true
 }
@@ -92,10 +96,11 @@ export type DMMessageSumAggregateInputType = {
 export type DMMessageMinAggregateInputType = {
   id?: true
   content?: true
-  directMessageId?: true
+  type?: true
+  dmRoomId?: true
   userId?: true
   replyToId?: true
-  isEdited?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -103,10 +108,11 @@ export type DMMessageMinAggregateInputType = {
 export type DMMessageMaxAggregateInputType = {
   id?: true
   content?: true
-  directMessageId?: true
+  type?: true
+  dmRoomId?: true
   userId?: true
   replyToId?: true
-  isEdited?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -114,10 +120,12 @@ export type DMMessageMaxAggregateInputType = {
 export type DMMessageCountAggregateInputType = {
   id?: true
   content?: true
-  directMessageId?: true
+  type?: true
+  attachments?: true
+  dmRoomId?: true
   userId?: true
   replyToId?: true
-  isEdited?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -212,10 +220,12 @@ export type DMMessageGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type DMMessageGroupByOutputType = {
   id: number
   content: string
-  directMessageId: number
+  type: string
+  attachments: runtime.JsonValue | null
+  dmRoomId: number
   userId: number
   replyToId: number | null
-  isEdited: boolean
+  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: DMMessageCountAggregateOutputType | null
@@ -246,13 +256,15 @@ export type DMMessageWhereInput = {
   NOT?: Prisma.DMMessageWhereInput | Prisma.DMMessageWhereInput[]
   id?: Prisma.IntFilter<"DMMessage"> | number
   content?: Prisma.StringFilter<"DMMessage"> | string
-  directMessageId?: Prisma.IntFilter<"DMMessage"> | number
+  type?: Prisma.StringFilter<"DMMessage"> | string
+  attachments?: Prisma.JsonNullableFilter<"DMMessage">
+  dmRoomId?: Prisma.IntFilter<"DMMessage"> | number
   userId?: Prisma.IntFilter<"DMMessage"> | number
   replyToId?: Prisma.IntNullableFilter<"DMMessage"> | number | null
-  isEdited?: Prisma.BoolFilter<"DMMessage"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"DMMessage"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"DMMessage"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DMMessage"> | Date | string
-  DirectMessage?: Prisma.XOR<Prisma.DirectMessageScalarRelationFilter, Prisma.DirectMessageWhereInput>
+  DMRoom?: Prisma.XOR<Prisma.DMRoomScalarRelationFilter, Prisma.DMRoomWhereInput>
   User?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   ReplyTo?: Prisma.XOR<Prisma.DMMessageNullableScalarRelationFilter, Prisma.DMMessageWhereInput> | null
   Replies?: Prisma.DMMessageListRelationFilter
@@ -261,13 +273,15 @@ export type DMMessageWhereInput = {
 export type DMMessageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  directMessageId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  attachments?: Prisma.SortOrderInput | Prisma.SortOrder
+  dmRoomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   replyToId?: Prisma.SortOrderInput | Prisma.SortOrder
-  isEdited?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  DirectMessage?: Prisma.DirectMessageOrderByWithRelationInput
+  DMRoom?: Prisma.DMRoomOrderByWithRelationInput
   User?: Prisma.UserOrderByWithRelationInput
   ReplyTo?: Prisma.DMMessageOrderByWithRelationInput
   Replies?: Prisma.DMMessageOrderByRelationAggregateInput
@@ -279,13 +293,15 @@ export type DMMessageWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.DMMessageWhereInput[]
   NOT?: Prisma.DMMessageWhereInput | Prisma.DMMessageWhereInput[]
   content?: Prisma.StringFilter<"DMMessage"> | string
-  directMessageId?: Prisma.IntFilter<"DMMessage"> | number
+  type?: Prisma.StringFilter<"DMMessage"> | string
+  attachments?: Prisma.JsonNullableFilter<"DMMessage">
+  dmRoomId?: Prisma.IntFilter<"DMMessage"> | number
   userId?: Prisma.IntFilter<"DMMessage"> | number
   replyToId?: Prisma.IntNullableFilter<"DMMessage"> | number | null
-  isEdited?: Prisma.BoolFilter<"DMMessage"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"DMMessage"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"DMMessage"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DMMessage"> | Date | string
-  DirectMessage?: Prisma.XOR<Prisma.DirectMessageScalarRelationFilter, Prisma.DirectMessageWhereInput>
+  DMRoom?: Prisma.XOR<Prisma.DMRoomScalarRelationFilter, Prisma.DMRoomWhereInput>
   User?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   ReplyTo?: Prisma.XOR<Prisma.DMMessageNullableScalarRelationFilter, Prisma.DMMessageWhereInput> | null
   Replies?: Prisma.DMMessageListRelationFilter
@@ -294,10 +310,12 @@ export type DMMessageWhereUniqueInput = Prisma.AtLeast<{
 export type DMMessageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  directMessageId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  attachments?: Prisma.SortOrderInput | Prisma.SortOrder
+  dmRoomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   replyToId?: Prisma.SortOrderInput | Prisma.SortOrder
-  isEdited?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DMMessageCountOrderByAggregateInput
@@ -313,20 +331,24 @@ export type DMMessageScalarWhereWithAggregatesInput = {
   NOT?: Prisma.DMMessageScalarWhereWithAggregatesInput | Prisma.DMMessageScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"DMMessage"> | number
   content?: Prisma.StringWithAggregatesFilter<"DMMessage"> | string
-  directMessageId?: Prisma.IntWithAggregatesFilter<"DMMessage"> | number
+  type?: Prisma.StringWithAggregatesFilter<"DMMessage"> | string
+  attachments?: Prisma.JsonNullableWithAggregatesFilter<"DMMessage">
+  dmRoomId?: Prisma.IntWithAggregatesFilter<"DMMessage"> | number
   userId?: Prisma.IntWithAggregatesFilter<"DMMessage"> | number
   replyToId?: Prisma.IntNullableWithAggregatesFilter<"DMMessage"> | number | null
-  isEdited?: Prisma.BoolWithAggregatesFilter<"DMMessage"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"DMMessage"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DMMessage"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DMMessage"> | Date | string
 }
 
 export type DMMessageCreateInput = {
   content: string
-  isEdited?: boolean
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  DirectMessage: Prisma.DirectMessageCreateNestedOneWithoutMessagesInput
+  DMRoom: Prisma.DMRoomCreateNestedOneWithoutMessagesInput
   User: Prisma.UserCreateNestedOneWithoutDMMessagesInput
   ReplyTo?: Prisma.DMMessageCreateNestedOneWithoutRepliesInput
   Replies?: Prisma.DMMessageCreateNestedManyWithoutReplyToInput
@@ -335,10 +357,12 @@ export type DMMessageCreateInput = {
 export type DMMessageUncheckedCreateInput = {
   id?: number
   content: string
-  directMessageId: number
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId: number
   userId: number
   replyToId?: number | null
-  isEdited?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   Replies?: Prisma.DMMessageUncheckedCreateNestedManyWithoutReplyToInput
@@ -346,10 +370,12 @@ export type DMMessageUncheckedCreateInput = {
 
 export type DMMessageUpdateInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  DirectMessage?: Prisma.DirectMessageUpdateOneRequiredWithoutMessagesNestedInput
+  DMRoom?: Prisma.DMRoomUpdateOneRequiredWithoutMessagesNestedInput
   User?: Prisma.UserUpdateOneRequiredWithoutDMMessagesNestedInput
   ReplyTo?: Prisma.DMMessageUpdateOneWithoutRepliesNestedInput
   Replies?: Prisma.DMMessageUpdateManyWithoutReplyToNestedInput
@@ -358,10 +384,12 @@ export type DMMessageUpdateInput = {
 export type DMMessageUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  directMessageId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   replyToId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Replies?: Prisma.DMMessageUncheckedUpdateManyWithoutReplyToNestedInput
@@ -370,17 +398,21 @@ export type DMMessageUncheckedUpdateInput = {
 export type DMMessageCreateManyInput = {
   id?: number
   content: string
-  directMessageId: number
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId: number
   userId: number
   replyToId?: number | null
-  isEdited?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type DMMessageUpdateManyMutationInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -388,10 +420,12 @@ export type DMMessageUpdateManyMutationInput = {
 export type DMMessageUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  directMessageId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   replyToId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -414,17 +448,19 @@ export type DMMessageNullableScalarRelationFilter = {
 export type DMMessageCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  directMessageId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  attachments?: Prisma.SortOrder
+  dmRoomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   replyToId?: Prisma.SortOrder
-  isEdited?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type DMMessageAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  directMessageId?: Prisma.SortOrder
+  dmRoomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   replyToId?: Prisma.SortOrder
 }
@@ -432,10 +468,11 @@ export type DMMessageAvgOrderByAggregateInput = {
 export type DMMessageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  directMessageId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  dmRoomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   replyToId?: Prisma.SortOrder
-  isEdited?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -443,17 +480,18 @@ export type DMMessageMaxOrderByAggregateInput = {
 export type DMMessageMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  directMessageId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  dmRoomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   replyToId?: Prisma.SortOrder
-  isEdited?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type DMMessageSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  directMessageId?: Prisma.SortOrder
+  dmRoomId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   replyToId?: Prisma.SortOrder
 }
@@ -500,45 +538,45 @@ export type DMMessageUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.DMMessageScalarWhereInput | Prisma.DMMessageScalarWhereInput[]
 }
 
-export type DMMessageCreateNestedManyWithoutDirectMessageInput = {
-  create?: Prisma.XOR<Prisma.DMMessageCreateWithoutDirectMessageInput, Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput> | Prisma.DMMessageCreateWithoutDirectMessageInput[] | Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput[]
-  connectOrCreate?: Prisma.DMMessageCreateOrConnectWithoutDirectMessageInput | Prisma.DMMessageCreateOrConnectWithoutDirectMessageInput[]
-  createMany?: Prisma.DMMessageCreateManyDirectMessageInputEnvelope
+export type DMMessageCreateNestedManyWithoutDMRoomInput = {
+  create?: Prisma.XOR<Prisma.DMMessageCreateWithoutDMRoomInput, Prisma.DMMessageUncheckedCreateWithoutDMRoomInput> | Prisma.DMMessageCreateWithoutDMRoomInput[] | Prisma.DMMessageUncheckedCreateWithoutDMRoomInput[]
+  connectOrCreate?: Prisma.DMMessageCreateOrConnectWithoutDMRoomInput | Prisma.DMMessageCreateOrConnectWithoutDMRoomInput[]
+  createMany?: Prisma.DMMessageCreateManyDMRoomInputEnvelope
   connect?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
 }
 
-export type DMMessageUncheckedCreateNestedManyWithoutDirectMessageInput = {
-  create?: Prisma.XOR<Prisma.DMMessageCreateWithoutDirectMessageInput, Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput> | Prisma.DMMessageCreateWithoutDirectMessageInput[] | Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput[]
-  connectOrCreate?: Prisma.DMMessageCreateOrConnectWithoutDirectMessageInput | Prisma.DMMessageCreateOrConnectWithoutDirectMessageInput[]
-  createMany?: Prisma.DMMessageCreateManyDirectMessageInputEnvelope
+export type DMMessageUncheckedCreateNestedManyWithoutDMRoomInput = {
+  create?: Prisma.XOR<Prisma.DMMessageCreateWithoutDMRoomInput, Prisma.DMMessageUncheckedCreateWithoutDMRoomInput> | Prisma.DMMessageCreateWithoutDMRoomInput[] | Prisma.DMMessageUncheckedCreateWithoutDMRoomInput[]
+  connectOrCreate?: Prisma.DMMessageCreateOrConnectWithoutDMRoomInput | Prisma.DMMessageCreateOrConnectWithoutDMRoomInput[]
+  createMany?: Prisma.DMMessageCreateManyDMRoomInputEnvelope
   connect?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
 }
 
-export type DMMessageUpdateManyWithoutDirectMessageNestedInput = {
-  create?: Prisma.XOR<Prisma.DMMessageCreateWithoutDirectMessageInput, Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput> | Prisma.DMMessageCreateWithoutDirectMessageInput[] | Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput[]
-  connectOrCreate?: Prisma.DMMessageCreateOrConnectWithoutDirectMessageInput | Prisma.DMMessageCreateOrConnectWithoutDirectMessageInput[]
-  upsert?: Prisma.DMMessageUpsertWithWhereUniqueWithoutDirectMessageInput | Prisma.DMMessageUpsertWithWhereUniqueWithoutDirectMessageInput[]
-  createMany?: Prisma.DMMessageCreateManyDirectMessageInputEnvelope
+export type DMMessageUpdateManyWithoutDMRoomNestedInput = {
+  create?: Prisma.XOR<Prisma.DMMessageCreateWithoutDMRoomInput, Prisma.DMMessageUncheckedCreateWithoutDMRoomInput> | Prisma.DMMessageCreateWithoutDMRoomInput[] | Prisma.DMMessageUncheckedCreateWithoutDMRoomInput[]
+  connectOrCreate?: Prisma.DMMessageCreateOrConnectWithoutDMRoomInput | Prisma.DMMessageCreateOrConnectWithoutDMRoomInput[]
+  upsert?: Prisma.DMMessageUpsertWithWhereUniqueWithoutDMRoomInput | Prisma.DMMessageUpsertWithWhereUniqueWithoutDMRoomInput[]
+  createMany?: Prisma.DMMessageCreateManyDMRoomInputEnvelope
   set?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
   disconnect?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
   delete?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
   connect?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
-  update?: Prisma.DMMessageUpdateWithWhereUniqueWithoutDirectMessageInput | Prisma.DMMessageUpdateWithWhereUniqueWithoutDirectMessageInput[]
-  updateMany?: Prisma.DMMessageUpdateManyWithWhereWithoutDirectMessageInput | Prisma.DMMessageUpdateManyWithWhereWithoutDirectMessageInput[]
+  update?: Prisma.DMMessageUpdateWithWhereUniqueWithoutDMRoomInput | Prisma.DMMessageUpdateWithWhereUniqueWithoutDMRoomInput[]
+  updateMany?: Prisma.DMMessageUpdateManyWithWhereWithoutDMRoomInput | Prisma.DMMessageUpdateManyWithWhereWithoutDMRoomInput[]
   deleteMany?: Prisma.DMMessageScalarWhereInput | Prisma.DMMessageScalarWhereInput[]
 }
 
-export type DMMessageUncheckedUpdateManyWithoutDirectMessageNestedInput = {
-  create?: Prisma.XOR<Prisma.DMMessageCreateWithoutDirectMessageInput, Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput> | Prisma.DMMessageCreateWithoutDirectMessageInput[] | Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput[]
-  connectOrCreate?: Prisma.DMMessageCreateOrConnectWithoutDirectMessageInput | Prisma.DMMessageCreateOrConnectWithoutDirectMessageInput[]
-  upsert?: Prisma.DMMessageUpsertWithWhereUniqueWithoutDirectMessageInput | Prisma.DMMessageUpsertWithWhereUniqueWithoutDirectMessageInput[]
-  createMany?: Prisma.DMMessageCreateManyDirectMessageInputEnvelope
+export type DMMessageUncheckedUpdateManyWithoutDMRoomNestedInput = {
+  create?: Prisma.XOR<Prisma.DMMessageCreateWithoutDMRoomInput, Prisma.DMMessageUncheckedCreateWithoutDMRoomInput> | Prisma.DMMessageCreateWithoutDMRoomInput[] | Prisma.DMMessageUncheckedCreateWithoutDMRoomInput[]
+  connectOrCreate?: Prisma.DMMessageCreateOrConnectWithoutDMRoomInput | Prisma.DMMessageCreateOrConnectWithoutDMRoomInput[]
+  upsert?: Prisma.DMMessageUpsertWithWhereUniqueWithoutDMRoomInput | Prisma.DMMessageUpsertWithWhereUniqueWithoutDMRoomInput[]
+  createMany?: Prisma.DMMessageCreateManyDMRoomInputEnvelope
   set?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
   disconnect?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
   delete?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
   connect?: Prisma.DMMessageWhereUniqueInput | Prisma.DMMessageWhereUniqueInput[]
-  update?: Prisma.DMMessageUpdateWithWhereUniqueWithoutDirectMessageInput | Prisma.DMMessageUpdateWithWhereUniqueWithoutDirectMessageInput[]
-  updateMany?: Prisma.DMMessageUpdateManyWithWhereWithoutDirectMessageInput | Prisma.DMMessageUpdateManyWithWhereWithoutDirectMessageInput[]
+  update?: Prisma.DMMessageUpdateWithWhereUniqueWithoutDMRoomInput | Prisma.DMMessageUpdateWithWhereUniqueWithoutDMRoomInput[]
+  updateMany?: Prisma.DMMessageUpdateManyWithWhereWithoutDMRoomInput | Prisma.DMMessageUpdateManyWithWhereWithoutDMRoomInput[]
   deleteMany?: Prisma.DMMessageScalarWhereInput | Prisma.DMMessageScalarWhereInput[]
 }
 
@@ -602,10 +640,12 @@ export type DMMessageUncheckedUpdateManyWithoutReplyToNestedInput = {
 
 export type DMMessageCreateWithoutUserInput = {
   content: string
-  isEdited?: boolean
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  DirectMessage: Prisma.DirectMessageCreateNestedOneWithoutMessagesInput
+  DMRoom: Prisma.DMRoomCreateNestedOneWithoutMessagesInput
   ReplyTo?: Prisma.DMMessageCreateNestedOneWithoutRepliesInput
   Replies?: Prisma.DMMessageCreateNestedManyWithoutReplyToInput
 }
@@ -613,9 +653,11 @@ export type DMMessageCreateWithoutUserInput = {
 export type DMMessageUncheckedCreateWithoutUserInput = {
   id?: number
   content: string
-  directMessageId: number
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId: number
   replyToId?: number | null
-  isEdited?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   Replies?: Prisma.DMMessageUncheckedCreateNestedManyWithoutReplyToInput
@@ -653,17 +695,21 @@ export type DMMessageScalarWhereInput = {
   NOT?: Prisma.DMMessageScalarWhereInput | Prisma.DMMessageScalarWhereInput[]
   id?: Prisma.IntFilter<"DMMessage"> | number
   content?: Prisma.StringFilter<"DMMessage"> | string
-  directMessageId?: Prisma.IntFilter<"DMMessage"> | number
+  type?: Prisma.StringFilter<"DMMessage"> | string
+  attachments?: Prisma.JsonNullableFilter<"DMMessage">
+  dmRoomId?: Prisma.IntFilter<"DMMessage"> | number
   userId?: Prisma.IntFilter<"DMMessage"> | number
   replyToId?: Prisma.IntNullableFilter<"DMMessage"> | number | null
-  isEdited?: Prisma.BoolFilter<"DMMessage"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"DMMessage"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"DMMessage"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DMMessage"> | Date | string
 }
 
-export type DMMessageCreateWithoutDirectMessageInput = {
+export type DMMessageCreateWithoutDMRoomInput = {
   content: string
-  isEdited?: boolean
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   User: Prisma.UserCreateNestedOneWithoutDMMessagesInput
@@ -671,49 +717,53 @@ export type DMMessageCreateWithoutDirectMessageInput = {
   Replies?: Prisma.DMMessageCreateNestedManyWithoutReplyToInput
 }
 
-export type DMMessageUncheckedCreateWithoutDirectMessageInput = {
+export type DMMessageUncheckedCreateWithoutDMRoomInput = {
   id?: number
   content: string
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId: number
   replyToId?: number | null
-  isEdited?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   Replies?: Prisma.DMMessageUncheckedCreateNestedManyWithoutReplyToInput
 }
 
-export type DMMessageCreateOrConnectWithoutDirectMessageInput = {
+export type DMMessageCreateOrConnectWithoutDMRoomInput = {
   where: Prisma.DMMessageWhereUniqueInput
-  create: Prisma.XOR<Prisma.DMMessageCreateWithoutDirectMessageInput, Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput>
+  create: Prisma.XOR<Prisma.DMMessageCreateWithoutDMRoomInput, Prisma.DMMessageUncheckedCreateWithoutDMRoomInput>
 }
 
-export type DMMessageCreateManyDirectMessageInputEnvelope = {
-  data: Prisma.DMMessageCreateManyDirectMessageInput | Prisma.DMMessageCreateManyDirectMessageInput[]
+export type DMMessageCreateManyDMRoomInputEnvelope = {
+  data: Prisma.DMMessageCreateManyDMRoomInput | Prisma.DMMessageCreateManyDMRoomInput[]
   skipDuplicates?: boolean
 }
 
-export type DMMessageUpsertWithWhereUniqueWithoutDirectMessageInput = {
+export type DMMessageUpsertWithWhereUniqueWithoutDMRoomInput = {
   where: Prisma.DMMessageWhereUniqueInput
-  update: Prisma.XOR<Prisma.DMMessageUpdateWithoutDirectMessageInput, Prisma.DMMessageUncheckedUpdateWithoutDirectMessageInput>
-  create: Prisma.XOR<Prisma.DMMessageCreateWithoutDirectMessageInput, Prisma.DMMessageUncheckedCreateWithoutDirectMessageInput>
+  update: Prisma.XOR<Prisma.DMMessageUpdateWithoutDMRoomInput, Prisma.DMMessageUncheckedUpdateWithoutDMRoomInput>
+  create: Prisma.XOR<Prisma.DMMessageCreateWithoutDMRoomInput, Prisma.DMMessageUncheckedCreateWithoutDMRoomInput>
 }
 
-export type DMMessageUpdateWithWhereUniqueWithoutDirectMessageInput = {
+export type DMMessageUpdateWithWhereUniqueWithoutDMRoomInput = {
   where: Prisma.DMMessageWhereUniqueInput
-  data: Prisma.XOR<Prisma.DMMessageUpdateWithoutDirectMessageInput, Prisma.DMMessageUncheckedUpdateWithoutDirectMessageInput>
+  data: Prisma.XOR<Prisma.DMMessageUpdateWithoutDMRoomInput, Prisma.DMMessageUncheckedUpdateWithoutDMRoomInput>
 }
 
-export type DMMessageUpdateManyWithWhereWithoutDirectMessageInput = {
+export type DMMessageUpdateManyWithWhereWithoutDMRoomInput = {
   where: Prisma.DMMessageScalarWhereInput
-  data: Prisma.XOR<Prisma.DMMessageUpdateManyMutationInput, Prisma.DMMessageUncheckedUpdateManyWithoutDirectMessageInput>
+  data: Prisma.XOR<Prisma.DMMessageUpdateManyMutationInput, Prisma.DMMessageUncheckedUpdateManyWithoutDMRoomInput>
 }
 
 export type DMMessageCreateWithoutRepliesInput = {
   content: string
-  isEdited?: boolean
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  DirectMessage: Prisma.DirectMessageCreateNestedOneWithoutMessagesInput
+  DMRoom: Prisma.DMRoomCreateNestedOneWithoutMessagesInput
   User: Prisma.UserCreateNestedOneWithoutDMMessagesInput
   ReplyTo?: Prisma.DMMessageCreateNestedOneWithoutRepliesInput
 }
@@ -721,10 +771,12 @@ export type DMMessageCreateWithoutRepliesInput = {
 export type DMMessageUncheckedCreateWithoutRepliesInput = {
   id?: number
   content: string
-  directMessageId: number
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId: number
   userId: number
   replyToId?: number | null
-  isEdited?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -736,10 +788,12 @@ export type DMMessageCreateOrConnectWithoutRepliesInput = {
 
 export type DMMessageCreateWithoutReplyToInput = {
   content: string
-  isEdited?: boolean
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  DirectMessage: Prisma.DirectMessageCreateNestedOneWithoutMessagesInput
+  DMRoom: Prisma.DMRoomCreateNestedOneWithoutMessagesInput
   User: Prisma.UserCreateNestedOneWithoutDMMessagesInput
   Replies?: Prisma.DMMessageCreateNestedManyWithoutReplyToInput
 }
@@ -747,9 +801,11 @@ export type DMMessageCreateWithoutReplyToInput = {
 export type DMMessageUncheckedCreateWithoutReplyToInput = {
   id?: number
   content: string
-  directMessageId: number
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId: number
   userId: number
-  isEdited?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   Replies?: Prisma.DMMessageUncheckedCreateNestedManyWithoutReplyToInput
@@ -778,10 +834,12 @@ export type DMMessageUpdateToOneWithWhereWithoutRepliesInput = {
 
 export type DMMessageUpdateWithoutRepliesInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  DirectMessage?: Prisma.DirectMessageUpdateOneRequiredWithoutMessagesNestedInput
+  DMRoom?: Prisma.DMRoomUpdateOneRequiredWithoutMessagesNestedInput
   User?: Prisma.UserUpdateOneRequiredWithoutDMMessagesNestedInput
   ReplyTo?: Prisma.DMMessageUpdateOneWithoutRepliesNestedInput
 }
@@ -789,10 +847,12 @@ export type DMMessageUpdateWithoutRepliesInput = {
 export type DMMessageUncheckedUpdateWithoutRepliesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  directMessageId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   replyToId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -816,19 +876,23 @@ export type DMMessageUpdateManyWithWhereWithoutReplyToInput = {
 export type DMMessageCreateManyUserInput = {
   id?: number
   content: string
-  directMessageId: number
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId: number
   replyToId?: number | null
-  isEdited?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type DMMessageUpdateWithoutUserInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  DirectMessage?: Prisma.DirectMessageUpdateOneRequiredWithoutMessagesNestedInput
+  DMRoom?: Prisma.DMRoomUpdateOneRequiredWithoutMessagesNestedInput
   ReplyTo?: Prisma.DMMessageUpdateOneWithoutRepliesNestedInput
   Replies?: Prisma.DMMessageUpdateManyWithoutReplyToNestedInput
 }
@@ -836,9 +900,11 @@ export type DMMessageUpdateWithoutUserInput = {
 export type DMMessageUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  directMessageId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId?: Prisma.IntFieldUpdateOperationsInput | number
   replyToId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Replies?: Prisma.DMMessageUncheckedUpdateManyWithoutReplyToNestedInput
@@ -847,26 +913,32 @@ export type DMMessageUncheckedUpdateWithoutUserInput = {
 export type DMMessageUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  directMessageId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId?: Prisma.IntFieldUpdateOperationsInput | number
   replyToId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type DMMessageCreateManyDirectMessageInput = {
+export type DMMessageCreateManyDMRoomInput = {
   id?: number
   content: string
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId: number
   replyToId?: number | null
-  isEdited?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type DMMessageUpdateWithoutDirectMessageInput = {
+export type DMMessageUpdateWithoutDMRoomInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   User?: Prisma.UserUpdateOneRequiredWithoutDMMessagesNestedInput
@@ -874,23 +946,27 @@ export type DMMessageUpdateWithoutDirectMessageInput = {
   Replies?: Prisma.DMMessageUpdateManyWithoutReplyToNestedInput
 }
 
-export type DMMessageUncheckedUpdateWithoutDirectMessageInput = {
+export type DMMessageUncheckedUpdateWithoutDMRoomInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   replyToId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Replies?: Prisma.DMMessageUncheckedUpdateManyWithoutReplyToNestedInput
 }
 
-export type DMMessageUncheckedUpdateManyWithoutDirectMessageInput = {
+export type DMMessageUncheckedUpdateManyWithoutDMRoomInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   replyToId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -898,19 +974,23 @@ export type DMMessageUncheckedUpdateManyWithoutDirectMessageInput = {
 export type DMMessageCreateManyReplyToInput = {
   id?: number
   content: string
-  directMessageId: number
+  type?: string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId: number
   userId: number
-  isEdited?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type DMMessageUpdateWithoutReplyToInput = {
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  DirectMessage?: Prisma.DirectMessageUpdateOneRequiredWithoutMessagesNestedInput
+  DMRoom?: Prisma.DMRoomUpdateOneRequiredWithoutMessagesNestedInput
   User?: Prisma.UserUpdateOneRequiredWithoutDMMessagesNestedInput
   Replies?: Prisma.DMMessageUpdateManyWithoutReplyToNestedInput
 }
@@ -918,9 +998,11 @@ export type DMMessageUpdateWithoutReplyToInput = {
 export type DMMessageUncheckedUpdateWithoutReplyToInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  directMessageId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   Replies?: Prisma.DMMessageUncheckedUpdateManyWithoutReplyToNestedInput
@@ -929,9 +1011,11 @@ export type DMMessageUncheckedUpdateWithoutReplyToInput = {
 export type DMMessageUncheckedUpdateManyWithoutReplyToInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   content?: Prisma.StringFieldUpdateOperationsInput | string
-  directMessageId?: Prisma.IntFieldUpdateOperationsInput | number
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  attachments?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  dmRoomId?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  isEdited?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -970,13 +1054,15 @@ export type DMMessageCountOutputTypeCountRepliesArgs<ExtArgs extends runtime.Typ
 export type DMMessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   content?: boolean
-  directMessageId?: boolean
+  type?: boolean
+  attachments?: boolean
+  dmRoomId?: boolean
   userId?: boolean
   replyToId?: boolean
-  isEdited?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  DirectMessage?: boolean | Prisma.DirectMessageDefaultArgs<ExtArgs>
+  DMRoom?: boolean | Prisma.DMRoomDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ReplyTo?: boolean | Prisma.DMMessage$ReplyToArgs<ExtArgs>
   Replies?: boolean | Prisma.DMMessage$RepliesArgs<ExtArgs>
@@ -986,13 +1072,15 @@ export type DMMessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type DMMessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   content?: boolean
-  directMessageId?: boolean
+  type?: boolean
+  attachments?: boolean
+  dmRoomId?: boolean
   userId?: boolean
   replyToId?: boolean
-  isEdited?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  DirectMessage?: boolean | Prisma.DirectMessageDefaultArgs<ExtArgs>
+  DMRoom?: boolean | Prisma.DMRoomDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ReplyTo?: boolean | Prisma.DMMessage$ReplyToArgs<ExtArgs>
 }, ExtArgs["result"]["dMMessage"]>
@@ -1000,13 +1088,15 @@ export type DMMessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type DMMessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   content?: boolean
-  directMessageId?: boolean
+  type?: boolean
+  attachments?: boolean
+  dmRoomId?: boolean
   userId?: boolean
   replyToId?: boolean
-  isEdited?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  DirectMessage?: boolean | Prisma.DirectMessageDefaultArgs<ExtArgs>
+  DMRoom?: boolean | Prisma.DMRoomDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ReplyTo?: boolean | Prisma.DMMessage$ReplyToArgs<ExtArgs>
 }, ExtArgs["result"]["dMMessage"]>
@@ -1014,29 +1104,31 @@ export type DMMessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type DMMessageSelectScalar = {
   id?: boolean
   content?: boolean
-  directMessageId?: boolean
+  type?: boolean
+  attachments?: boolean
+  dmRoomId?: boolean
   userId?: boolean
   replyToId?: boolean
-  isEdited?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DMMessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "directMessageId" | "userId" | "replyToId" | "isEdited" | "createdAt" | "updatedAt", ExtArgs["result"]["dMMessage"]>
+export type DMMessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "content" | "type" | "attachments" | "dmRoomId" | "userId" | "replyToId" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["dMMessage"]>
 export type DMMessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  DirectMessage?: boolean | Prisma.DirectMessageDefaultArgs<ExtArgs>
+  DMRoom?: boolean | Prisma.DMRoomDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ReplyTo?: boolean | Prisma.DMMessage$ReplyToArgs<ExtArgs>
   Replies?: boolean | Prisma.DMMessage$RepliesArgs<ExtArgs>
   _count?: boolean | Prisma.DMMessageCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DMMessageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  DirectMessage?: boolean | Prisma.DirectMessageDefaultArgs<ExtArgs>
+  DMRoom?: boolean | Prisma.DMRoomDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ReplyTo?: boolean | Prisma.DMMessage$ReplyToArgs<ExtArgs>
 }
 export type DMMessageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  DirectMessage?: boolean | Prisma.DirectMessageDefaultArgs<ExtArgs>
+  DMRoom?: boolean | Prisma.DMRoomDefaultArgs<ExtArgs>
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   ReplyTo?: boolean | Prisma.DMMessage$ReplyToArgs<ExtArgs>
 }
@@ -1044,7 +1136,7 @@ export type DMMessageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type $DMMessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DMMessage"
   objects: {
-    DirectMessage: Prisma.$DirectMessagePayload<ExtArgs>
+    DMRoom: Prisma.$DMRoomPayload<ExtArgs>
     User: Prisma.$UserPayload<ExtArgs>
     ReplyTo: Prisma.$DMMessagePayload<ExtArgs> | null
     Replies: Prisma.$DMMessagePayload<ExtArgs>[]
@@ -1052,10 +1144,12 @@ export type $DMMessagePayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     content: string
-    directMessageId: number
+    type: string
+    attachments: runtime.JsonValue | null
+    dmRoomId: number
     userId: number
     replyToId: number | null
-    isEdited: boolean
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["dMMessage"]>
@@ -1452,7 +1546,7 @@ readonly fields: DMMessageFieldRefs;
  */
 export interface Prisma__DMMessageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  DirectMessage<T extends Prisma.DirectMessageDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DirectMessageDefaultArgs<ExtArgs>>): Prisma.Prisma__DirectMessageClient<runtime.Types.Result.GetResult<Prisma.$DirectMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  DMRoom<T extends Prisma.DMRoomDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DMRoomDefaultArgs<ExtArgs>>): Prisma.Prisma__DMRoomClient<runtime.Types.Result.GetResult<Prisma.$DMRoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   User<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ReplyTo<T extends Prisma.DMMessage$ReplyToArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DMMessage$ReplyToArgs<ExtArgs>>): Prisma.Prisma__DMMessageClient<runtime.Types.Result.GetResult<Prisma.$DMMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   Replies<T extends Prisma.DMMessage$RepliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DMMessage$RepliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DMMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1487,10 +1581,12 @@ export interface Prisma__DMMessageClient<T, Null = never, ExtArgs extends runtim
 export interface DMMessageFieldRefs {
   readonly id: Prisma.FieldRef<"DMMessage", 'Int'>
   readonly content: Prisma.FieldRef<"DMMessage", 'String'>
-  readonly directMessageId: Prisma.FieldRef<"DMMessage", 'Int'>
+  readonly type: Prisma.FieldRef<"DMMessage", 'String'>
+  readonly attachments: Prisma.FieldRef<"DMMessage", 'Json'>
+  readonly dmRoomId: Prisma.FieldRef<"DMMessage", 'Int'>
   readonly userId: Prisma.FieldRef<"DMMessage", 'Int'>
   readonly replyToId: Prisma.FieldRef<"DMMessage", 'Int'>
-  readonly isEdited: Prisma.FieldRef<"DMMessage", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"DMMessage", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"DMMessage", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DMMessage", 'DateTime'>
 }

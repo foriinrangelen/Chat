@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { UserEntity } from 'src/routers/users/entities/user.entity';
+import { UserEntity } from '../entities';
 
 export class UpdateUserDto extends PartialType(UserEntity) {}

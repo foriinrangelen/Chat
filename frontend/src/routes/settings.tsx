@@ -56,11 +56,11 @@ function SettingsPage() {
     });
   };
 
-  const themeIcons: Record<string, React.ReactNode> = {
-    light: <HiSun size={16} />,
-    dark: <HiMoon size={16} />,
-    system: <HiComputerDesktop size={16} />,
-  };
+  // const themeIcons: Record<string, React.ReactNode> = {
+  //   light: <HiSun size={16} />,
+  //   dark: <HiMoon size={16} />,
+  //   system: <HiComputerDesktop size={16} />,
+  // };
 
   return (
     <>
@@ -115,9 +115,9 @@ function SettingsPage() {
             ]}
             fullWidth
           />
-          <Text size="xs" c="dimmed" mt="xs">
+          {/* <Text size="xs" c="dimmed" mt="xs">
             * 다크 모드는 현재 개발 중입니다.
-          </Text>
+          </Text> */}
         </Paper>
 
         {/* 알림 설정 */}

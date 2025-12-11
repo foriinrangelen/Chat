@@ -29,8 +29,9 @@ model User {
   deletedAt          DateTime? @map("deleted_at") // Soft Delete: 탈퇴한 시점을 기록하고 실제 데이터는 남김
 
   // [관계 설정: 채널]
+  // @relation("ChannelOwner") 를 붙여주는이유는 그냥 다음에 동일 테이블에 여러 fk가 생길시 구분하기 위함
   OwnedChannels      Channel[]       @relation("ChannelOwner")
-  ChannelMembers     ChannelMember[]
+  ChannelMembers     ChannelMember[] 
   
   // [관계 설정: 워크스페이스(채팅방)]
   WorkspaceMessages  WorkspaceMessage[]
@@ -65,6 +66,8 @@ model Friendship {
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 
+  // User 테이블에 관계걸기, FriendshipSender는 여러개의 fk를 User테이블에서 구분하기 위함
+  // 이경우 연결된 테이블의 컬럼 관계옆에 @relation("FriendshipSender") 같이 붙여줘서 구분해야 한다
   Sender   User @relation("FriendshipSender", fields: [senderId], references: [id], onDelete: Cascade)
   Receiver User @relation("FriendshipReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
 
