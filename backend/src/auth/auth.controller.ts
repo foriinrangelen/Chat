@@ -1,13 +1,11 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { SignupDto } from './dto/signup.dto';
-import { LoginDto } from './dto/login.dto';
-import { AccessTokenGuard } from './guards/accessToken.guard';
-import { RefreshTokenGuard } from './guards/refreshToken.guard';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { prisma } from '../../lib/prisma';
-import { User } from '../../decorators/user.decorator';
-import type { JwtPayload, JwtPayloadWithRefreshToken } from '../../common/types';
+import { AuthService } from './auth.service';
+import { SignupDto, LoginDto } from './dto';
+import { AccessTokenGuard, RefreshTokenGuard } from './guards';
+import { prisma } from '../lib/prisma';
+import { User } from '../decorators/user.decorator';
+import type { JwtPayload, JwtPayloadWithRefreshToken } from './types/jwt-payload.type';
 
 @ApiTags('Auth')
 @Controller('auth')

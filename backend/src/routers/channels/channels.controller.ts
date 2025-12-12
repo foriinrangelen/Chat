@@ -1,7 +1,7 @@
 // src/routers/channels/channels.controller.ts
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { AccessTokenGuard } from '../auth/guards/accessToken.guard';
+import { AccessTokenGuard } from '../../guards/accessToken.guard';
 import { ChannelsService } from './channels.service';
 import { CreateChannelDto } from './dto/create-channel.dto';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
@@ -74,32 +74,19 @@ export class ChannelsController {
 	@ApiQuery({ name: 'page', type: Number, required: false })
 	@ApiQuery({ name: 'limit', type: Number, required: false })
 	@Get('workspaces/:workspaceId/messages')
-	getMessages(
-		@User() user: JwtPayload,
-		@Param('workspaceId', ParseIntPipe) workspaceId: number,
-		@Query('page') page?: number,
-		@Query('limit') limit?: number,
-	) {
+	getMessages(@User() user: JwtPayload, @Param('workspaceId', ParseIntPipe) workspaceId: number, @Query('page') page?: number, @Query('limit') limit?: number) {
 		return this.channelsService.getMessages(workspaceId, user.sub, page || 1, limit || 50);
 	}
 
 	@ApiOperation({ summary: '워크스페이스 메시지 전송' })
 	@Post('workspaces/:workspaceId/messages')
-	sendMessage(
-		@User() user: JwtPayload,
-		@Param('workspaceId', ParseIntPipe) workspaceId: number,
-		@Body() dto: SendMessageDto,
-	) {
+	sendMessage(@User() user: JwtPayload, @Param('workspaceId', ParseIntPipe) workspaceId: number, @Body() dto: SendMessageDto) {
 		return this.channelsService.sendMessage(workspaceId, user.sub, dto);
 	}
 
 	@ApiOperation({ summary: '메시지 수정' })
 	@Patch('messages/:messageId')
-	editMessage(
-		@User() user: JwtPayload,
-		@Param('messageId', ParseIntPipe) messageId: number,
-		@Body() dto: EditMessageDto,
-	) {
+	editMessage(@User() user: JwtPayload, @Param('messageId', ParseIntPipe) messageId: number, @Body() dto: EditMessageDto) {
 		return this.channelsService.editMessage(messageId, user.sub, dto.content);
 	}
 

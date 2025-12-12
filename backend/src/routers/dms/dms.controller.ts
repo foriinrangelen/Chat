@@ -1,7 +1,7 @@
 // src/routers/dms/dms.controller.ts
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { AccessTokenGuard } from '../auth/guards/accessToken.guard';
+import { AccessTokenGuard } from '../../guards/accessToken.guard';
 import { DmsService } from './dms.service';
 import { CreateDmDto } from './dto/create-dm.dto';
 import { SendDmDto, EditDmMessageDto } from './dto/send-dm.dto';
@@ -37,12 +37,7 @@ export class DmsController {
 	@ApiQuery({ name: 'page', type: Number, required: false })
 	@ApiQuery({ name: 'limit', type: Number, required: false })
 	@Get(':id/messages')
-	getMessages(
-		@User() user: JwtPayload,
-		@Param('id', ParseIntPipe) id: number,
-		@Query('page') page?: number,
-		@Query('limit') limit?: number,
-	) {
+	getMessages(@User() user: JwtPayload, @Param('id', ParseIntPipe) id: number, @Query('page') page?: number, @Query('limit') limit?: number) {
 		return this.dmsService.getMessages(id, user.sub, page || 1, limit || 50);
 	}
 

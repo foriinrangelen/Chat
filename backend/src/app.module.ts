@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { LoggingMiddleware } from './middlewares/logging.middleware';
-import { AuthModule } from './routers/auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 import { ChannelsModule } from './routers/channels/channels.module';
 import { DmsModule } from './routers/dms/dms.module';
 import { FriendsModule } from './routers/friends/friends.module';

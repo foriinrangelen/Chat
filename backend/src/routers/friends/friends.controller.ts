@@ -1,7 +1,7 @@
 // src/routers/friends/friends.controller.ts
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AccessTokenGuard } from '../auth/guards/accessToken.guard';
+import { AccessTokenGuard } from '../../guards/accessToken.guard';
 import { FriendsService } from './friends.service';
 import { SendFriendRequestDto } from './dto/send-friend-request.dto';
 import { User } from '../../decorators/user.decorator';
@@ -74,8 +74,3 @@ export class FriendsController {
 		return this.friendsService.getBlockedUsers(user.sub);
 	}
 }
-
-
-
-
-
